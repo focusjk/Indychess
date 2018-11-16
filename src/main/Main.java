@@ -10,11 +10,9 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			HBox root = new HBox();
-			
-			Scene scene = new Scene(root);
+			Scene scene1 = new Scene(new scene.Login());
 			primaryStage.setTitle("Indychess");
-			primaryStage.setScene(scene);
+			primaryStage.setScene(scene1);
 			primaryStage.show();
 
 		} catch (Exception e) {
