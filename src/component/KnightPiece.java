@@ -29,10 +29,10 @@ public class KnightPiece extends ChessPiece {
 		int currentRow = chessLocation.getRow();
 		int currentCol = chessLocation.getCol();
 
-		int[] row = { 2, 2, 1, 1, -1, -1, -2, -2 };
-		int[] col = { 1, -1, 2, -2, 2, -2, 1, -1 };
+		int[] col = { 2, 2, 1, 1, -1, -1, -2, -2 };
+		int[] row = { 1, -1, 2, -2, 2, -2, 1, -1 };
 		for (int i = 0; i < 8; i++) {
-			ChessLocation lo = new ChessLocation(currentRow + row[i], currentCol + col[i]);
+			ChessLocation lo = new ChessLocation(currentCol + col[i], currentRow + row[i]);
 			if (lo.isOnBoard() && !lo.equals(chessLocation) && !possibleMoveList.contains(lo)) {
 				possibleMoveList.add(lo);
 			}

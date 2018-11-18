@@ -29,9 +29,9 @@ public class KingPiece extends ChessPiece {
 		int currentRow = chessLocation.getRow();
 		int currentCol = chessLocation.getCol();
 
-		for (int row = -1; row <= 1; row++) {
-			for (int col = -1; col <= 1; col++) {
-				ChessLocation lo = new ChessLocation(currentRow+row,currentCol+col);
+		for (int col = -1; col <= 1; col++) {
+			for (int row = -1; row <= 1; row++) {
+				ChessLocation lo = new ChessLocation(currentCol+col,currentRow+row);
 				
 				if (lo.isOnBoard() && !lo.equals(chessLocation) && !possibleMoveList.contains(lo)) {
 					possibleMoveList.add(lo);

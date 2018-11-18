@@ -30,11 +30,11 @@ public class BishopPiece extends ChessPiece {
 		int currentCol = chessLocation.getCol();
 
 		for (int i = -8; i <= 8; i++) {
-			ChessLocation lo = new ChessLocation(currentRow + i, currentCol + i);
+			ChessLocation lo = new ChessLocation(currentCol + i, currentRow + i);
 			if (lo.isOnBoard() && !lo.equals(chessLocation) && !possibleMoveList.contains(lo)) {
 				possibleMoveList.add(lo);
 			}
-			lo = new ChessLocation(currentRow - i, currentCol + i);
+			lo = new ChessLocation(currentCol - i, currentRow + i);
 			if (lo.isOnBoard() && !lo.equals(chessLocation) && !possibleMoveList.contains(lo)) {
 				possibleMoveList.add(lo);
 			}

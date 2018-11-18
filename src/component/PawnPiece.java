@@ -29,7 +29,7 @@ public class PawnPiece extends ChessPiece {
 		int currentRow = chessLocation.getRow();
 		int currentCol = chessLocation.getCol();
 
-		ChessLocation lo = new ChessLocation(currentRow + 1, currentCol);
+		ChessLocation lo = new ChessLocation(currentCol, currentRow + 1);
 
 		if (lo.isOnBoard() && !lo.equals(chessLocation) && !possibleMoveList.contains(lo)) {
 			possibleMoveList.add(lo);

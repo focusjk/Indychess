@@ -2,18 +2,20 @@ package component;
 
 public class ChessLocation {
 	public static final int BOARD_SIZE = 6;
-	private int row;
 	private int col;
-	public static final String[] COL_CHAR = {"X","A","B","C","D","E","F","G","H"};
+	private int row;
+	public static final String[] COL_CHAR = {"x","a","b","c","d","e","f","g","h"};
 
 	public ChessLocation() {
-		row = 0;
 		col = 0;
+		row = 0;
+		
 	}
 
-	public ChessLocation(int row, int col) {
-		this.row = row;
+	public ChessLocation(int col, int row) {
 		this.col = col;
+		this.row = row;
+
 	}
 
 	@Override
@@ -26,7 +28,7 @@ public class ChessLocation {
 	}
 
 	public boolean isOnBoard() {
-		return (row >= 1 && col >= 1 && row <= BOARD_SIZE && col <= BOARD_SIZE);
+		return (col >= 1 && row >= 1 && col <= BOARD_SIZE && row <= BOARD_SIZE);
 	}
 
 	public int getRow() {
@@ -47,6 +49,6 @@ public class ChessLocation {
 	
 	@Override
 	public String toString() {
-		return "("+Integer.toString(row)+","+Integer.toString(col)+")";
+		return "("+Integer.toString(col)+","+Integer.toString(row)+")";
 	}
 }
