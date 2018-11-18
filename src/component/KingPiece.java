@@ -31,8 +31,8 @@ public class KingPiece extends ChessPiece {
 
 		for (int col = -1; col <= 1; col++) {
 			for (int row = -1; row <= 1; row++) {
-				ChessLocation lo = new ChessLocation(currentCol+col,currentRow+row);
-				
+				ChessLocation lo = new ChessLocation(currentCol + col, currentRow + row);
+
 				if (lo.isOnBoard() && !lo.equals(chessLocation) && !possibleMoveList.contains(lo)) {
 					possibleMoveList.add(lo);
 				}

@@ -39,7 +39,10 @@ public abstract class ChessPiece {
 	public void setChessLocation(ChessLocation chessLocation) {
 		this.chessLocation = chessLocation;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return Character.toString(id);
+	}
 
 }

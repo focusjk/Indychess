@@ -42,7 +42,7 @@ public class QueenPiece extends ChessPiece {
 				possibleMoveList.add(lo);
 			}
 		}
-		
+
 		for (int i = -8; i <= 8; i++) {
 			ChessLocation lo = new ChessLocation(currentCol + i, currentRow + i);
 			if (lo.isOnBoard() && !lo.equals(chessLocation) && !possibleMoveList.contains(lo)) {
@@ -53,7 +53,6 @@ public class QueenPiece extends ChessPiece {
 				possibleMoveList.add(lo);
 			}
 		}
-
 
 		return possibleMoveList;
 	}
