@@ -29,8 +29,6 @@ public class MainWithoutUI {
 			}
 
 			ChessPiece selectPiece = chessBoard.getPieceAt(new ChessLocation(col, row));
-			
-			System.out.println(selectPiece.possibleMove());
 
 			System.out.println(chessBoard.canMoveTo(selectPiece));
 
