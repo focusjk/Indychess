@@ -28,11 +28,16 @@ public class PawnPiece extends ChessPiece {
 		ArrayList<ChessLocation> possibleMoveList = new ArrayList<ChessLocation>();
 		int currentRow = chessLocation.getRow();
 		int currentCol = chessLocation.getCol();
+		ChessLocation lo;
+		int row = 1;
+		if (owner == "player2")
+			row = -1;
 
-		ChessLocation lo = new ChessLocation(currentCol, currentRow + 1);
-
-		if (lo.isOnBoard() && !lo.equals(chessLocation) && !possibleMoveList.contains(lo)) {
-			possibleMoveList.add(lo);
+		for (int col = -1; col <= 1; col++) {
+			lo = new ChessLocation(currentCol + col, currentRow + row);
+			if (lo.isOnBoard() && !lo.equals(chessLocation) && !possibleMoveList.contains(lo)) {
+				possibleMoveList.add(lo);
+			}
 		}
 		return possibleMoveList;
 	}

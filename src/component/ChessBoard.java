@@ -1,5 +1,6 @@
 package component;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -10,7 +11,7 @@ public class ChessBoard {
 	public ChessBoard() {
 		board = new ChessPiece[BOARD_SIZE][BOARD_SIZE];
 		String owner;
-		ChessLocation chessLocation = new ChessLocation(0, 2);
+		ChessLocation chessLocation = new ChessLocation(2, 2);
 		// player1
 		owner = "player1";
 
@@ -19,7 +20,7 @@ public class ChessBoard {
 				new RookPiece(owner, chessLocation), new PawnPiece(owner, chessLocation) };
 		shuffleArray(pieceList1);
 		for (int i = 0; i < pieceList1.length; i++) {
-			placePieceAt(pieceList1[i], new ChessLocation(i, 0));
+			setNewPiece(pieceList1[i], new ChessLocation(i, 0));
 		}
 		// player2
 		owner = "player2";
@@ -29,32 +30,50 @@ public class ChessBoard {
 				new RookPiece(owner, chessLocation), new PawnPiece(owner, chessLocation) };
 		shuffleArray(pieceList2);
 		for (int i = 0; i < pieceList2.length; i++) {
-			placePieceAt(pieceList2[i], new ChessLocation(i, 5));
+			setNewPiece(pieceList2[i], new ChessLocation(i, 5));
 		}
+	}
 
+	public ArrayList<ChessLocation> canMoveTo(ChessPiece piece) {
+		ArrayList<ChessLocation> canMoveToList = new ArrayList<ChessLocation>();
+		ArrayList<ChessLocation> possibleMoveList = piece.possibleMove();
+		for (ChessLocation lo : possibleMoveList) {
+			//System.out.println(board[lo.getCol()][lo.getRow()]);
+			if (!isPieceAt(lo.getCol(), lo.getRow())) {
+				canMoveToList.add(lo);
+			} else if (getPieceAt(lo).getOwner() != piece.getOwner()) {
+				canMoveToList.add(lo);
+			}
+		}
+		return canMoveToList;
 	}
 
 	public boolean isPieceAt(int col, int row) {
 		return board[col][row] != null;
 	}
+	
+	public void setNewPiece(ChessPiece piece, ChessLocation location) {
+		board[location.getCol()][location.getRow()] = piece;
+		piece.setChessLocation(location);
+	}
 
 	public void placePieceAt(ChessPiece piece, ChessLocation location) {
-		if (isPieceAt(location.getRow(), location.getCol())) {
+		if (isPieceAt(location.getCol(), location.getRow())) {
 			removePieceAt(location);
 		}
 		if (piece.getChessLocation() != null) {
 			removePieceAt(piece.getChessLocation());
 		}
-		board[location.getRow()][location.getCol()] = piece;
+		board[location.getCol()][location.getRow()] = piece;
 		piece.setChessLocation(location);
 	}
 
 	private void removePieceAt(ChessLocation location) {
-		board[location.getRow()][location.getCol()] = null;
+		board[location.getCol()][location.getRow()] = null;
 	}
 
 	public ChessPiece getPieceAt(ChessLocation location) {
-		return board[location.getRow()][location.getCol()];
+		return board[location.getCol()][location.getRow()];
 	}
 
 	public void shuffleArray(ChessPiece[] ar) {
@@ -73,8 +92,8 @@ public class ChessBoard {
 		for (int row = BOARD_SIZE - 1; row >= 0; row--) {
 			s += row;
 			for (int col = 0; col < BOARD_SIZE; col++) {
-				if (board[row][col] != null) {
-					s += " " + board[row][col].getId();
+				if (board[col][row] != null) {
+					s += " " + board[col][row].getId();
 				} else {
 					s += " -";
 				}

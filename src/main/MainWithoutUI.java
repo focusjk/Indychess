@@ -1,5 +1,6 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import component.*;
@@ -7,6 +8,7 @@ import component.*;
 public class MainWithoutUI {
 
 	public static void main(String[] args) {
+
 		ChessBoard chessBoard = new ChessBoard();
 		boolean gameOver = false;
 		String currentPlayer = "player1";
@@ -27,8 +29,10 @@ public class MainWithoutUI {
 			}
 
 			ChessPiece selectPiece = chessBoard.getPieceAt(new ChessLocation(col, row));
-
+			
 			System.out.println(selectPiece.possibleMove());
+
+			System.out.println(chessBoard.canMoveTo(selectPiece));
 
 			while (true) {
 				System.out.print("Select Where to Move (input col row EX. 1 2) : ");
@@ -43,7 +47,7 @@ public class MainWithoutUI {
 			chessBoard.placePieceAt(selectPiece, new ChessLocation(toCol, toRow));
 
 			System.out.println(chessBoard.toString());
-			break;
+			//break;
 		}
 	}
 }
