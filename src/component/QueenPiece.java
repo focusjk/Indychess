@@ -2,14 +2,14 @@ package component;
 
 import java.util.ArrayList;
 
-public class RookPiece extends ChessPiece {
+public class QueenPiece extends ChessPiece {
 
-	public RookPiece(String owner, ChessLocation chessLocation) {
+	public QueenPiece(String owner, ChessLocation chessLocation) {
 		super(owner, chessLocation);
 		if (owner.equalsIgnoreCase("player1")) {
-			id = 'R';
+			id = 'Q';
 		} else if (owner.equalsIgnoreCase("player2")) {
-			id = 'r';
+			id = 'q';
 		}
 
 	}
@@ -38,6 +38,17 @@ public class RookPiece extends ChessPiece {
 
 		for (int col = 1; col <= 8; col++) {
 			ChessLocation lo = new ChessLocation(currentRow, col);
+			if (lo.isOnBoard() && !lo.equals(chessLocation) && !possibleMoveList.contains(lo)) {
+				possibleMoveList.add(lo);
+			}
+		}
+		
+		for (int i = -8; i <= 8; i++) {
+			ChessLocation lo = new ChessLocation(currentRow + i, currentCol + i);
+			if (lo.isOnBoard() && !lo.equals(chessLocation) && !possibleMoveList.contains(lo)) {
+				possibleMoveList.add(lo);
+			}
+			lo = new ChessLocation(currentRow - i, currentCol + i);
 			if (lo.isOnBoard() && !lo.equals(chessLocation) && !possibleMoveList.contains(lo)) {
 				possibleMoveList.add(lo);
 			}
