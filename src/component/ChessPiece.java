@@ -12,6 +12,8 @@ public abstract class ChessPiece {
 		this.chessLocation = chessLocation;
 	}
 
+	public abstract boolean moveTo(ChessLocation chessLocation);
+
 	public abstract ArrayList<ChessLocation> possibleMove();
 
 	public String getOwner() {
