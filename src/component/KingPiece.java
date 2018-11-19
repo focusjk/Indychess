@@ -15,15 +15,6 @@ public class KingPiece extends ChessPiece {
 	}
 
 	@Override
-	public boolean moveTo(ChessLocation chessLocation) {
-		if (possibleMove().contains(chessLocation)) {
-			this.chessLocation = chessLocation;
-			return true;
-		}
-		return false;
-	}
-
-	@Override
 	public ArrayList<ChessLocation> possibleMove() {
 		ArrayList<ChessLocation> possibleMoveList = new ArrayList<ChessLocation>();
 		int currentRow = chessLocation.getRow();
