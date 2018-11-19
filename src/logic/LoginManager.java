@@ -6,17 +6,40 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import main.Main;
+import scene.Login;
 
 public class LoginManager extends Manager {
 	private InputField player1Input;
 	private InputField player2Input;
 	private Button button;
+	private Thread backgroundThread;
+	private Login loginScreen;
 
-	public LoginManager(InputField player1Input, InputField player2Input, Button button) {
+	public LoginManager(Login loginScreen,InputField player1Input, InputField player2Input, Button button) {
 		super();
+		this.loginScreen = loginScreen;
 		setPlayer1Input(player1Input);
 		setPlayer2Input(player2Input);
 		setButton(button);
+		
+		this.backgroundThread = new Thread(() -> {
+			int i = 1;
+			while(true){
+				try {
+					Thread.sleep(30);
+					loginScreen.setBgNumber(i);
+					i++;
+					i%=40;
+					System.out.println(i);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.out.println("Stop Background Thread");
+					break;
+				}
+			}
+		});
+		this.backgroundThread.start();
 	}
 
 	private class ButtonEventHandler implements EventHandler<ActionEvent> {

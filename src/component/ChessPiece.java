@@ -41,6 +41,7 @@ public abstract class ChessPiece extends Pane {
 
 	public void setX(int x) {
 		this.x = x;
+		setLayoutX(180 + y*80);
 	}
 
 	public int getY() {
@@ -49,6 +50,7 @@ public abstract class ChessPiece extends Pane {
 
 	public void setY(int y) {
 		this.y = y;
+		setLayoutY(30 + x*80);
 	}
 
 	public int getPlayer() {

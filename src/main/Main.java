@@ -36,7 +36,7 @@ public class Main extends Application {
 
 		if (managerType.equals("login")) {
 			loginScreen = new Login();
-			loginManager = new LoginManager(loginScreen.getPlayer1(), loginScreen.getPlayer2(),
+			loginManager = new LoginManager(loginScreen,loginScreen.getPlayer1(), loginScreen.getPlayer2(),
 					loginScreen.getStartButton());
 			setCurrentScene(new Scene(loginScreen));
 		} else if (managerType.equals("game")) {

@@ -8,43 +8,54 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-public class Login extends VBox{
-	
+public class Login extends VBox {
+
 	private InputField player1;
 	private InputField player2;
 	private ImageView logo;
+	private Image background;
 	private Button startButton;
+	private int bgNumber = 0;
 
 	public Login() {
-		//set screen
+		// set screen
 		setPrefHeight(700);
 		setPrefWidth(1000);
-		setPadding(new Insets(50,320,100,320));
+		setPadding(new Insets(50, 320, 100, 320));
 		setAlignment(Pos.CENTER);
-		setBackground(new Background(new BackgroundFill(Color.WHEAT, null, null)));
-		
-		//set box
+//		setBackground(new Background(new BackgroundFill(Color.WHEAT, null, null)));
+
+		// set background
+
+		background = new Image(ClassLoader.getSystemResource("images/loginBackground/background1-" + bgNumber + ".jpg").toString());
+		setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(1000, 700, false, false, false, false))));
+//		System.out.println(BackgroundSize.DEFAULT);
+//		getChildren().add(background);
+
+		// set box
 		VBox box = new VBox();
 		box.setPadding(new Insets(20));
 		box.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
 		box.setSpacing(15);
 		box.setAlignment(Pos.CENTER);
-		//set logo
+		// set logo
 		logo = new ImageView(new Image(ClassLoader.getSystemResource("images/logo.png").toString()));
-        logo.setFitWidth(200);
-        logo.setPreserveRatio(true);
-        //set input player1
-        player1 = new InputField("PLAYER 1", "Input name");
-        //set input player2
-        player2 = new InputField("PLAYER 2", "Input name");
-		//start button
+		logo.setFitWidth(200);
+		logo.setPreserveRatio(true);
+		// set input player1
+		player1 = new InputField("PLAYER 1", "Input name");
+		// set input player2
+		player2 = new InputField("PLAYER 2", "Input name");
+		// start button
 		startButton = new Button("Let's start");
-		
-		box.getChildren().addAll(logo,player1,player2,startButton);
-		
+
+		box.getChildren().addAll(logo, player1, player2, startButton);
+
 		getChildren().add(box);
 	}
 
@@ -80,6 +91,10 @@ public class Login extends VBox{
 		this.startButton = startButton;
 	}
 	
-	
+	public void setBgNumber(int num) {
+		bgNumber = num;
+		background = new Image(ClassLoader.getSystemResource("images/loginBackground/background1-" + bgNumber + ".jpg").toString());
+		setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(1000, 700, false, false, false, false))));
+	}
 
 }

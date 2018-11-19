@@ -6,6 +6,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+
 import component.ChessPiece;
 import component.PlayerProfile;
 import component.Star;
@@ -16,6 +17,7 @@ public class Game extends Pane {
 	private PlayerProfile player2;
 	private ImageView pauseButton;
 	private Timer timer;
+//	private ChessPiece[][] chessPiece = new ChessPiece[7][7]; 
 
 	public Game() {
 		// set screen
@@ -79,8 +81,16 @@ public class Game extends Pane {
 	}
 	
 	public void addChessPiece(ChessPiece e) {
+//		chessPiece[e.getX()][e.getY()] = e;
 		getChildren().add(e);
 	}
+	
+//	public void moveChessPiece(ChessPiece e) {
+//		chessPiece[e.getX()][e.getY()] = e;
+//		e.setLayoutX(e.getX());
+//		getChildren().add(e);
+//	}
+	
 	public void addStar(Star e) {
 		getChildren().add(e);
 	}
