@@ -2,8 +2,8 @@ package chessPiece;
 
 public class KingPiece extends ChessPiece {
 
-	public KingPiece(int x, int y, int player) {
-		super(x, y, player, ClassLoader.getSystemResource("images/king"+player+".png").toString());
+	public KingPiece(double x, double y, int player) {
+		super(x, y, player,"images/king");
 		// TODO Auto-generated constructor stub
 	}
 
