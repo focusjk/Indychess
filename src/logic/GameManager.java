@@ -3,14 +3,15 @@ package logic;
 import java.util.ArrayList;
 import java.util.Random;
 
-import component.BishopPiece;
-import component.ChessPiece;
-import component.KingPiece;
-import component.KnightPiece;
-import component.PawnPiece;
+import chessPiece.BishopPiece;
+import chessPiece.ChessPiece;
+import chessPiece.KingPiece;
+import chessPiece.KnightPiece;
+import chessPiece.PawnPiece;
+import chessPiece.QueenPiece;
+import chessPiece.RookPiece;
+import component.Button;
 import component.PlayerProfile;
-import component.QueenPiece;
-import component.RookPiece;
 import component.Star;
 import component.Timer;
 import javafx.scene.image.ImageView;
@@ -22,7 +23,7 @@ public class GameManager extends Manager {
 	private Star star;
 	private PlayerProfile player1;
 	private PlayerProfile player2;
-	private ImageView pauseButton;
+	private Button pauseButton;
 	private Timer timer;
 	private Game gameScreen;
 
@@ -31,7 +32,7 @@ public class GameManager extends Manager {
 		this.gameScreen = gameScreen;
 		this.player1 = gameScreen.getPlayer1();
 		this.player2 = gameScreen.getPlayer2();
-		setPauseButton(gameScreen.getPauseButton());
+		this.pauseButton = gameScreen.getPauseButton();
 		this.timer = gameScreen.getTimer();
 
 		initialChess();
@@ -124,11 +125,6 @@ public class GameManager extends Manager {
 
 	public void drawStar() {
 		gameScreen.addStar(star);
-	}
-
-	public void setPauseButton(ImageView pauseButton) {
-		this.pauseButton = pauseButton;
-		// TODO
 	}
 
 }

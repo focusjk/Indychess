@@ -18,8 +18,9 @@ public class Timer extends HBox {
 	private int currentTime;
 	private long lastTimeTriggered;
 	private AnimationTimer animationTimer;
+	private int playing;
 
-	public Timer() {
+	public Timer(PlayerProfile player1, PlayerProfile player2) {
 		// set screen
 		setPrefHeight(65);
 		setPrefWidth(200);
@@ -34,14 +35,13 @@ public class Timer extends HBox {
 		Text timing = new Text();
 		timing.setFont(Font.font("AndaleMono", 40));
 
-		this.currentTime = 20;
+		this.playing = 1;
+		this.currentTime = 10;
 		this.lastTimeTriggered = -1;
 		this.animationTimer = new AnimationTimer() {
 
 			@Override
 			public void handle(long now) {
-				// TODO Auto-generated method stub
-
 				lastTimeTriggered = (lastTimeTriggered < 0 ? now : lastTimeTriggered);
 
 				if (now - lastTimeTriggered >= 1000000000 && currentTime > 0) {
@@ -51,6 +51,19 @@ public class Timer extends HBox {
 					else
 						timing.setText("00:" + currentTime);
 					lastTimeTriggered = now;
+				}
+				else if(currentTime == 0){
+					currentTime = 10;
+					if(playing == 1) {
+						playing = 2;
+						player1.setTurn(false);
+						player2.setTurn(true);
+					} else {
+						playing = 1;
+						player1.setTurn(true);
+						player2.setTurn(false);
+					}
+					
 				}
 			}
 		};

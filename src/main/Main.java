@@ -27,6 +27,10 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
+	@Override
+	public void stop() throws Exception {
+		System.exit(0);
+	}
 
 	public static void main(String[] args) {
 		launch(args);

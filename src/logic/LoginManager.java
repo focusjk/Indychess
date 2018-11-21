@@ -26,7 +26,7 @@ public class LoginManager extends Manager {
 			int i = 1;
 			while(true){
 				try {
-					Thread.sleep(30);
+					Thread.sleep(35);
 					loginScreen.setBgNumber(i);
 					i++;
 					i%=40;
@@ -62,6 +62,7 @@ public class LoginManager extends Manager {
 					a.show();
 				}
 				Main.setup("game");
+				backgroundThread.interrupt();
 			} catch (Exception e) {
 				// TODO
 				
@@ -94,6 +95,10 @@ public class LoginManager extends Manager {
 		this.button = button;
 		this.button.setOnAction(new ButtonEventHandler(player1Input, player2Input));
 
+	}
+	
+	public void stopBg() {
+		backgroundThread.interrupt();
 	}
 
 }

@@ -1,5 +1,4 @@
-package component;
-
+package chessPiece;
 
 public class BishopPiece extends ChessPiece {
 

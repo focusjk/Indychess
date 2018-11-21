@@ -13,16 +13,15 @@ public class PlayerProfile extends Pane {
 	private int player;
 	private Text nameTag;
 	private ImageView arrow;
+	private int arrowPosition;
+	private int up;
+	private Thread arrowThread;
 
 	public PlayerProfile(String name, int player) {
 		super();
 		this.player = player;
 		Random rand = new Random();
 		this.number = rand.nextInt(9) + 1;
-
-		// set screen
-		setPrefHeight(700);
-		setPrefWidth(1000);
 
 		// set emoji1
 		ImageView emoji = new ImageView(
@@ -41,6 +40,37 @@ public class PlayerProfile extends Pane {
 		arrow = new ImageView(
 				new Image(ClassLoader.getSystemResource("images/redArrow" + this.player + ".png").toString()));
 		arrow.setVisible(false);
+		arrowPosition = 0;
+		up = 1;
+//		arrowThread = new Thread("arrow") {
+//			@Override
+//			public void run() {
+//				while (true) {
+//					try {
+//						sleep(70);
+//						arrowPosition += 1;
+//						if (arrowPosition > 10) {
+//							up *= -1;
+//							arrowPosition %= 10;
+//						}
+//						if (player == 1) {
+//							if(up == 1)
+//								arrow.setLayoutY(150 + arrowPosition);
+//							else 
+//								arrow.setLayoutY(150 + 10 - arrowPosition);
+//						} else {
+//							if(up == 1)
+//								arrow.setLayoutY(490 - arrowPosition);
+//							else 
+//								arrow.setLayoutY(490 - 10 + arrowPosition);
+//						}
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//
+//				}
+//			}
+//		};
 
 		if (this.player == 1) {
 			emoji.setLayoutX(20);
@@ -80,6 +110,11 @@ public class PlayerProfile extends Pane {
 
 	public void setTurn(boolean e) {
 		arrow.setVisible(e);
+//		if (e) {
+//			arrowThread.start();
+//		} else {
+//			Thread.yield();
+//		}
 	}
 
 }
