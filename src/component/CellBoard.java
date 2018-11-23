@@ -4,19 +4,37 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class CellBoard extends ImageView {
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	private int color;
-	
-	public CellBoard(int x, int y) {
+	private boolean isActive;
+
+	public CellBoard(double x, double y) {
 		super();
 		this.x = x;
 		this.y = y;
-		this.color = ((x+y)%2)+1;
-		setImage( new Image(ClassLoader.getSystemResource("images/cell" + this.color + ".png").toString()));
-		setLayoutX(260 + (80 *(x-1)));
-		setLayoutY(110 + (80 *(y-1)));
+		this.color = (int) ((x + y) % 2) + 1;
+		this.isActive = false;
+		setImage(new Image(ClassLoader.getSystemResource("images/cell" + this.color + ".png").toString()));
+		setLayoutX(260 + (80 * (x - 1)));
+		setLayoutY(110 + (80 * (y - 1)));
 	}
-	
+
+	public void active() {
+		if (isActive)
+			setImage(new Image(ClassLoader.getSystemResource("images/cell" + this.color + ".png").toString()));
+		else
+			setImage(new Image(ClassLoader.getSystemResource("images/cell3.png").toString()));
+		isActive = !isActive;
+	}
+
+	public double getPositionX() {
+		return x;
+	}
+
+	public double getPositionY() {
+		return y;
+	}
+
 
 }

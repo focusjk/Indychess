@@ -36,9 +36,9 @@ public class GameManager extends Manager {
 		this.timer = gameScreen.getTimer();
 
 		initialChess();
-		drawChess();
 		initialStar();
 		drawStar();
+		drawChess();
 		this.player1.setTurn(true);
 	}
 
@@ -48,40 +48,40 @@ public class GameManager extends Manager {
 
 		for (int i = 1; i <= 6; i++) {
 			if (i == 3) {
-				chess1.add(new KingPiece(1, i, 1));
+				chess1.add(new KingPiece(i, 1, 1));
 			} else {
 				Random rand = new Random();
 				int random = rand.nextInt(5) + 1;
 				if (random == 1) {
-					chess1.add(new BishopPiece(1, i, 1));
+					chess1.add(new BishopPiece(i, 1, 1));
 				} else if (random == 2) {
-					chess1.add(new QueenPiece(1, i, 1));
+					chess1.add(new QueenPiece(i, 1, 1));
 				} else if (random == 3) {
-					chess1.add(new KnightPiece(1, i, 1));
+					chess1.add(new KnightPiece(i, 1, 1));
 				} else if (random == 4) {
-					chess1.add(new PawnPiece(1, i, 1));
+					chess1.add(new PawnPiece(i, 1, 1));
 				} else if (random == 5) {
-					chess1.add(new RookPiece(1, i, 1));
+					chess1.add(new RookPiece(i, 1, 1));
 				}
 			}
 		}
 
 		for (int i = 1; i <= 6; i++) {
 			if (i == 3) {
-				chess2.add(new KingPiece(6, i, 2));
+				chess2.add(new KingPiece(i, 6, 2));
 			} else {
 				Random rand = new Random();
 				int random = rand.nextInt(5) + 1;
 				if (random == 1) {
-					chess2.add(new BishopPiece(6, i, 2));
+					chess2.add(new BishopPiece(i, 6, 2));
 				} else if (random == 2) {
-					chess2.add(new QueenPiece(6, i, 2));
+					chess2.add(new QueenPiece(i, 6, 2));
 				} else if (random == 3) {
-					chess2.add(new KnightPiece(6, i, 2));
+					chess2.add(new KnightPiece(i, 6, 2));
 				} else if (random == 4) {
-					chess2.add(new PawnPiece(6, i, 2));
+					chess2.add(new PawnPiece(i, 6, 2));
 				} else if (random == 5) {
-					chess2.add(new RookPiece(6, i, 2));
+					chess2.add(new RookPiece(i, 6, 2));
 				}
 			}
 		}

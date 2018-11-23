@@ -7,13 +7,15 @@ import scene.Game;
 import scene.Login;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 public class Main extends Application {
 	private static Stage stage;
 	private static Login loginScreen;
 	private static Game gameScreen;
-	private static LoginManager loginManager;
 	private static GameManager gameManager;
+	private static LoginManager loginManager;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -23,10 +25,16 @@ public class Main extends Application {
 			primaryStage.setTitle("Indychess");
 			primaryStage.show();
 
+//			music
+//			MediaPlayer music = new MediaPlayer(new Media(ClassLoader.getSystemResource("bgm.mp3").toString()));
+//			music.setAutoPlay(true);
+//			music.setCycleCount(MediaPlayer.INDEFINITE);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	@Override
 	public void stop() throws Exception {
 		System.exit(0);
@@ -37,18 +45,21 @@ public class Main extends Application {
 	}
 
 	public static void setup(String managerType) {
-
-		if (managerType.equals("login")) {
-			loginScreen = new Login();
-			loginManager = new LoginManager(loginScreen,loginScreen.getPlayer1(), loginScreen.getPlayer2(),
-					loginScreen.getStartButton());
-			setCurrentScene(new Scene(loginScreen));
-		} else if (managerType.equals("game")) {
-			gameScreen = new Game();
-			gameManager = new GameManager(gameScreen);
-			gameScreen.getPlayer1().setName(loginManager.getPlayer1Input().getText());
-			gameScreen.getPlayer2().setName(loginManager.getPlayer2Input().getText());
-			setCurrentScene(new Scene(gameScreen));
+		try {
+			if (managerType.equals("login")) {
+				loginScreen = new Login();
+				loginManager = new LoginManager(loginScreen, loginScreen.getPlayer1(), loginScreen.getPlayer2(),
+						loginScreen.getStartButton());
+				setCurrentScene(new Scene(loginScreen));
+			} else if (managerType.equals("game")) {
+				gameScreen = new Game();
+				gameManager = new GameManager(gameScreen);
+				gameScreen.getPlayer1().setName(loginManager.getPlayer1Input().getText());
+				gameScreen.getPlayer2().setName(loginManager.getPlayer2Input().getText());
+				setCurrentScene(new Scene(gameScreen));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

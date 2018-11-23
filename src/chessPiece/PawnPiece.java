@@ -7,4 +7,17 @@ public class PawnPiece extends ChessPiece {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	protected void setMove() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void getMovable() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
 }

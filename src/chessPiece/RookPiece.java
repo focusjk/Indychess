@@ -6,4 +6,16 @@ public class RookPiece extends ChessPiece {
 		super(x, y, player, "images/rook");
 	}
 
+	@Override
+	protected void setMove() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void getMovable() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

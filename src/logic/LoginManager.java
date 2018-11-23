@@ -1,6 +1,8 @@
 package logic;
 
+
 import component.InputField;
+import exception.InputNotFilledException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
@@ -8,31 +10,30 @@ import javafx.scene.control.Button;
 import main.Main;
 import scene.Login;
 
-public class LoginManager extends Manager {
+public class LoginManager {
 	private InputField player1Input;
 	private InputField player2Input;
 	private Button button;
 	private Thread backgroundThread;
 	private Login loginScreen;
 
-	public LoginManager(Login loginScreen,InputField player1Input, InputField player2Input, Button button) {
+	public LoginManager(Login loginScreen, InputField player1Input, InputField player2Input, Button button) {
 		super();
 		this.loginScreen = loginScreen;
 		setPlayer1Input(player1Input);
 		setPlayer2Input(player2Input);
 		setButton(button);
-		
+
 		this.backgroundThread = new Thread(() -> {
 			int i = 1;
-			while(true){
+			while (true) {
 				try {
 					Thread.sleep(35);
 					loginScreen.setBgNumber(i);
 					i++;
-					i%=40;
+					i %= 40;
 					System.out.println(i);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 					System.out.println("Stop Background Thread");
 					break;
@@ -58,14 +59,16 @@ public class LoginManager extends Manager {
 				String name1 = this.player1Input.getText();
 				String name2 = this.player2Input.getText();
 				if (name1.isEmpty() || name2.isEmpty()) {
+//					throw new InputNotFilledException(0);
 					Alert a = new Alert(Alert.AlertType.INFORMATION, "Please Fill Player Name");
 					a.show();
 				}
 				Main.setup("game");
 				backgroundThread.interrupt();
-			} catch (Exception e) {
-				// TODO
+//			} catch (InputNotFilledException e) {
 				
+			} catch(Exception e) {
+				e.printStackTrace();
 			}
 		}
 
@@ -96,7 +99,7 @@ public class LoginManager extends Manager {
 		this.button.setOnAction(new ButtonEventHandler(player1Input, player2Input));
 
 	}
-	
+
 	public void stopBg() {
 		backgroundThread.interrupt();
 	}

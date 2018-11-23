@@ -20,7 +20,7 @@ public class ResumeModal extends VBox {
 		Button resume = new Button("images/resumeButton", 0, 0) {
 			@Override
 			public void onClicked() {
-				// TODO Auto-generated method stub
+				
 			}
 
 		};

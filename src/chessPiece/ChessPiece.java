@@ -1,18 +1,23 @@
 package chessPiece;
 
+import java.util.ArrayList;
+
+import component.Clickable;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.util.Pair;
 
-public abstract class ChessPiece extends Pane {
+public abstract class ChessPiece extends Pane implements Clickable {
 	private double x;
 	private double y;
 	private int player;
 	private String image;
-	private ImageView img;
-	private boolean isClicked;
+	private ImageView img = new ImageView();
+	protected static double isClicked = 0;
+	protected ArrayList< Pair<Integer, Integer> > move = new ArrayList< Pair<Integer, Integer> >();
 
 	public ChessPiece(double x, double y, int player, String img) {
 		super();
@@ -20,19 +25,21 @@ public abstract class ChessPiece extends Pane {
 		this.y = y;
 		this.player = player;
 		this.image = img + player;
-		this.isClicked = false;
 
 		// set screen
 		setPrefHeight(80);
 		setPrefWidth(80);
-		setImg(this.image);
 		setX(x);
 		setY(y);
+		this.img = new ImageView(new Image(ClassLoader.getSystemResource(this.image+".png").toString()));
+		this.img.setMouseTransparent(true);
+		getChildren().add(this.img);
 
 		setOnMouseEntered(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				if(!isClicked)setImg(image + "gray");
+				if (isClicked != x * 10 + y)
+					setImg(image + "gray");
 				event.consume();
 			}
 		});
@@ -40,23 +47,21 @@ public abstract class ChessPiece extends Pane {
 		setOnMouseExited(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				if(isClicked) setImg(image + "red");
-				else setImg(image);
+				setImg(image);
 				event.consume();
 			}
 		});
 		
-		setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				
-				if(isClicked) setImg(image);
-				else setImg(image + "red");
-				isClicked = !isClicked;
-				event.consume();
-			}
-		});
-		
+	}
+	
+	protected abstract void setMove(); 
+	protected abstract void getMovable(); 
+
+	@Override
+	public void onClicked() {
+		isClicked = x * 10 + y;
+//		setMove();
+//		getMovable();
 	}
 
 	public String getImageName() {
@@ -64,10 +69,18 @@ public abstract class ChessPiece extends Pane {
 	}
 
 	public void setImg(String image) {
-		if (getChildren().contains(img))
-			getChildren().remove(img);
-		img = new ImageView(new Image(ClassLoader.getSystemResource(image + ".png").toString()));
-		getChildren().add(img);
+		if (isClicked == x * 10 + y)
+			img.setImage(new Image(ClassLoader.getSystemResource(image + "red.png").toString()));
+		else
+			img.setImage(new Image(ClassLoader.getSystemResource(image + ".png").toString()));
+	}
+
+	public void setPosition(double x, double y) {
+		if (isClicked == this.x * 10 + this.y) {
+			setX(x);
+			setY(y);
+			isClicked = 0;
+		}
 	}
 
 	public double getX() {
@@ -76,7 +89,7 @@ public abstract class ChessPiece extends Pane {
 
 	public void setX(double x) {
 		this.x = x;
-		setLayoutX(180 + y * 80);
+		setLayoutX(180 + x * 80);
 	}
 
 	public double getY() {
@@ -85,7 +98,7 @@ public abstract class ChessPiece extends Pane {
 
 	public void setY(double y) {
 		this.y = y;
-		setLayoutY(30 + x * 80);
+		setLayoutY(30 + y * 80);
 	}
 
 	public int getPlayer() {
@@ -95,5 +108,5 @@ public abstract class ChessPiece extends Pane {
 	public void setPlayer(int player) {
 		this.player = player;
 	}
-
+	
 }
