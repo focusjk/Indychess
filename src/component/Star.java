@@ -18,8 +18,8 @@ public class Star extends Pane {
 		setPrefWidth(80);
 
 		ImageView img = new ImageView(new Image(ClassLoader.getSystemResource("images/star.png").toString()));
-		setLayoutX(180 + y * 80);
-		setLayoutY(30 + x * 80);
+		setLayoutX(180 + x * 80);
+		setLayoutY(30 + y * 80);
 		getChildren().add(img);
 	}
 

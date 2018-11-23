@@ -78,9 +78,16 @@ public class Main extends Application {
 	public static Game getGameScreen() {
 		return gameScreen;
 	}
-
 	public static void setGameScreen(Game gameScreen) {
 		Main.gameScreen = gameScreen;
+	}
+
+	public static GameManager getGameManager() {
+		return gameManager;
+	}
+
+	public static void setGameManager(GameManager gameManager) {
+		Main.gameManager = gameManager;
 	}
 
 }

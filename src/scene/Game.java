@@ -1,8 +1,6 @@
 package scene;
 
 import javafx.event.EventHandler;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -26,9 +24,10 @@ public class Game extends Pane {
 	private Timer timer;
 	private Button pauseButton;
 	private ResumeModal resumeModal = new ResumeModal();
-	private ArrayList<ChessPiece> chessPiece = new ArrayList<ChessPiece>(); 
-//	 private ChessPiece[][] chessPiece = new ChessPiece[7][7];
+	private ArrayList<ChessPiece> chessPiece = new ArrayList<ChessPiece>();
 	private CellBoard[][] board = new CellBoard[7][7];
+	private int turn = 1;
+	private Star star;
 
 	public Game() {
 		// set screen
@@ -39,7 +38,7 @@ public class Game extends Pane {
 		// set board
 		for (int i = 1; i <= 6; i++) {
 			for (int j = 1; j <= 6; j++) {
-				board[i][j] = new CellBoard((double)i,(double) j);
+				board[i][j] = new CellBoard((double) i, (double) j);
 				getChildren().add(board[i][j]);
 			}
 		}
@@ -72,20 +71,39 @@ public class Game extends Pane {
 				System.out.println(event.toString());
 				if (getChildren().contains(resumeModal))
 					getChildren().remove(resumeModal);
-				if (event.getTarget() instanceof Clickable) {
-					((Clickable) event.getTarget()).onClicked();
-				} else if (event.getTarget() instanceof CellBoard){
-					for(int i=0 ;i < chessPiece.size();i++) {
-						double x = ((CellBoard)event.getTarget()).getPositionX();
-						double y = ((CellBoard)event.getTarget()).getPositionY();
-						
-						chessPiece.get(i).setPosition(x,y);
+				Object o = event.getTarget();
+				if (o instanceof ChessPiece) {
+					double x = ((ChessPiece) o).getX();
+					double y = ((ChessPiece) o).getY();
+
+					if (((ChessPiece) o).getPlayer() == turn) {
+						((Clickable) o).onClicked();
+					} else if (chessPiece.get(0).getClickedPiece() != null && ((ChessPiece) o).getPlayer() != turn) {
+						resetBoard();
+						getChildren().remove(o);
+						chessPiece.remove(o);
+						chessPiece.get(0).getClickedPiece().setPosition(x, y);
+						changeTurn();
 					}
+				} else if (o instanceof CellBoard && chessPiece.get(0).getClickedPiece() != null) {
+					double x = ((CellBoard) o).getPositionX();
+					double y = ((CellBoard) o).getPositionY();
+					chessPiece.get(0).getClickedPiece().setPosition(x, y);
+					if(star.getX() == x && star.getY() == y) {
+						//something;
+						//det new start
+						Main.getGameManager().initialStar();
+					}
+					resetBoard();
+					changeTurn();
+				} else if (o instanceof Clickable) {
+					((Clickable) o).onClicked();
 				}
-				for(int i=0 ;i < chessPiece.size();i++) {
+				for (int i = 0; i < chessPiece.size(); i++) {
 					chessPiece.get(i).setImg(chessPiece.get(i).getImageName());
 				}
 				event.consume();
+
 			}
 		});
 
@@ -119,6 +137,10 @@ public class Game extends Pane {
 		this.timer = timer;
 	}
 
+	public int getTurn() {
+		return turn;
+	}
+
 	public void addChessPiece(ChessPiece e) {
 		chessPiece.add(e);
 		getChildren().add(e);
@@ -126,6 +148,35 @@ public class Game extends Pane {
 
 	public void addStar(Star e) {
 		e.setMouseTransparent(true);
+		this.star = e;
 		getChildren().add(e);
 	}
+
+	public CellBoard[][] getBoard() {
+		return board;
+	}
+
+	public void resetBoard() {
+		for (int i = 1; i <= 6; i++) {
+			for (int j = 1; j <= 6; j++) {
+				board[i][j].inactive();
+			}
+		}
+	}
+
+	public ChessPiece findChessPiece(int x, int y) {
+		for (int i = 0; i < chessPiece.size(); i++) {
+			if (chessPiece.get(i).getX() == (double) x && chessPiece.get(i).getY() == (double) y)
+				return chessPiece.get(i);
+		}
+		return null;
+	}
+
+	public void changeTurn() {
+		if (turn == 1)
+			turn = 2;
+		else
+			turn = 1;
+	}
+
 }

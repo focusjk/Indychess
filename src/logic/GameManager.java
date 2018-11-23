@@ -17,7 +17,7 @@ import component.Timer;
 import javafx.scene.image.ImageView;
 import scene.Game;
 
-public class GameManager extends Manager {
+public class GameManager {
 	private ArrayList<ChessPiece> chess1;
 	private ArrayList<ChessPiece> chess2;
 	private Star star;
@@ -37,7 +37,6 @@ public class GameManager extends Manager {
 
 		initialChess();
 		initialStar();
-		drawStar();
 		drawChess();
 		this.player1.setTurn(true);
 	}
@@ -121,9 +120,6 @@ public class GameManager extends Manager {
 				break;
 		}
 		star = new Star(x, y);
-	}
-
-	public void drawStar() {
 		gameScreen.addStar(star);
 	}
 

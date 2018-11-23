@@ -1,17 +1,20 @@
 package chessPiece;
 
+import java.util.ArrayList;
+
 import javafx.util.Pair;
+import main.Main;
 
 public class KingPiece extends ChessPiece {
+	private ArrayList<Pair<Integer, Integer>> move;
 
 	public KingPiece(double x, double y, int player) {
 		super(x, y, player, "images/king");
 		setMove();
-		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	protected void setMove() {
+	private void setMove() {
+		move = new ArrayList<Pair<Integer, Integer>>();
 		move.add(new Pair<Integer, Integer>(-1, -1));
 		move.add(new Pair<Integer, Integer>(0, -1));
 		move.add(new Pair<Integer, Integer>(1, -1));
@@ -20,24 +23,27 @@ public class KingPiece extends ChessPiece {
 		move.add(new Pair<Integer, Integer>(-1, 1));
 		move.add(new Pair<Integer, Integer>(0, 1));
 		move.add(new Pair<Integer, Integer>(1, 1));
-
 	}
 
 	@Override
 	public void onClicked() {
-		int x = (int)getX();
-		int y = (int)getY();
+		Main.getGameScreen().resetBoard();
+		int x = (int) getX();
+		int y = (int) getY();
 		isClicked = getX() * 10 + getY();
-		for(int i =0;i<move.size();i++) {
-//			board[x+move.get(i).getKey()][y+move.get(i).getValue()].active();
+		clickedPiece = this; // TODO
+		for (int i = 0; i < move.size(); i++) {
+			int X = x + move.get(i).getKey();
+			int Y = y + move.get(i).getValue();
+			if (X > 6 || X < 1 || Y > 6 || Y < 1)
+				continue;
+			ChessPiece temp = Main.getGameScreen().findChessPiece(X, Y);
+			if (temp != null && temp.getPlayer() == Main.getGameScreen().getTurn())
+				continue;
+			Main.getGameScreen().getBoard()[X][Y].active();
+
 		}
-		
-	}
-
-	@Override
-	protected void getMovable() {
-		// TODO Auto-generated method stub
-
+		System.out.println("dsfsdfdfdffs");
 	}
 
 }

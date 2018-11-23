@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.util.Pair;
+import main.Main;
 
 public abstract class ChessPiece extends Pane implements Clickable {
 	private double x;
@@ -17,7 +17,7 @@ public abstract class ChessPiece extends Pane implements Clickable {
 	private String image;
 	private ImageView img = new ImageView();
 	protected static double isClicked = 0;
-	protected ArrayList< Pair<Integer, Integer> > move = new ArrayList< Pair<Integer, Integer> >();
+	protected static ChessPiece clickedPiece = null;
 
 	public ChessPiece(double x, double y, int player, String img) {
 		super();
@@ -38,7 +38,7 @@ public abstract class ChessPiece extends Pane implements Clickable {
 		setOnMouseEntered(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				if (isClicked != x * 10 + y)
+				if (isClicked != x * 10 + y || this.equals(clickedPiece))
 					setImg(image + "gray");
 				event.consume();
 			}
@@ -53,13 +53,12 @@ public abstract class ChessPiece extends Pane implements Clickable {
 		});
 		
 	}
-	
-	protected abstract void setMove(); 
-	protected abstract void getMovable(); 
 
 	@Override
 	public void onClicked() {
 		isClicked = x * 10 + y;
+		clickedPiece = this;
+		Main.getGameScreen().resetBoard();
 //		setMove();
 //		getMovable();
 	}
@@ -69,17 +68,18 @@ public abstract class ChessPiece extends Pane implements Clickable {
 	}
 
 	public void setImg(String image) {
-		if (isClicked == x * 10 + y)
+		if (isClicked == x * 10 + y || this.equals(clickedPiece))
 			img.setImage(new Image(ClassLoader.getSystemResource(image + "red.png").toString()));
 		else
 			img.setImage(new Image(ClassLoader.getSystemResource(image + ".png").toString()));
 	}
 
 	public void setPosition(double x, double y) {
-		if (isClicked == this.x * 10 + this.y) {
+		if (isClicked == this.x * 10 + this.y || this.equals(clickedPiece)) {
 			setX(x);
 			setY(y);
 			isClicked = 0;
+			clickedPiece = null;
 		}
 	}
 
@@ -104,9 +104,12 @@ public abstract class ChessPiece extends Pane implements Clickable {
 	public int getPlayer() {
 		return player;
 	}
-
-	public void setPlayer(int player) {
-		this.player = player;
+	
+	public double getIsClicked() {
+		return isClicked;
 	}
 	
+	public ChessPiece getClickedPiece() {
+		return clickedPiece;
+	}
 }
