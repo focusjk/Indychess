@@ -11,6 +11,7 @@ import main.Main;
 import java.util.ArrayList;
 
 import chessPiece.ChessPiece;
+import chessPiece.PawnPiece;
 import component.Button;
 import component.CellBoard;
 import component.Clickable;
@@ -26,6 +27,7 @@ public class Game extends Pane {
 	private ResumeModal resumeModal = new ResumeModal();
 	private ArrayList<ChessPiece> chessPiece = new ArrayList<ChessPiece>();
 	private CellBoard[][] board = new CellBoard[7][7];
+	private ChessPiece clickedChess = null;
 	private int turn = 1;
 	private Star star;
 
@@ -79,6 +81,9 @@ public class Game extends Pane {
 					if (((ChessPiece) o).getPlayer() == turn) {
 						((Clickable) o).onClicked();
 					} else if (chessPiece.get(0).getClickedPiece() != null && ((ChessPiece) o).getPlayer() != turn) {
+						if (chessPiece.get(0).getClickedPiece() instanceof PawnPiece) {
+							((PawnPiece) chessPiece.get(0).getClickedPiece()).setIsFirstMove();
+						}
 						resetBoard();
 						getChildren().remove(o);
 						chessPiece.remove(o);
@@ -86,12 +91,13 @@ public class Game extends Pane {
 						changeTurn();
 					}
 				} else if (o instanceof CellBoard && chessPiece.get(0).getClickedPiece() != null) {
+					if (chessPiece.get(0).getClickedPiece() instanceof PawnPiece) {
+						((PawnPiece) chessPiece.get(0).getClickedPiece()).setIsFirstMove();
+					}
 					double x = ((CellBoard) o).getPositionX();
 					double y = ((CellBoard) o).getPositionY();
 					chessPiece.get(0).getClickedPiece().setPosition(x, y);
-					if(star.getX() == x && star.getY() == y) {
-						//something;
-						//det new start
+					if (star.getX() == x && star.getY() == y) {
 						Main.getGameManager().initialStar();
 					}
 					resetBoard();
@@ -173,10 +179,24 @@ public class Game extends Pane {
 	}
 
 	public void changeTurn() {
-		if (turn == 1)
+		if (turn == 1) {
 			turn = 2;
-		else
+			player1.setTurn(false);
+			player2.setTurn(true);
+		} else {
 			turn = 1;
+			player1.setTurn(true);
+			player2.setTurn(false);
+		}
 	}
+
+	public ChessPiece getClickedChess() {
+		return clickedChess;
+	}
+
+	public void setClickedChess(ChessPiece clickedChess) {
+		this.clickedChess = clickedChess;
+	}
+	
 
 }

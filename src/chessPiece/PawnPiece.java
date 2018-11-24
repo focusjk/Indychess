@@ -17,29 +17,25 @@ public class PawnPiece extends ChessPiece {
 		int x = (int) getX();
 		int y = (int) getY();
 		isClicked = getX() * 10 + getY();
-		clickedPiece = this; 
-		if (isFirstMove) {
-			if (getPlayer() == 1) {
-				if (x <= 6 && x >= 1 && y + 1 <= 6 && y + 1 >= 1
-						&& Main.getGameScreen().findChessPiece(x, y + 1) == null)
-					Main.getGameScreen().getBoard()[x][y + 1].active();
-				if (x <= 6 && x >= 1 && y + 2 <= 6 && y + 2 >= 1
-						&& Main.getGameScreen().findChessPiece(x, y + 2) == null
-						&& Main.getGameScreen().findChessPiece(x, y + 1) == null)
-					Main.getGameScreen().getBoard()[x][y + 2].active();
-				toKill(x - 1, y + 1);
-				toKill(x + 1, y + 1);
-			} else {
-				if (x <= 6 && x >= 1 && y - 1 <= 6 && y - 1 >= 1
-						&& Main.getGameScreen().findChessPiece(x, y - 1) == null)
-					Main.getGameScreen().getBoard()[x][y - 1].active();
-				if (x <= 6 && x >= 1 && y - 2 <= 6 && y - 2 >= 1
-						&& Main.getGameScreen().findChessPiece(x, y - 2) == null
-						&& Main.getGameScreen().findChessPiece(x, y - 1) == null)
-					Main.getGameScreen().getBoard()[x][y - 2].active();
-				toKill(x - 1, y - 1);
-				toKill(x + 1, y - 1);
-			}
+		clickedPiece = this;
+		if (getPlayer() == 1) {
+			if (x <= 6 && x >= 1 && y + 1 <= 6 && y + 1 >= 1 && Main.getGameScreen().findChessPiece(x, y + 1) == null)
+				Main.getGameScreen().getBoard()[x][y + 1].active();
+			if (isFirstMove && x <= 6 && x >= 1 && y + 2 <= 6 && y + 2 >= 1
+					&& Main.getGameScreen().findChessPiece(x, y + 2) == null
+					&& Main.getGameScreen().findChessPiece(x, y + 1) == null)
+				Main.getGameScreen().getBoard()[x][y + 2].active();
+			toKill(x - 1, y + 1);
+			toKill(x + 1, y + 1);
+		} else {
+			if (x <= 6 && x >= 1 && y - 1 <= 6 && y - 1 >= 1 && Main.getGameScreen().findChessPiece(x, y - 1) == null)
+				Main.getGameScreen().getBoard()[x][y - 1].active();
+			if (isFirstMove && x <= 6 && x >= 1 && y - 2 <= 6 && y - 2 >= 1
+					&& Main.getGameScreen().findChessPiece(x, y - 2) == null
+					&& Main.getGameScreen().findChessPiece(x, y - 1) == null)
+				Main.getGameScreen().getBoard()[x][y - 2].active();
+			toKill(x - 1, y - 1);
+			toKill(x + 1, y - 1);
 		}
 
 	}
@@ -59,6 +55,10 @@ public class PawnPiece extends ChessPiece {
 		if (temp == null || temp.getPlayer() == Main.getGameScreen().getTurn())
 			return;
 		Main.getGameScreen().getBoard()[x][y].active();
+	}
+
+	public void setIsFirstMove() {
+		isFirstMove = false;
 	}
 
 }

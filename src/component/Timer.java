@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import main.Main;
 
 public class Timer extends HBox {
 	private int currentTime;
@@ -54,15 +55,7 @@ public class Timer extends HBox {
 				}
 				else if(currentTime == 0){
 					currentTime = 10;
-					if(playing == 1) {
-						playing = 2;
-						player1.setTurn(false);
-						player2.setTurn(true);
-					} else {
-						playing = 1;
-						player1.setTurn(true);
-						player2.setTurn(false);
-					}
+					Main.getGameScreen().changeTurn();
 					
 				}
 			}
