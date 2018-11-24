@@ -27,7 +27,7 @@ public class Game extends Pane {
 	private ResumeModal resumeModal = new ResumeModal();
 	private ArrayList<ChessPiece> chessPiece = new ArrayList<ChessPiece>();
 	private CellBoard[][] board = new CellBoard[7][7];
-	private ChessPiece clickedChess = null;
+	private static ChessPiece clickedChess = null;
 	private int turn = 1;
 	private Star star;
 
@@ -80,23 +80,26 @@ public class Game extends Pane {
 
 					if (((ChessPiece) o).getPlayer() == turn) {
 						((Clickable) o).onClicked();
-					} else if (chessPiece.get(0).getClickedPiece() != null && ((ChessPiece) o).getPlayer() != turn) {
-						if (chessPiece.get(0).getClickedPiece() instanceof PawnPiece) {
-							((PawnPiece) chessPiece.get(0).getClickedPiece()).setIsFirstMove();
+					} else if (clickedChess != null && ((ChessPiece) o).getPlayer() != turn
+							&& board[(int) x][(int) y].isActive()) {
+						if (clickedChess instanceof PawnPiece) {
+							((PawnPiece) clickedChess).setIsFirstMove();
+							((PawnPiece) clickedChess).setQueen((int) y);
 						}
 						resetBoard();
 						getChildren().remove(o);
 						chessPiece.remove(o);
-						chessPiece.get(0).getClickedPiece().setPosition(x, y);
+						clickedChess.setPosition(x, y);
 						changeTurn();
 					}
-				} else if (o instanceof CellBoard && chessPiece.get(0).getClickedPiece() != null) {
-					if (chessPiece.get(0).getClickedPiece() instanceof PawnPiece) {
-						((PawnPiece) chessPiece.get(0).getClickedPiece()).setIsFirstMove();
-					}
+				} else if (o instanceof CellBoard && clickedChess != null) {
 					double x = ((CellBoard) o).getPositionX();
 					double y = ((CellBoard) o).getPositionY();
-					chessPiece.get(0).getClickedPiece().setPosition(x, y);
+					if (clickedChess instanceof PawnPiece) {
+						((PawnPiece) clickedChess).setIsFirstMove();
+						((PawnPiece) clickedChess).setQueen((int)y);
+					}
+					clickedChess.setPosition(x, y);
 					if (star.getX() == x && star.getY() == y) {
 						Main.getGameManager().initialStar();
 					}
@@ -197,6 +200,5 @@ public class Game extends Pane {
 	public void setClickedChess(ChessPiece clickedChess) {
 		this.clickedChess = clickedChess;
 	}
-	
 
 }

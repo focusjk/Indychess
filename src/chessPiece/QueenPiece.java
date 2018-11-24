@@ -14,8 +14,7 @@ public class QueenPiece extends ChessPiece {
 		Main.getGameScreen().resetBoard();
 		int x = (int) getX();
 		int y = (int) getY();
-		isClicked = getX() * 10 + getY();
-		clickedPiece = this; 
+		Main.getGameScreen().setClickedChess(this);
 		getMove(x - 1, y - 1, -1, -1);
 		getMove(x, y - 1, 0, -1);
 		getMove(x + 1, y - 1, 1, -1);
@@ -24,7 +23,6 @@ public class QueenPiece extends ChessPiece {
 		getMove(x - 1, y + 1, -1, 1);
 		getMove(x, y + 1, 0, 1);
 		getMove(x + 1, y + 1, 1, 1);
-
 	}
 
 	public void getMove(int x, int y, int addX, int addY) {

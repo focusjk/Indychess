@@ -30,8 +30,7 @@ public class KnightPiece extends ChessPiece {
 		Main.getGameScreen().resetBoard();
 		int x = (int) getX();
 		int y = (int) getY();
-		isClicked = getX() * 10 + getY();
-		clickedPiece = this; 
+		Main.getGameScreen().setClickedChess(this);
 		for (int i = 0; i < move.size(); i++) {
 			int X = x + move.get(i).getKey();
 			int Y = y + move.get(i).getValue();

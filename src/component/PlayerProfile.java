@@ -42,35 +42,35 @@ public class PlayerProfile extends Pane {
 		arrow.setVisible(false);
 		arrowPosition = 0;
 		up = 1;
-//		arrowThread = new Thread("arrow") {
-//			@Override
-//			public void run() {
-//				while (true) {
-//					try {
-//						sleep(70);
-//						arrowPosition += 1;
-//						if (arrowPosition > 10) {
-//							up *= -1;
-//							arrowPosition %= 10;
-//						}
-//						if (player == 1) {
-//							if(up == 1)
-//								arrow.setLayoutY(150 + arrowPosition);
-//							else 
-//								arrow.setLayoutY(150 + 10 - arrowPosition);
-//						} else {
-//							if(up == 1)
-//								arrow.setLayoutY(490 - arrowPosition);
-//							else 
-//								arrow.setLayoutY(490 - 10 + arrowPosition);
-//						}
-//					} catch (InterruptedException e) {
-//						e.printStackTrace();
-//					}
-//
-//				}
-//			}
-//		};
+		arrowThread = new Thread("arrow") {
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						sleep(60);
+						arrowPosition += 1;
+						if (arrowPosition > 10) {
+							up *= -1;
+							arrowPosition %= 10;
+						}
+						if (player == 1) {
+							if(up == 1)
+								arrow.setLayoutY(150 + arrowPosition);
+							else 
+								arrow.setLayoutY(150 + 10 - arrowPosition);
+						} else {
+							if(up == 1)
+								arrow.setLayoutY(490 - arrowPosition);
+							else 
+								arrow.setLayoutY(490 - 10 + arrowPosition);
+						}
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+
+				}
+			}
+		};
 
 		if (this.player == 1) {
 			emoji.setLayoutX(20);
@@ -96,7 +96,7 @@ public class PlayerProfile extends Pane {
 			arrow.setLayoutX(45);
 			arrow.setLayoutY(490);
 		}
-
+		arrowThread.start();
 		getChildren().addAll(emoji, nameTag, playerTag, arrow);
 	}
 

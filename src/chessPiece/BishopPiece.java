@@ -13,8 +13,7 @@ public class BishopPiece extends ChessPiece {
 		Main.getGameScreen().resetBoard();
 		int x = (int) getX();
 		int y = (int) getY();
-		isClicked = getX() * 10 + getY();
-		clickedPiece = (ChessPiece) this;
+		Main.getGameScreen().setClickedChess(this);
 		getMove(x - 1, y - 1, -1, -1);
 		getMove(x + 1, y - 1, 1, -1);
 		getMove(x - 1, y + 1, -1, 1);

@@ -13,8 +13,7 @@ public class RookPiece extends ChessPiece {
 		Main.getGameScreen().resetBoard();
 		int x = (int) getX();
 		int y = (int) getY();
-		isClicked = getX() * 10 + getY();
-		clickedPiece = this; 
+		Main.getGameScreen().setClickedChess(this);
 		getMove(x, y - 1, 0, -1);
 		getMove(x - 1, y, -1, 0);
 		getMove(x + 1, y, 1, 0);

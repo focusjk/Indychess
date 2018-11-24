@@ -19,7 +19,7 @@ public class Timer extends HBox {
 	private int currentTime;
 	private long lastTimeTriggered;
 	private AnimationTimer animationTimer;
-	private int playing;
+	private ImageView icon;
 
 	public Timer(PlayerProfile player1, PlayerProfile player2) {
 		// set screen
@@ -30,14 +30,13 @@ public class Timer extends HBox {
 		setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
 
 		// set board
-		ImageView icon = new ImageView(new Image(ClassLoader.getSystemResource("images/timer.png").toString()));
+		icon = new ImageView(new Image(ClassLoader.getSystemResource("images/timer.png").toString()));
 
 		// set timing
 		Text timing = new Text();
 		timing.setFont(Font.font("AndaleMono", 40));
 
-		this.playing = 1;
-		this.currentTime = 10;
+		this.currentTime = 11;
 		this.lastTimeTriggered = -1;
 		this.animationTimer = new AnimationTimer() {
 
@@ -46,17 +45,23 @@ public class Timer extends HBox {
 				lastTimeTriggered = (lastTimeTriggered < 0 ? now : lastTimeTriggered);
 
 				if (now - lastTimeTriggered >= 1000000000 && currentTime > 0) {
+					if (currentTime == 6) {
+						timing.setFill(Color.RED);
+						icon.setImage(new Image(ClassLoader.getSystemResource("images/timerred.png").toString()));
+					}
 					currentTime--;
 					if (currentTime < 10)
 						timing.setText("00:0" + currentTime);
 					else
 						timing.setText("00:" + currentTime);
 					lastTimeTriggered = now;
-				}
-				else if(currentTime == 0){
+				} else if (currentTime == 0) {
 					currentTime = 10;
-					Main.getGameScreen().changeTurn();
-					
+					timing.setFill(Color.BLACK);
+					icon.setImage(new Image(ClassLoader.getSystemResource("images/timer.png").toString()));
+//					Main.getGameScreen().changeTurn();
+					Main.getGameScreen().setClickedChess(null);
+					Main.getGameScreen().resetBoard();
 				}
 			}
 		};
