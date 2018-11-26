@@ -25,11 +25,13 @@ public class Game extends Pane {
 	private Timer timer;
 	private Button pauseButton;
 	private ResumeModal resumeModal = new ResumeModal();
+	private StarModal starModal = new StarModal();
 	private ArrayList<ChessPiece> chessPiece = new ArrayList<ChessPiece>();
 	private CellBoard[][] board = new CellBoard[7][7];
 	private static ChessPiece clickedChess = null;
 	private int turn = 1;
 	private Star star;
+	private Thread timing;
 
 	public Game() {
 		// set screen
@@ -73,6 +75,8 @@ public class Game extends Pane {
 				System.out.println(event.toString());
 				if (getChildren().contains(resumeModal))
 					getChildren().remove(resumeModal);
+				if (getChildren().contains(starModal))
+					getChildren().remove(starModal);
 				Object o = event.getTarget();
 				if (o instanceof ChessPiece) {
 					double x = ((ChessPiece) o).getX();
@@ -97,11 +101,14 @@ public class Game extends Pane {
 					double y = ((CellBoard) o).getPositionY();
 					if (clickedChess instanceof PawnPiece) {
 						((PawnPiece) clickedChess).setIsFirstMove();
-						((PawnPiece) clickedChess).setQueen((int)y);
+						((PawnPiece) clickedChess).setQueen((int) y);
 					}
 					clickedChess.setPosition(x, y);
 					if (star.getX() == x && star.getY() == y) {
-						Main.getGameManager().initialStar();
+						starModal = new StarModal(); 
+						getChildren().add(starModal);
+//						Main.getGameManager().initialStar();
+
 					}
 					resetBoard();
 					changeTurn();
@@ -191,6 +198,7 @@ public class Game extends Pane {
 			player1.setTurn(true);
 			player2.setTurn(false);
 		}
+
 	}
 
 	public ChessPiece getClickedChess() {
