@@ -15,6 +15,7 @@ public abstract class ChessPiece extends Pane implements Clickable {
 	private double y;
 	private int player;
 	private String image;
+	private String imgName;
 	private ImageView img = new ImageView();
 
 	public ChessPiece(double x, double y, int player, String img) {
@@ -22,6 +23,7 @@ public abstract class ChessPiece extends Pane implements Clickable {
 		this.x = x;
 		this.y = y;
 		this.player = player;
+		this.imgName = img;
 		this.image = img + player;
 
 		// set screen
@@ -56,8 +58,6 @@ public abstract class ChessPiece extends Pane implements Clickable {
 	public void onClicked() {
 		Main.getGameScreen().setClickedChess(this);
 		Main.getGameScreen().resetBoard();
-//		setMove();
-//		getMovable();
 	}
 
 	public String getImageName() {
@@ -99,6 +99,13 @@ public abstract class ChessPiece extends Pane implements Clickable {
 
 	public int getPlayer() {
 		return player;
+	}
+	
+	public void setPlayer(int player) {
+//		System.out.println("focus");
+		this.player = player;
+		this.image = this.imgName + player;
+		setImg(this.image);
 	}
 	
 }

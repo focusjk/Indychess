@@ -36,8 +36,9 @@ public class GameManager {
 		this.timer = gameScreen.getTimer();
 
 		initialChess();
-		initialStar();
+//		initialStar();
 		drawChess();
+		gameScreen.addStar();
 		this.player1.setTurn(true);
 	}
 
@@ -95,32 +96,32 @@ public class GameManager {
 		}
 	}
 
-	public void initialStar() {
-		int x, y;
-		while (true) {
-			Random rand1 = new Random();
-			Random rand2 = new Random();
-			x = rand1.nextInt(5) + 1;
-			y = rand2.nextInt(5) + 1;
-
-			boolean t = true;
-			for (int i = 0; i < 6; i++) {
-				if (chess1.get(i).getX() == x && chess1.get(i).getY() == y) {
-					t = false;
-					break;
-				}
-			}
-			for (int i = 0; i < 6; i++) {
-				if (chess2.get(i).getX() == x && chess2.get(i).getY() == y) {
-					t = false;
-					break;
-				}
-			}
-			if (t)
-				break;
-		}
-		star = new Star(x, y);
-		gameScreen.addStar(star);
-	}
+//	public void initialStar() {
+//		int x, y;
+//		while (true) {
+//			Random rand1 = new Random();
+//			Random rand2 = new Random();
+//			x = rand1.nextInt(5) + 1;
+//			y = rand2.nextInt(5) + 1;
+//
+//			boolean t = true;
+//			for (int i = 0; i < 6; i++) {
+//				if (chess1.get(i).getX() == x && chess1.get(i).getY() == y) {
+//					t = false;
+//					break;
+//				}
+//			}
+//			for (int i = 0; i < 6; i++) {
+//				if (chess2.get(i).getX() == x && chess2.get(i).getY() == y) {
+//					t = false;
+//					break;
+//				}
+//			}
+//			if (t)
+//				break;
+//		}
+//		star = new Star();
+//		gameScreen.addStar(star);
+//	}
 
 }

@@ -39,6 +39,8 @@ public class KingPiece extends ChessPiece {
 			ChessPiece temp = Main.getGameScreen().findChessPiece(X, Y);
 			if (temp != null && temp.getPlayer() == Main.getGameScreen().getTurn())
 				continue;
+			if(X == Main.getGameScreen().getStar().getX() && Y == Main.getGameScreen().getStar().getY() )
+				continue;
 			Main.getGameScreen().getBoard()[X][Y].active();
 
 		}

@@ -25,12 +25,12 @@ public class Game extends Pane {
 	private Timer timer;
 	private Button pauseButton;
 	private ResumeModal resumeModal = new ResumeModal();
-	private StarModal starModal = new StarModal();
+	private StarModal starModal;
 	private ArrayList<ChessPiece> chessPiece = new ArrayList<ChessPiece>();
 	private CellBoard[][] board = new CellBoard[7][7];
 	private static ChessPiece clickedChess = null;
 	private int turn = 1;
-	private Star star;
+	private Star star = null;
 	private Thread timing;
 
 	public Game() {
@@ -58,12 +58,18 @@ public class Game extends Pane {
 
 		// set player
 		player1 = new PlayerProfile("anonymous", 1);
+		player1.setMouseTransparent(true);
 		player2 = new PlayerProfile("anonymous", 2);
-
+		player2.setMouseTransparent(true);
+		
 		// set timer
 		timer = new Timer(player1, player2);
 		timer.setLayoutX(400);
 		timer.setLayoutY(15);
+		
+		//set star
+//		addStar();
+		
 
 		getChildren().addAll(pauseButton, timer, player1, player2);
 
@@ -75,8 +81,7 @@ public class Game extends Pane {
 				System.out.println(event.toString());
 				if (getChildren().contains(resumeModal))
 					getChildren().remove(resumeModal);
-				if (getChildren().contains(starModal))
-					getChildren().remove(starModal);
+
 				Object o = event.getTarget();
 				if (o instanceof ChessPiece) {
 					double x = ((ChessPiece) o).getX();
@@ -91,28 +96,28 @@ public class Game extends Pane {
 							((PawnPiece) clickedChess).setQueen((int) y);
 						}
 						resetBoard();
-						getChildren().remove(o);
-						chessPiece.remove(o);
+						removeChessPiece((ChessPiece) o);
 						clickedChess.setPosition(x, y);
 						changeTurn();
 					}
 				} else if (o instanceof CellBoard && clickedChess != null) {
 					double x = ((CellBoard) o).getPositionX();
 					double y = ((CellBoard) o).getPositionY();
+
 					if (clickedChess instanceof PawnPiece) {
 						((PawnPiece) clickedChess).setIsFirstMove();
 						((PawnPiece) clickedChess).setQueen((int) y);
 					}
-					clickedChess.setPosition(x, y);
-					if (star.getX() == x && star.getY() == y) {
-						starModal = new StarModal(); 
-						getChildren().add(starModal);
-//						Main.getGameManager().initialStar();
 
+					if (star.getX() == x && star.getY() == y) {
+						starModal = new StarModal(clickedChess);
+						getChildren().add(starModal);
 					}
+					clickedChess.setPosition(x, y);
 					resetBoard();
 					changeTurn();
 				} else if (o instanceof Clickable) {
+					System.out.println("game clickable");
 					((Clickable) o).onClicked();
 				}
 				for (int i = 0; i < chessPiece.size(); i++) {
@@ -162,10 +167,17 @@ public class Game extends Pane {
 		getChildren().add(e);
 	}
 
-	public void addStar(Star e) {
-		e.setMouseTransparent(true);
-		this.star = e;
-		getChildren().add(e);
+	public void removeChessPiece(ChessPiece e) {
+		chessPiece.remove(e);
+		getChildren().remove(e);
+	}
+
+	public void addStar() {
+		if (getChildren().contains(star))
+			getChildren().remove(star);
+		this.star = new Star();
+		this.star.setMouseTransparent(true);
+		getChildren().add(this.star);
 	}
 
 	public CellBoard[][] getBoard() {
@@ -181,6 +193,7 @@ public class Game extends Pane {
 	}
 
 	public ChessPiece findChessPiece(int x, int y) {
+
 		for (int i = 0; i < chessPiece.size(); i++) {
 			if (chessPiece.get(i).getX() == (double) x && chessPiece.get(i).getY() == (double) y)
 				return chessPiece.get(i);
@@ -208,5 +221,19 @@ public class Game extends Pane {
 	public void setClickedChess(ChessPiece clickedChess) {
 		this.clickedChess = clickedChess;
 	}
+
+	public void removeStarModal() {
+		if (getChildren().contains(starModal))
+			getChildren().remove(starModal);
+	}
+
+	public ArrayList<ChessPiece> getChessPiece() {
+		return chessPiece;
+	}
+
+	public Star getStar() {
+		return star;
+	}
+
 
 }
