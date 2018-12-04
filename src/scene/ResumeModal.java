@@ -22,7 +22,6 @@ public class ResumeModal extends VBox {
 			public void onClicked() {
 				
 			}
-
 		};
 		Button newgame = new Button("images/newgameButton", 0, 0) {
 			@Override

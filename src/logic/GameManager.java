@@ -20,10 +20,8 @@ import scene.Game;
 public class GameManager {
 	private ArrayList<ChessPiece> chess1;
 	private ArrayList<ChessPiece> chess2;
-	private Star star;
 	private PlayerProfile player1;
 	private PlayerProfile player2;
-	private Button pauseButton;
 	private Timer timer;
 	private Game gameScreen;
 
@@ -32,7 +30,6 @@ public class GameManager {
 		this.gameScreen = gameScreen;
 		this.player1 = gameScreen.getPlayer1();
 		this.player2 = gameScreen.getPlayer2();
-		this.pauseButton = gameScreen.getPauseButton();
 		this.timer = gameScreen.getTimer();
 
 		initialChess();
@@ -51,7 +48,7 @@ public class GameManager {
 				chess1.add(new KingPiece(i, 1, 1));
 			} else {
 				Random rand = new Random();
-				int random = rand.nextInt(5) + 1;
+				int random = rand.nextInt(4) + 1;
 				if (random == 1) {
 					chess1.add(new BishopPiece(i, 1, 1));
 				} else if (random == 2) {
@@ -59,11 +56,10 @@ public class GameManager {
 				} else if (random == 3) {
 					chess1.add(new KnightPiece(i, 1, 1));
 				} else if (random == 4) {
-					chess1.add(new PawnPiece(i, 1, 1));
-				} else if (random == 5) {
 					chess1.add(new RookPiece(i, 1, 1));
 				}
 			}
+			chess1.add(new PawnPiece(i, 2, 1));
 		}
 
 		for (int i = 1; i <= 6; i++) {
@@ -71,7 +67,7 @@ public class GameManager {
 				chess2.add(new KingPiece(i, 6, 2));
 			} else {
 				Random rand = new Random();
-				int random = rand.nextInt(5) + 1;
+				int random = rand.nextInt(4) + 1;
 				if (random == 1) {
 					chess2.add(new BishopPiece(i, 6, 2));
 				} else if (random == 2) {
@@ -79,49 +75,19 @@ public class GameManager {
 				} else if (random == 3) {
 					chess2.add(new KnightPiece(i, 6, 2));
 				} else if (random == 4) {
-					chess2.add(new PawnPiece(i, 6, 2));
-				} else if (random == 5) {
 					chess2.add(new RookPiece(i, 6, 2));
 				}
 			}
+			chess2.add(new PawnPiece(i, 5, 2));
 		}
 	}
 
 	public void drawChess() {
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < chess1.size(); i++) {
 			gameScreen.addChessPiece(chess1.get(i));
 		}
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < chess2.size(); i++) {
 			gameScreen.addChessPiece(chess2.get(i));
 		}
 	}
-
-//	public void initialStar() {
-//		int x, y;
-//		while (true) {
-//			Random rand1 = new Random();
-//			Random rand2 = new Random();
-//			x = rand1.nextInt(5) + 1;
-//			y = rand2.nextInt(5) + 1;
-//
-//			boolean t = true;
-//			for (int i = 0; i < 6; i++) {
-//				if (chess1.get(i).getX() == x && chess1.get(i).getY() == y) {
-//					t = false;
-//					break;
-//				}
-//			}
-//			for (int i = 0; i < 6; i++) {
-//				if (chess2.get(i).getX() == x && chess2.get(i).getY() == y) {
-//					t = false;
-//					break;
-//				}
-//			}
-//			if (t)
-//				break;
-//		}
-//		star = new Star();
-//		gameScreen.addStar(star);
-//	}
-
 }

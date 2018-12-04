@@ -6,11 +6,11 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import main.Main;
 
 import java.util.ArrayList;
 
 import chessPiece.ChessPiece;
+import chessPiece.KingPiece;
 import chessPiece.PawnPiece;
 import component.Button;
 import component.CellBoard;
@@ -31,7 +31,7 @@ public class Game extends Pane {
 	private static ChessPiece clickedChess = null;
 	private int turn = 1;
 	private Star star = null;
-	private Thread timing;
+//	private Thread timing;
 
 	public Game() {
 		// set screen
@@ -52,7 +52,7 @@ public class Game extends Pane {
 			@Override
 			public void onClicked() {
 				getChildren().add(resumeModal);
-
+				timer.stop();
 			}
 		};
 
@@ -66,9 +66,7 @@ public class Game extends Pane {
 		timer = new Timer(player1, player2);
 		timer.setLayoutX(400);
 		timer.setLayoutY(15);
-		
-		//set star
-//		addStar();
+		timer.start();
 		
 
 		getChildren().addAll(pauseButton, timer, player1, player2);
@@ -79,9 +77,11 @@ public class Game extends Pane {
 			@Override
 			public void handle(MouseEvent event) {
 				System.out.println(event.toString());
-				if (getChildren().contains(resumeModal))
+				if (getChildren().contains(resumeModal)) {
 					getChildren().remove(resumeModal);
-
+					timer.start();
+				}
+				
 				Object o = event.getTarget();
 				if (o instanceof ChessPiece) {
 					double x = ((ChessPiece) o).getX();
@@ -123,8 +123,27 @@ public class Game extends Pane {
 				for (int i = 0; i < chessPiece.size(); i++) {
 					chessPiece.get(i).setImg(chessPiece.get(i).getImageName());
 				}
-				event.consume();
+				
+				boolean isWin1 = true;
+				boolean isWin2 = true;
+				for (int i = 0; i < chessPiece.size(); i++) {
+					if(chessPiece.get(i) instanceof KingPiece) {
+						if(chessPiece.get(i).getPlayer()== 2) {
+							isWin1 = false;
+						}
+						else {
+							isWin2 = false;
+						}
+					} 	
+				}
+				if(isWin1 && !isWin2) {
+					getChildren().add(new CongratModal(player1.getName()));
+				} else if (!isWin1 && isWin2) {
+					getChildren().add(new CongratModal(player2.getName()));
+				}
 
+				
+				event.consume();
 			}
 		});
 
@@ -211,6 +230,7 @@ public class Game extends Pane {
 			player1.setTurn(true);
 			player2.setTurn(false);
 		}
+		timer.reset();
 
 	}
 
