@@ -5,6 +5,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -31,7 +32,10 @@ public class Game extends Pane {
 	private static ChessPiece clickedChess = null;
 	private int turn = 1;
 	private Star star = null;
-//	private Thread timing;
+	private boolean isEnd = false;
+	private AudioClip selectSound = new AudioClip(ClassLoader.getSystemResource("sound/selectSound.mp3").toString());
+	private AudioClip eatSound = new AudioClip(ClassLoader.getSystemResource("sound/eatSound.mp3").toString());
+	private AudioClip disableSound = new AudioClip(ClassLoader.getSystemResource("sound/cantMoveSound.mp3").toString());
 
 	public Game() {
 		// set screen
@@ -51,6 +55,7 @@ public class Game extends Pane {
 		pauseButton = new Button("images/pause", 920, 10) {
 			@Override
 			public void onClicked() {
+				playCheckSound();
 				getChildren().add(resumeModal);
 				timer.stop();
 			}
@@ -61,13 +66,12 @@ public class Game extends Pane {
 		player1.setMouseTransparent(true);
 		player2 = new PlayerProfile("anonymous", 2);
 		player2.setMouseTransparent(true);
-		
+
 		// set timer
 		timer = new Timer(player1, player2);
 		timer.setLayoutX(400);
 		timer.setLayoutY(15);
 		timer.start();
-		
 
 		getChildren().addAll(pauseButton, timer, player1, player2);
 
@@ -81,7 +85,7 @@ public class Game extends Pane {
 					getChildren().remove(resumeModal);
 					timer.start();
 				}
-				
+
 				Object o = event.getTarget();
 				if (o instanceof ChessPiece) {
 					double x = ((ChessPiece) o).getX();
@@ -89,6 +93,7 @@ public class Game extends Pane {
 
 					if (((ChessPiece) o).getPlayer() == turn) {
 						((Clickable) o).onClicked();
+						selectSound.play();
 					} else if (clickedChess != null && ((ChessPiece) o).getPlayer() != turn
 							&& board[(int) x][(int) y].isActive()) {
 						if (clickedChess instanceof PawnPiece) {
@@ -99,6 +104,9 @@ public class Game extends Pane {
 						removeChessPiece((ChessPiece) o);
 						clickedChess.setPosition(x, y);
 						changeTurn();
+						eatSound.play();
+					} else {
+						disableSound.play();
 					}
 				} else if (o instanceof CellBoard && clickedChess != null) {
 					double x = ((CellBoard) o).getPositionX();
@@ -116,33 +124,35 @@ public class Game extends Pane {
 					clickedChess.setPosition(x, y);
 					resetBoard();
 					changeTurn();
+					eatSound.play();
 				} else if (o instanceof Clickable) {
-					System.out.println("game clickable");
 					((Clickable) o).onClicked();
+					selectSound.play();
 				}
 				for (int i = 0; i < chessPiece.size(); i++) {
 					chessPiece.get(i).setImg(chessPiece.get(i).getImageName());
 				}
-				
-				boolean isWin1 = true;
-				boolean isWin2 = true;
-				for (int i = 0; i < chessPiece.size(); i++) {
-					if(chessPiece.get(i) instanceof KingPiece) {
-						if(chessPiece.get(i).getPlayer()== 2) {
-							isWin1 = false;
-						}
-						else {
-							isWin2 = false;
-						}
-					} 	
-				}
-				if(isWin1 && !isWin2) {
-					getChildren().add(new CongratModal(player1.getName()));
-				} else if (!isWin1 && isWin2) {
-					getChildren().add(new CongratModal(player2.getName()));
-				}
 
-				
+				if (!isEnd) {
+					boolean isWin1 = true;
+					boolean isWin2 = true;
+					for (int i = 0; i < chessPiece.size(); i++) {
+						if (chessPiece.get(i) instanceof KingPiece) {
+							if (chessPiece.get(i).getPlayer() == 2) {
+								isWin1 = false;
+							} else {
+								isWin2 = false;
+							}
+						}
+					}
+					if (isWin1 && !isWin2) {
+						isEnd = true;
+						getChildren().add(new CongratModal(player1.getName()));
+					} else if (!isWin1 && isWin2) {
+						isEnd = true;
+						getChildren().add(new CongratModal(player2.getName()));
+					}
+				}
 				event.consume();
 			}
 		});
@@ -254,6 +264,5 @@ public class Game extends Pane {
 	public Star getStar() {
 		return star;
 	}
-
 
 }

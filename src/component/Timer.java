@@ -38,6 +38,7 @@ public class Timer extends HBox {
 		// set timing
 		timing = new Text();
 		timing.setFont(Font.font("AndaleMono", 40));
+		timing.setWrappingWidth(115);
 
 		setTimeMax();
 		this.lastTimeTriggered = -1;
@@ -51,11 +52,18 @@ public class Timer extends HBox {
 					Main.getGameScreen().resetBoard();
 				}
 
-				if (currentTime < 10)
-					timing.setText("00:0" + currentTime);
-				else
-					timing.setText("00:" + currentTime);
-				
+				if (currentTime < 10) {
+					if (currentTime2%100 < 10)
+						timing.setText("0" + currentTime + ":0" + currentTime2%100);
+					else
+						timing.setText("0" + currentTime + ":" + currentTime2%100);
+				} else {
+					if (currentTime2 < 10)
+						timing.setText(currentTime + ":0" + currentTime2%100);
+					else
+						timing.setText(currentTime + ":" + currentTime2%100);
+				}
+
 				if (currentTime <= 5) {
 					timing.setFill(Color.RED);
 					icon.setImage(new Image(ClassLoader.getSystemResource("images/timerred.png").toString()));
@@ -63,16 +71,16 @@ public class Timer extends HBox {
 					timing.setFill(Color.BLACK);
 					icon.setImage(new Image(ClassLoader.getSystemResource("images/timer.png").toString()));
 				}
-				
+
 				lastTimeTriggered = (lastTimeTriggered < 0 ? now : lastTimeTriggered);
-				if (now - lastTimeTriggered >= 1000000000 && currentTime >= 0) {
-					currentTime--;
-//					currentTime2--;
-//					if(currentTime2 < 0) {
-//						currentTime2 = 100;
-//						currentTime--;
-//						//10 000 000
-//					}
+				if (now - lastTimeTriggered >= 10000000) {
+//					currentTime--;
+					currentTime2--;
+					if (currentTime2 == 0) {
+						currentTime2 = 100;
+						currentTime--;
+//						//1 000 000 000
+					}
 					lastTimeTriggered = now;
 				}
 			}
@@ -90,7 +98,7 @@ public class Timer extends HBox {
 
 	public void setTimeMax() {
 		this.currentTime = timeLimit;
-//		this.currentTime2 = 100;
+		this.currentTime2 = 100;
 	}
 
 	public void stop() {

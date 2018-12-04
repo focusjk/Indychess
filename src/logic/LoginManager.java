@@ -1,6 +1,5 @@
 package logic;
 
-
 import component.InputField;
 import exception.InputNotFilledException;
 import javafx.event.ActionEvent;
@@ -62,12 +61,13 @@ public class LoginManager {
 //					throw new InputNotFilledException(0);
 					Alert a = new Alert(Alert.AlertType.INFORMATION, "Please Fill Player Name");
 					a.show();
+				} else {
+					Main.setup("game");
+					backgroundThread.interrupt();
 				}
-				Main.setup("game");
-				backgroundThread.interrupt();
 //			} catch (InputNotFilledException e) {
-				
-			} catch(Exception e) {
+
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}

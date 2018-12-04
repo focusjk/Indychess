@@ -5,10 +5,10 @@ import logic.GameManager;
 import logic.LoginManager;
 import scene.Game;
 import scene.Login;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.AudioClip;
 
 public class Main extends Application {
 	private static Stage stage;
@@ -16,19 +16,19 @@ public class Main extends Application {
 	private static Game gameScreen;
 	private static GameManager gameManager;
 	private static LoginManager loginManager;
+	private static AudioClip backgroundMusic;
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			backgroundMusic = new AudioClip(ClassLoader.getSystemResource("sound/background.mp3").toString());
+			backgroundMusic.setCycleCount(AudioClip.INDEFINITE);
+			backgroundMusic.setVolume(0.2);
+
 			stage = primaryStage;
 			setup("login");
 			primaryStage.setTitle("Indychess");
 			primaryStage.show();
-
-//			music
-//			MediaPlayer music = new MediaPlayer(new Media(ClassLoader.getSystemResource("bgm.mp3").toString()));
-//			music.setAutoPlay(true);
-//			music.setCycleCount(MediaPlayer.INDEFINITE);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -51,6 +51,7 @@ public class Main extends Application {
 				loginManager = new LoginManager(loginScreen, loginScreen.getPlayer1(), loginScreen.getPlayer2(),
 						loginScreen.getStartButton());
 				setCurrentScene(new Scene(loginScreen));
+				startMusic();
 			} else if (managerType.equals("game")) {
 				gameScreen = new Game();
 				gameManager = new GameManager(gameScreen);
@@ -78,6 +79,7 @@ public class Main extends Application {
 	public static Game getGameScreen() {
 		return gameScreen;
 	}
+
 	public static void setGameScreen(Game gameScreen) {
 		Main.gameScreen = gameScreen;
 	}
@@ -88,6 +90,14 @@ public class Main extends Application {
 
 	public static void setGameManager(GameManager gameManager) {
 		Main.gameManager = gameManager;
+	}
+
+	public static void startMusic() {
+		backgroundMusic.play();
+	}
+
+	public static void stopMusic() {
+		backgroundMusic.stop();
 	}
 
 }

@@ -20,18 +20,20 @@ public class ResumeModal extends VBox {
 		Button resume = new Button("images/resumeButton", 0, 0) {
 			@Override
 			public void onClicked() {
-				
+				playCheckSound();
 			}
 		};
 		Button newgame = new Button("images/newgameButton", 0, 0) {
 			@Override
 			public void onClicked() {
+				playCheckSound();
 				Main.setup("login");
 			}
 		};
 		Button quit = new Button("images/quitButton", 0, 0) {
 			@Override
 			public void onClicked() {
+				playCheckSound();
 				System.exit(0);
 			}
 		};
