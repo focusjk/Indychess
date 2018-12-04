@@ -62,10 +62,11 @@ public class LoginManager {
 //					throw new InputNotFilledException(0);
 					Alert a = new Alert(Alert.AlertType.INFORMATION, "Please Fill Player Name");
 					a.show();
+					throw new InputNotFilledException(0);
 				}
 				Main.setup("game");
 				backgroundThread.interrupt();
-//			} catch (InputNotFilledException e) {
+			} catch (InputNotFilledException e) {
 				
 			} catch(Exception e) {
 				e.printStackTrace();

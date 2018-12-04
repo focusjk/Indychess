@@ -26,9 +26,10 @@ public class Main extends Application {
 			primaryStage.show();
 
 //			music
-//			MediaPlayer music = new MediaPlayer(new Media(ClassLoader.getSystemResource("bgm.mp3").toString()));
+//			MediaPlayer music = new MediaPlayer(new Media(ClassLoader.getSystemResource("audio/bgm.mp3").toString()));
 //			music.setAutoPlay(true);
 //			music.setCycleCount(MediaPlayer.INDEFINITE);
+//			music.play();
 
 		} catch (Exception e) {
 			e.printStackTrace();

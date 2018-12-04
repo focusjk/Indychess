@@ -16,7 +16,7 @@ import javafx.scene.text.Text;
 import main.Main;
 
 public class Timer extends HBox {
-	private static int timeLimit = 10;
+	private static int timeLimit = 30;
 	private int currentTime;
 	private int currentTime2;
 	private long lastTimeTriggered;
