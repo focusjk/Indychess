@@ -48,9 +48,9 @@ public class Main extends Application {
 		try {
 			if (managerType.equals("login")) {
 				loginScreen = new Login();
-				loginManager = new LoginManager(loginScreen, loginScreen.getPlayer1(), loginScreen.getPlayer2(),
-						loginScreen.getStartButton());
+				loginManager = new LoginManager(loginScreen, loginScreen.getPlayer1(), loginScreen.getPlayer2(), loginScreen.getStartButton());
 				setCurrentScene(new Scene(loginScreen));
+				stopMusic();
 				startMusic();
 			} else if (managerType.equals("game")) {
 				gameScreen = new Game();
@@ -98,6 +98,10 @@ public class Main extends Application {
 
 	public static void stopMusic() {
 		backgroundMusic.stop();
+	}
+
+	public static LoginManager getLoginManager() {
+		return loginManager;
 	}
 
 }

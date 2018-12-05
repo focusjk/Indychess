@@ -47,6 +47,7 @@ public class StarModal extends Pane {
 		Button ok = new Button("images/okButton", 450, 500) {
 			@Override
 			public void onClicked() {
+				playCheckSound();
 				if (x == 0) {
 					clickedChess.setPlayer((clickedChess.getPlayer() % 2) + 1);
 				} else if (x == 1) {
@@ -85,7 +86,6 @@ public class StarModal extends Pane {
 				}
 				Main.getGameScreen().removeStarModal();
 				Main.getGameScreen().addStar();
-				
 			}
 		};
 

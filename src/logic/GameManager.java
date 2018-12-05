@@ -43,42 +43,48 @@ public class GameManager {
 		chess1 = new ArrayList<>();
 		chess2 = new ArrayList<>();
 
-		for (int i = 1; i <= 6; i++) {
-			if (i == 3) {
-				chess1.add(new KingPiece(i, 1, 1));
-			} else {
-				Random rand = new Random();
-				int random = rand.nextInt(4) + 1;
-				if (random == 1) {
-					chess1.add(new BishopPiece(i, 1, 1));
-				} else if (random == 2) {
-					chess1.add(new QueenPiece(i, 1, 1));
-				} else if (random == 3) {
-					chess1.add(new KnightPiece(i, 1, 1));
-				} else if (random == 4) {
-					chess1.add(new RookPiece(i, 1, 1));
+		for (int j = 1; j <= 2; j++) {
+			for (int i = 1; i <= 6; i++) {
+				if (i == 4 && j == 1) {
+					chess1.add(new KingPiece(i, j, 1));
+				} else {
+					Random rand = new Random();
+					int random = rand.nextInt(10) + 1;
+					if (random == 1) {
+						chess1.add(new BishopPiece(i, j, 1));
+					} else if (random == 2) {
+						chess1.add(new QueenPiece(i, j, 1));
+					} else if (random == 3) {
+						chess1.add(new KnightPiece(i, j, 1));
+					} else if (random == 4) {
+						chess1.add(new RookPiece(i, j, 1));
+					} else {
+						chess1.add(new PawnPiece(i, j, 1));
+					}
 				}
-			}
-			chess1.add(new PawnPiece(i, 2, 1));
-		}
 
-		for (int i = 1; i <= 6; i++) {
-			if (i == 3) {
-				chess2.add(new KingPiece(i, 6, 2));
-			} else {
-				Random rand = new Random();
-				int random = rand.nextInt(4) + 1;
-				if (random == 1) {
-					chess2.add(new BishopPiece(i, 6, 2));
-				} else if (random == 2) {
-					chess2.add(new QueenPiece(i, 6, 2));
-				} else if (random == 3) {
-					chess2.add(new KnightPiece(i, 6, 2));
-				} else if (random == 4) {
-					chess2.add(new RookPiece(i, 6, 2));
+			}
+		}
+		for (int j = 5; j <= 6; j++) {
+			for (int i = 1; i <= 6; i++) {
+				if (i == 4 && j == 6) {
+					chess2.add(new KingPiece(i, j, 2));
+				} else {
+					Random rand = new Random();
+					int random = rand.nextInt(10) + 1;
+					if (random == 1) {
+						chess2.add(new BishopPiece(i, j, 2));
+					} else if (random == 2) {
+						chess2.add(new QueenPiece(i, j, 2));
+					} else if (random == 3) {
+						chess2.add(new KnightPiece(i, j, 2));
+					} else if (random == 4) {
+						chess2.add(new RookPiece(i, j, 2));
+					} else {
+						chess2.add(new PawnPiece(i, j, 2));
+					}
 				}
 			}
-			chess2.add(new PawnPiece(i, 5, 2));
 		}
 	}
 

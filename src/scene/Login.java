@@ -1,9 +1,10 @@
 package scene;
 
+import component.Button;
 import component.InputField;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -12,6 +13,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import main.Main;
 
 public class Login extends VBox {
 
@@ -30,8 +32,10 @@ public class Login extends VBox {
 		setAlignment(Pos.CENTER);
 
 		// set background
-		background = new Image(ClassLoader.getSystemResource("images/loginBackground/background1-" + bgNumber + ".jpg").toString());
-		setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(1000, 700, false, false, false, false))));
+		background = new Image(
+				ClassLoader.getSystemResource("images/loginBackground/background1-" + bgNumber + ".jpg").toString());
+		setBackground(new Background(new BackgroundImage(background, null, null, null,
+				new BackgroundSize(1000, 700, false, false, false, false))));
 
 		// set box
 		VBox box = new VBox();
@@ -39,19 +43,41 @@ public class Login extends VBox {
 		box.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
 		box.setSpacing(15);
 		box.setAlignment(Pos.CENTER);
-		
+
 		// set logo
 		logo = new ImageView(new Image(ClassLoader.getSystemResource("images/logo.png").toString()));
 		logo.setFitWidth(200);
 		logo.setPreserveRatio(true);
-		
+
 		// set input player1
 		player1 = new InputField("PLAYER 1", "Input name");
 		// set input player2
 		player2 = new InputField("PLAYER 2", "Input name");
-		
+
 		// start button
-		startButton = new Button("Let's start");
+		Button startButton = new Button("images/startButton", 0, 0) {
+			@Override
+			public void onClicked() {
+				try {
+					String name1 = player1.getText();
+					String name2 = player2.getText();
+					if (name1.isEmpty() || name2.isEmpty()) {
+//						throw new InputNotFilledException(0);
+						Alert a = new Alert(Alert.AlertType.INFORMATION, "Please Fill Player Name");
+						a.show();
+					} else {
+						Main.setup("game");
+						System.out.println("dsfsdfd");
+						Main.getLoginManager().stopBg();
+					}
+//				} catch (InputNotFilledException e) {
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		};
+//		startButton = new Button("Let's start");
 
 		box.getChildren().addAll(logo, player1, player2, startButton);
 		getChildren().add(box);
@@ -88,11 +114,13 @@ public class Login extends VBox {
 	public void setStartButton(Button startButton) {
 		this.startButton = startButton;
 	}
-	
+
 	public void setBgNumber(int num) {
 		bgNumber = num;
-		background = new Image(ClassLoader.getSystemResource("images/loginBackground/background1-" + bgNumber + ".jpg").toString());
-		setBackground(new Background(new BackgroundImage(background, null, null, null, new BackgroundSize(1000, 700, false, false, false, false))));
+		background = new Image(
+				ClassLoader.getSystemResource("images/loginBackground/background1-" + bgNumber + ".jpg").toString());
+		setBackground(new Background(new BackgroundImage(background, null, null, null,
+				new BackgroundSize(1000, 700, false, false, false, false))));
 	}
 
 }

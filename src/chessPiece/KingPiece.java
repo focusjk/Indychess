@@ -39,12 +39,36 @@ public class KingPiece extends ChessPiece {
 			ChessPiece temp = Main.getGameScreen().findChessPiece(X, Y);
 			if (temp != null && temp.getPlayer() == Main.getGameScreen().getTurn())
 				continue;
-			if(X == Main.getGameScreen().getStar().getX() && Y == Main.getGameScreen().getStar().getY() )
+			if (X == Main.getGameScreen().getStar().getX() && Y == Main.getGameScreen().getStar().getY())
 				continue;
 			Main.getGameScreen().getBoard()[X][Y].active();
 
 		}
-		System.out.println("dsfsdfdfdffs");
+	}
+
+	@Override
+	public boolean isMovable() {
+		boolean isMovable = false;
+		int x = (int) getX();
+		int y = (int) getY();
+		for (int i = 0; i < move.size() && !isMovable; i++) {
+
+			int X = x + move.get(i).getKey();
+			int Y = y + move.get(i).getValue();
+
+			if (X > 6 || X < 1 || Y > 6 || Y < 1)
+				continue;
+
+			ChessPiece temp = Main.getGameScreen().findChessPiece(X, Y);
+			if (temp != null && temp.getPlayer() == Main.getGameScreen().getTurn())
+				continue;
+
+			if (X == Main.getGameScreen().getStar().getX() && Y == Main.getGameScreen().getStar().getY())
+				continue;
+
+			isMovable = true;
+		}
+		return isMovable;
 	}
 
 }

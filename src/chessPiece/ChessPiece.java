@@ -59,6 +59,8 @@ public abstract class ChessPiece extends Pane implements Clickable {
 		Main.getGameScreen().setClickedChess(this);
 		Main.getGameScreen().resetBoard();
 	}
+	
+	public abstract boolean isMovable();
 
 	public String getImageName() {
 		return this.image;
@@ -102,7 +104,6 @@ public abstract class ChessPiece extends Pane implements Clickable {
 	}
 	
 	public void setPlayer(int player) {
-//		System.out.println("focus");
 		this.player = player;
 		this.image = this.imgName + player;
 		setImg(this.image);

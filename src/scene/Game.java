@@ -55,7 +55,6 @@ public class Game extends Pane {
 		pauseButton = new Button("images/pause", 920, 10) {
 			@Override
 			public void onClicked() {
-				playCheckSound();
 				getChildren().add(resumeModal);
 				timer.stop();
 			}
@@ -120,6 +119,7 @@ public class Game extends Pane {
 					if (star.getX() == x && star.getY() == y) {
 						starModal = new StarModal(clickedChess);
 						getChildren().add(starModal);
+						timer.stop();
 					}
 					clickedChess.setPosition(x, y);
 					resetBoard();
@@ -147,11 +147,27 @@ public class Game extends Pane {
 					}
 					if (isWin1 && !isWin2) {
 						isEnd = true;
-						getChildren().add(new CongratModal(player1.getName()));
+						timer.stop();
+						getChildren().add(new CongratModal(player1.getName(), "winner"));
 					} else if (!isWin1 && isWin2) {
 						isEnd = true;
-						getChildren().add(new CongratModal(player2.getName()));
+						timer.stop();
+						getChildren().add(new CongratModal(player2.getName(), "winner"));
+					} else {
+						boolean canMove = false;
+						for (int i = 0; i < chessPiece.size(); i++) {
+							if (chessPiece.get(i).getPlayer() == turn && chessPiece.get(i).isMovable()) {
+								canMove = true;
+								break;
+							}
+						}
+						if (!canMove) {
+							isEnd = true;
+							timer.stop();
+							getChildren().add(new CongratModal(player1.getName() + " & " + player2.getName(), "draw"));
+						}
 					}
+
 				}
 				event.consume();
 			}
@@ -253,8 +269,10 @@ public class Game extends Pane {
 	}
 
 	public void removeStarModal() {
-		if (getChildren().contains(starModal))
+		if (getChildren().contains(starModal)) {
 			getChildren().remove(starModal);
+			timer.start();
+		}
 	}
 
 	public ArrayList<ChessPiece> getChessPiece() {

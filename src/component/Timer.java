@@ -16,7 +16,7 @@ import javafx.scene.text.Text;
 import main.Main;
 
 public class Timer extends HBox {
-	private static int timeLimit = 10;
+	private static int timeLimit = 30;
 	private int currentTime;
 	private int currentTime2;
 	private long lastTimeTriggered;
@@ -36,9 +36,10 @@ public class Timer extends HBox {
 		icon = new ImageView(new Image(ClassLoader.getSystemResource("images/timer.png").toString()));
 
 		// set timing
-		timing = new Text();
-		timing.setFont(Font.font("AndaleMono", 40));
-		timing.setWrappingWidth(115);
+		timing = new Text("00:00");
+		timing.setFont(Font.loadFont(ClassLoader.getSystemResource("font/Copperplate.ttf").toString(), 40));
+		timing.setFill(Color.BLACK);
+//		timing.setWrappingWidth(115);
 
 		setTimeMax();
 		this.lastTimeTriggered = -1;
@@ -58,7 +59,7 @@ public class Timer extends HBox {
 					else
 						timing.setText("0" + currentTime + ":" + currentTime2%100);
 				} else {
-					if (currentTime2 < 10)
+					if (currentTime2%100 < 10)
 						timing.setText(currentTime + ":0" + currentTime2%100);
 					else
 						timing.setText(currentTime + ":" + currentTime2%100);
@@ -73,10 +74,10 @@ public class Timer extends HBox {
 				}
 
 				lastTimeTriggered = (lastTimeTriggered < 0 ? now : lastTimeTriggered);
-				if (now - lastTimeTriggered >= 10000000) {
+				if (now - lastTimeTriggered >= 30000000) {
 //					currentTime--;
-					currentTime2--;
-					if (currentTime2 == 0) {
+					currentTime2-=3;
+					if (currentTime2 <= 0) {
 						currentTime2 = 100;
 						currentTime--;
 //						//1 000 000 000
@@ -85,7 +86,8 @@ public class Timer extends HBox {
 				}
 			}
 		};
-		getChildren().addAll(icon, timing);
+//		getChildren().addAll(icon, timing);
+		getChildren().addAll(timing);
 	}
 
 	public void start() {

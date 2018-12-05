@@ -19,8 +19,8 @@ public class CongratModal extends Pane {
 	private Thread t;
 //	private String winnerName;
 //	private Text name;
-	
-	public CongratModal(String winnerName) {
+
+	public CongratModal(String winnerName, String status) {
 		setPrefHeight(700);
 		setPrefWidth(1000);
 		setBackground(new Background(new BackgroundFill(Color.rgb(0, 0, 0, 0.7), null, null)));
@@ -46,7 +46,7 @@ public class CongratModal extends Pane {
 							ClassLoader.getSystemResource("images/congratModal/congrat" + i + ".jpg").toString()));
 					i++;
 					i %= 133;
-					System.out.println(i+ "Focus");
+					System.out.println(i + "Focus");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 					System.out.println("Stop Background Thread");
@@ -56,12 +56,21 @@ public class CongratModal extends Pane {
 		});
 		this.t.start();
 
-		Text name = new Text(winnerName);
-		name.setFont(Font.font("AndaleMono", 40));
-		name.setWrappingWidth(300);
+		Text statusText = new Text(status.toUpperCase());
+		statusText.setWrappingWidth(300);
+		statusText.setTextAlignment(TextAlignment.CENTER);
+		statusText.setLayoutX(350);
+		statusText.setLayoutY(100);
+		statusText.setFont(Font.loadFont(ClassLoader.getSystemResource("font/CopperplateBold.ttf").toString(), 20));
+		statusText.setFill(Color.BLACK);
+
+		Text name = new Text(winnerName.toUpperCase());
+		name.setWrappingWidth(450);
 		name.setTextAlignment(TextAlignment.CENTER);
-		name.setLayoutX(350);
-		name.setLayoutY(120);
+		name.setLayoutX(275);
+		name.setLayoutY(150);
+		name.setFont(Font.loadFont(ClassLoader.getSystemResource("font/CopperplateBold.ttf").toString(), 50));
+		name.setFill(Color.BLACK);
 
 		Button winner = new Button("images/winnerButton", 0, 0) {
 			@Override
@@ -75,7 +84,7 @@ public class CongratModal extends Pane {
 		};
 		winner.setLayoutX(350);
 		winner.setLayoutY(530);
-		getChildren().addAll(img, winner, name);
+		getChildren().addAll(img, winner, statusText, name);
 
 	}
 

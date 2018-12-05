@@ -3,7 +3,11 @@ package component;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontSmoothingType;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import java.util.Random;
@@ -30,11 +34,14 @@ public class PlayerProfile extends Pane {
 		emoji.setLayoutY(10);
 
 		// text
+		
 		nameTag = new Text(name);
-//		nameTag.setFont(ClassLoader.getSystemResource("font/AndaleMono.ttf").toString());
-		nameTag.setFont(Font.font("AndaleMono", 40));
-		Text playerTag = new Text("PLAYER" + this.player);
-		playerTag.setFont(Font.font("AndaleMono", 15));
+		nameTag.setFont(Font.loadFont(ClassLoader.getSystemResource("font/CopperplateBold.ttf").toString(), 40));
+		nameTag.setFill(Color.BLACK);
+		
+		Text playerTag = new Text("PLAYER " + this.player);
+		playerTag.setFont(Font.loadFont(ClassLoader.getSystemResource("font/CopperplateBold.ttf").toString(), 15));
+		playerTag.setFill(Color.GRAY);
 
 		// arrow
 		arrow = new ImageView(

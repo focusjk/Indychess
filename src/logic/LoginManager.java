@@ -1,18 +1,12 @@
 package logic;
 
+import component.Button;
 import component.InputField;
-import exception.InputNotFilledException;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import main.Main;
 import scene.Login;
 
 public class LoginManager {
 	private InputField player1Input;
 	private InputField player2Input;
-	private Button button;
 	private Thread backgroundThread;
 	private Login loginScreen;
 
@@ -21,7 +15,7 @@ public class LoginManager {
 		this.loginScreen = loginScreen;
 		setPlayer1Input(player1Input);
 		setPlayer2Input(player2Input);
-		setButton(button);
+		
 
 		this.backgroundThread = new Thread(() -> {
 			int i = 1;
@@ -42,38 +36,6 @@ public class LoginManager {
 		this.backgroundThread.start();
 	}
 
-	private class ButtonEventHandler implements EventHandler<ActionEvent> {
-
-		private InputField player1Input;
-		private InputField player2Input;
-
-		public ButtonEventHandler(InputField player1Input, InputField player2Input) {
-			this.player1Input = player1Input;
-			this.player2Input = player2Input;
-		}
-
-		@Override
-		public void handle(ActionEvent arg0) {
-			try {
-				String name1 = this.player1Input.getText();
-				String name2 = this.player2Input.getText();
-				if (name1.isEmpty() || name2.isEmpty()) {
-//					throw new InputNotFilledException(0);
-					Alert a = new Alert(Alert.AlertType.INFORMATION, "Please Fill Player Name");
-					a.show();
-				} else {
-					Main.setup("game");
-					backgroundThread.interrupt();
-				}
-//			} catch (InputNotFilledException e) {
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-	}
-
 	public InputField getPlayer1Input() {
 		return player1Input;
 	}
@@ -90,15 +52,6 @@ public class LoginManager {
 		this.player2Input = player2Input;
 	}
 
-	public Button getButton() {
-		return button;
-	}
-
-	public void setButton(Button button) {
-		this.button = button;
-		this.button.setOnAction(new ButtonEventHandler(player1Input, player2Input));
-
-	}
 
 	public void stopBg() {
 		backgroundThread.interrupt();

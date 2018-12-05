@@ -6,9 +6,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioClip;
 
-public abstract class Button extends ImageView implements Clickable {
+public abstract class Button extends ImageView {
 	private String imgName;
 	private AudioClip checkSound = new AudioClip(ClassLoader.getSystemResource("sound/checkSound.mp3").toString());
+
 	public Button(String imgName, double x, double y) {
 		super();
 		this.imgName = imgName;
@@ -27,21 +28,33 @@ public abstract class Button extends ImageView implements Clickable {
 		});
 		
 		setOnMouseExited(new EventHandler<MouseEvent>() {
-			
 			@Override
 			public void handle(MouseEvent event) {
 				setImg(imgName);
 				event.consume();
 			}
 		});
+		
+		setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				checkSound.play();
+				onClicked();
+				event.consume();
+			}
+		});
+		
+	}
+	
+	public abstract void onClicked();
 
-	}
 	public void setImg(String imgName) {
-		setImage(new Image(ClassLoader.getSystemResource(imgName+".png").toString()));
+		setImage(new Image(ClassLoader.getSystemResource(imgName + ".png").toString()));
 	}
+
+//	public void playCheckSound() {
+//		checkSound.play();
+//	}
 	
-	public void playCheckSound() {
-		checkSound.play();
-	}
-	
+
 }

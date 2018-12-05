@@ -37,7 +37,7 @@ public class Star extends Pane {
 			}
 
 		}
-		// set scree
+		// set screen
 		setPrefHeight(80);
 		setPrefWidth(80);
 
@@ -47,22 +47,7 @@ public class Star extends Pane {
 		getChildren().add(img);
 
 	}
-//
-//	public Star(int x, int y) {
-//		super();
-//		this.x = x;
-//		this.y = y;
-//
-//		// set screen
-//		setPrefHeight(80);
-//		setPrefWidth(80);
-//
-//		ImageView img = new ImageView(new Image(ClassLoader.getSystemResource("images/star.png").toString()));
-//		setLayoutX(180 + x * 80);
-//		setLayoutY(30 + y * 80);
-//		getChildren().add(img);
-//	}
-
+	
 	public int getX() {
 		return x;
 	}
