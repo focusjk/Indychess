@@ -7,32 +7,29 @@ import chessPiece.ChessPiece;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import main.Main;
 
 public class Star extends Pane {
 	private int x;
 	private int y;
 
-	public Star() {
+	public Star(ArrayList<ChessPiece> chessPiece) {
 		super();
-		int x, y;
 		while (true) {
-			Random rand1 = new Random();
-			Random rand2 = new Random();
-			x = rand1.nextInt(5) + 1;
-			y = rand2.nextInt(5) + 1;
+			Random random1 = new Random();
+			Random random2 = new Random();
+			int x = random1.nextInt(5) + 1;
+			int y = random2.nextInt(5) + 1;
 
-			boolean t = true;
-			ArrayList<ChessPiece> chessPiece = Main.getGameScreen().getChessPiece();
+			boolean isAvailable = true;
 			for (int i = 0; i < chessPiece.size(); i++) {
 				if (chessPiece.get(i).getX() == x && chessPiece.get(i).getY() == y) {
-					t = false;
+					isAvailable = false;
 					break;
 				}
 			}
-			if (t) {
-				this.x = x;
-				this.y = y;
+			if (isAvailable) {
+				setX(x);
+				setY(y);
 				break;
 			}
 

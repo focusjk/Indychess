@@ -1,13 +1,12 @@
 package chessPiece;
 
-import java.util.ArrayList;
-
 import component.Clickable;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import main.Main;
 
 public abstract class ChessPiece extends Pane implements Clickable {
@@ -15,31 +14,31 @@ public abstract class ChessPiece extends Pane implements Clickable {
 	private double y;
 	private int player;
 	private String image;
-	private String imgName;
-	private ImageView img = new ImageView();
+	private ImageView img;
+	private AudioClip selectSound = new AudioClip(ClassLoader.getSystemResource("sound/selectSound.mp3").toString());
 
-	public ChessPiece(double x, double y, int player, String img) {
+	public ChessPiece(double x, double y, int player, String image) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.player = player;
-		this.imgName = img;
-		this.image = img + player;
+		this.image = image;
 
 		// set screen
 		setPrefHeight(80);
 		setPrefWidth(80);
 		setX(x);
 		setY(y);
-		this.img = new ImageView(new Image(ClassLoader.getSystemResource(this.image+".png").toString()));
-		this.img.setMouseTransparent(true);
+		img = new ImageView();
+		setImage(1);
+		img.setMouseTransparent(true);
 		getChildren().add(this.img);
 
 		setOnMouseEntered(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				if (this.equals(Main.getGameScreen().getClickedChess()))
-					setImg(image + "gray");
+				if (!this.equals(Main.getGameScreen().getClickedChess()))
+					setImage(2);
 				event.consume();
 			}
 		});
@@ -47,30 +46,32 @@ public abstract class ChessPiece extends Pane implements Clickable {
 		setOnMouseExited(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				setImg(image);
+				setImage(1);
 				event.consume();
 			}
 		});
-		
+
 	}
 
 	@Override
 	public void onClicked() {
 		Main.getGameScreen().setClickedChess(this);
 		Main.getGameScreen().resetBoard();
+		selectSound.play();
+		onActive();		
 	}
-	
+	public abstract void onActive();
 	public abstract boolean isMovable();
 
-	public String getImageName() {
-		return this.image;
-	}
-
-	public void setImg(String image) {
-		if (this.equals(Main.getGameScreen().getClickedChess()))
-			img.setImage(new Image(ClassLoader.getSystemResource(image + "red.png").toString()));
-		else
-			img.setImage(new Image(ClassLoader.getSystemResource(image + ".png").toString()));
+	public void setImage(int type) {
+		if (type == 1) {
+			if (this.equals(Main.getGameScreen().getClickedChess()))
+				img.setImage(new Image(ClassLoader.getSystemResource(image + player + "red.png").toString()));
+			else
+				img.setImage(new Image(ClassLoader.getSystemResource(image + player + ".png").toString()));
+		} else if (type == 2) {
+			img.setImage(new Image(ClassLoader.getSystemResource(image + player + "gray.png").toString()));
+		}
 	}
 
 	public void setPosition(double x, double y) {
@@ -102,11 +103,10 @@ public abstract class ChessPiece extends Pane implements Clickable {
 	public int getPlayer() {
 		return player;
 	}
-	
+
 	public void setPlayer(int player) {
 		this.player = player;
-		this.image = this.imgName + player;
-		setImg(this.image);
+		setImage(1);
 	}
-	
+
 }

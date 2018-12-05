@@ -5,9 +5,10 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class InputField extends VBox {
-
 	private TextField textField;
 
 	public InputField(String title, String promptText) {
@@ -16,11 +17,14 @@ public class InputField extends VBox {
 		setSpacing(5);
 
 		Label label = new Label(title);
-		getChildren().add(label);
+		label.setFont(Font.loadFont(ClassLoader.getSystemResource("font/CopperplateBold.ttf").toString(), 20));
+		label.setTextFill(Color.BLACK);
 
 		textField = new TextField();
 		textField.setPromptText(promptText);
-		getChildren().add(textField);
+		textField.setFont(Font.loadFont(ClassLoader.getSystemResource("font/Copperplate.ttf").toString(), 18));
+		
+		getChildren().addAll(label, textField);
 	}
 
 	public String getText() {

@@ -7,6 +7,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
+import main.Main;
 
 import java.util.ArrayList;
 
@@ -29,15 +30,16 @@ public class Game extends Pane {
 	private StarModal starModal;
 	private ArrayList<ChessPiece> chessPiece = new ArrayList<ChessPiece>();
 	private CellBoard[][] board = new CellBoard[7][7];
-	private static ChessPiece clickedChess = null;
+	private ChessPiece clickedChess = null;
 	private int turn = 1;
 	private Star star = null;
 	private boolean isEnd = false;
 	private AudioClip selectSound = new AudioClip(ClassLoader.getSystemResource("sound/selectSound.mp3").toString());
 	private AudioClip eatSound = new AudioClip(ClassLoader.getSystemResource("sound/eatSound.mp3").toString());
 	private AudioClip disableSound = new AudioClip(ClassLoader.getSystemResource("sound/cantMoveSound.mp3").toString());
+	private AudioClip starSound = new AudioClip(ClassLoader.getSystemResource("sound/promotionSound.mp3").toString());
 
-	public Game() {
+	public Game(String player1Name, String player2Name) {
 		// set screen
 		setPrefHeight(700);
 		setPrefWidth(1000);
@@ -61,11 +63,13 @@ public class Game extends Pane {
 		};
 
 		// set player
-		player1 = new PlayerProfile("anonymous", 1);
+		player1 = new PlayerProfile(player1Name, 1);
+		player1.setTurn(true);
 		player1.setMouseTransparent(true);
-		player2 = new PlayerProfile("anonymous", 2);
+		player2 = new PlayerProfile(player2Name, 2);
+		player2.setTurn(false);
 		player2.setMouseTransparent(true);
-
+		
 		// set timer
 		timer = new Timer(player1, player2);
 		timer.setLayoutX(400);
@@ -80,10 +84,7 @@ public class Game extends Pane {
 			@Override
 			public void handle(MouseEvent event) {
 				System.out.println(event.toString());
-				if (getChildren().contains(resumeModal)) {
-					getChildren().remove(resumeModal);
-					timer.start();
-				}
+				removeResumeModal();
 
 				Object o = event.getTarget();
 				if (o instanceof ChessPiece) {
@@ -92,7 +93,7 @@ public class Game extends Pane {
 
 					if (((ChessPiece) o).getPlayer() == turn) {
 						((Clickable) o).onClicked();
-						selectSound.play();
+						
 					} else if (clickedChess != null && ((ChessPiece) o).getPlayer() != turn
 							&& board[(int) x][(int) y].isActive()) {
 						if (clickedChess instanceof PawnPiece) {
@@ -117,7 +118,8 @@ public class Game extends Pane {
 					}
 
 					if (star.getX() == x && star.getY() == y) {
-						starModal = new StarModal(clickedChess);
+						starSound.play();
+						starModal = new StarModal(clickedChess, Main.getGameScreen());
 						getChildren().add(starModal);
 						timer.stop();
 					}
@@ -130,7 +132,7 @@ public class Game extends Pane {
 					selectSound.play();
 				}
 				for (int i = 0; i < chessPiece.size(); i++) {
-					chessPiece.get(i).setImg(chessPiece.get(i).getImageName());
+					chessPiece.get(i).setImage(1);
 				}
 
 				if (!isEnd) {
@@ -220,7 +222,7 @@ public class Game extends Pane {
 	public void addStar() {
 		if (getChildren().contains(star))
 			getChildren().remove(star);
-		this.star = new Star();
+		this.star = new Star(chessPiece);
 		this.star.setMouseTransparent(true);
 		getChildren().add(this.star);
 	}
@@ -256,7 +258,7 @@ public class Game extends Pane {
 			player1.setTurn(true);
 			player2.setTurn(false);
 		}
-		timer.reset();
+		timer.resetTime();
 
 	}
 
@@ -274,6 +276,14 @@ public class Game extends Pane {
 			timer.start();
 		}
 	}
+	
+	public void removeResumeModal() {
+		if (getChildren().contains(resumeModal)) {
+			getChildren().remove(resumeModal);
+			timer.start();
+		}
+	}
+
 
 	public ArrayList<ChessPiece> getChessPiece() {
 		return chessPiece;

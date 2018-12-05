@@ -1,7 +1,5 @@
 package scene;
 
-import javax.security.auth.callback.ChoiceCallback;
-
 import component.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,9 +14,7 @@ import javafx.scene.text.TextAlignment;
 import main.Main;
 
 public class CongratModal extends Pane {
-	private Thread t;
-//	private String winnerName;
-//	private Text name;
+	private Thread backgroundThread;
 
 	public CongratModal(String winnerName, String status) {
 		setPrefHeight(700);
@@ -26,9 +22,9 @@ public class CongratModal extends Pane {
 		setBackground(new Background(new BackgroundFill(Color.rgb(0, 0, 0, 0.7), null, null)));
 
 		Main.stopMusic();
-		AudioClip music = new AudioClip(ClassLoader.getSystemResource("sound/winSound.mp3").toString());
-		music.setCycleCount(AudioClip.INDEFINITE);
-		music.play();
+		AudioClip congratSound = new AudioClip(ClassLoader.getSystemResource("sound/winSound.mp3").toString());
+		congratSound.setCycleCount(AudioClip.INDEFINITE);
+		congratSound.play();
 
 		ImageView img = new ImageView(
 				new Image(ClassLoader.getSystemResource("images/congratModal/congrat0.jpg").toString()));
@@ -37,7 +33,7 @@ public class CongratModal extends Pane {
 		img.setLayoutX(275);
 		img.setLayoutY(50);
 
-		this.t = new Thread(() -> {
+		this.backgroundThread = new Thread(() -> {
 			int i = 1;
 			while (true) {
 				try {
@@ -46,15 +42,13 @@ public class CongratModal extends Pane {
 							ClassLoader.getSystemResource("images/congratModal/congrat" + i + ".jpg").toString()));
 					i++;
 					i %= 133;
-					System.out.println(i + "Focus");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
-					System.out.println("Stop Background Thread");
 					break;
 				}
 			}
 		});
-		this.t.start();
+		this.backgroundThread.start();
 
 		Text statusText = new Text(status.toUpperCase());
 		statusText.setWrappingWidth(300);
@@ -76,16 +70,14 @@ public class CongratModal extends Pane {
 			@Override
 			public void onClicked() {
 				Main.setup("login");
-				t.interrupt();
-				music.stop();
-				playCheckSound();
-				System.out.println("dsgdsgsdgfewr24426ip30owe;krjld");
+				backgroundThread.interrupt();
+				congratSound.stop();
 			}
 		};
 		winner.setLayoutX(350);
 		winner.setLayoutY(530);
-		getChildren().addAll(img, winner, statusText, name);
 
+		getChildren().addAll(img, winner, statusText, name);
 	}
 
 }

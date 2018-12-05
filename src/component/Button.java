@@ -7,54 +7,52 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioClip;
 
 public abstract class Button extends ImageView {
-	private String imgName;
-	private AudioClip checkSound = new AudioClip(ClassLoader.getSystemResource("sound/checkSound.mp3").toString());
+	private String imageName;
+	private AudioClip clickSound = new AudioClip(ClassLoader.getSystemResource("sound/clickSound.mp3").toString());
 
-	public Button(String imgName, double x, double y) {
+	public Button(String imageName, double x, double y) {
 		super();
-		this.imgName = imgName;
-		setImg(imgName);
+		this.imageName = imageName;
+		setImage(1);
 		if (x != 0)
 			setLayoutX(x);
 		if (y != 0)
 			setLayoutY(y);
-		
+
 		setOnMouseEntered(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				setImg(imgName+"2");
+				setImage(2);
 				event.consume();
 			}
 		});
-		
+
 		setOnMouseExited(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				setImg(imgName);
+				setImage(1);
 				event.consume();
 			}
 		});
-		
+
 		setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				checkSound.play();
+				clickSound.play();
 				onClicked();
 				event.consume();
 			}
 		});
-		
 	}
-	
+
 	public abstract void onClicked();
 
-	public void setImg(String imgName) {
-		setImage(new Image(ClassLoader.getSystemResource(imgName + ".png").toString()));
+	public void setImage(int type) {
+		if (type == 1) {
+			setImage(new Image(ClassLoader.getSystemResource(imageName + ".png").toString()));
+		} else if (type == 2) {
+			setImage(new Image(ClassLoader.getSystemResource(imageName + "2.png").toString()));
+		}
 	}
-
-//	public void playCheckSound() {
-//		checkSound.play();
-//	}
-	
 
 }

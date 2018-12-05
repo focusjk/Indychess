@@ -3,8 +3,6 @@ package component;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Pos;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -21,7 +19,6 @@ public class Timer extends HBox {
 	private int currentTime2;
 	private long lastTimeTriggered;
 	private AnimationTimer animationTimer;
-	private ImageView icon;
 	private Text timing;
 
 	public Timer(PlayerProfile player1, PlayerProfile player2) {
@@ -32,16 +29,12 @@ public class Timer extends HBox {
 		setSpacing(10);
 		setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
 
-		// set board
-		icon = new ImageView(new Image(ClassLoader.getSystemResource("images/timer.png").toString()));
-
 		// set timing
 		timing = new Text("00:00");
 		timing.setFont(Font.loadFont(ClassLoader.getSystemResource("font/Copperplate.ttf").toString(), 40));
 		timing.setFill(Color.BLACK);
-//		timing.setWrappingWidth(115);
 
-		setTimeMax();
+		resetTime();
 		this.lastTimeTriggered = -1;
 		this.animationTimer = new AnimationTimer() {
 
@@ -54,39 +47,30 @@ public class Timer extends HBox {
 				}
 
 				if (currentTime < 10) {
-					if (currentTime2%100 < 10)
-						timing.setText("0" + currentTime + ":0" + currentTime2%100);
-					else
-						timing.setText("0" + currentTime + ":" + currentTime2%100);
-				} else {
-					if (currentTime2%100 < 10)
-						timing.setText(currentTime + ":0" + currentTime2%100);
-					else
-						timing.setText(currentTime + ":" + currentTime2%100);
-				}
-
-				if (currentTime <= 5) {
 					timing.setFill(Color.RED);
-					icon.setImage(new Image(ClassLoader.getSystemResource("images/timerred.png").toString()));
+					if (currentTime2 % 100 < 10)
+						timing.setText("0" + currentTime + ":0" + currentTime2 % 100);
+					else
+						timing.setText("0" + currentTime + ":" + currentTime2 % 100);
 				} else {
 					timing.setFill(Color.BLACK);
-					icon.setImage(new Image(ClassLoader.getSystemResource("images/timer.png").toString()));
+					if (currentTime2 % 100 < 10)
+						timing.setText(currentTime + ":0" + currentTime2 % 100);
+					else
+						timing.setText(currentTime + ":" + currentTime2 % 100);
 				}
 
 				lastTimeTriggered = (lastTimeTriggered < 0 ? now : lastTimeTriggered);
 				if (now - lastTimeTriggered >= 30000000) {
-//					currentTime--;
-					currentTime2-=3;
+					currentTime2 -= 3;
 					if (currentTime2 <= 0) {
 						currentTime2 = 100;
 						currentTime--;
-//						//1 000 000 000
 					}
 					lastTimeTriggered = now;
 				}
 			}
 		};
-//		getChildren().addAll(icon, timing);
 		getChildren().addAll(timing);
 	}
 
@@ -94,17 +78,14 @@ public class Timer extends HBox {
 		this.animationTimer.start();
 	}
 
-	public void reset() {
-		setTimeMax();
-	}
-
-	public void setTimeMax() {
-		this.currentTime = timeLimit;
-		this.currentTime2 = 100;
-	}
-
 	public void stop() {
 		this.animationTimer.stop();
 	}
+
+	public void resetTime() {
+		this.currentTime = timeLimit;
+		this.currentTime2 = 0;
+	}
+
 
 }

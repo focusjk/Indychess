@@ -2,7 +2,6 @@ package main;
 
 import javafx.stage.Stage;
 import logic.GameManager;
-import logic.LoginManager;
 import scene.Game;
 import scene.Login;
 
@@ -15,7 +14,6 @@ public class Main extends Application {
 	private static Login loginScreen;
 	private static Game gameScreen;
 	private static GameManager gameManager;
-	private static LoginManager loginManager;
 	private static AudioClip backgroundMusic;
 
 	@Override
@@ -31,6 +29,7 @@ public class Main extends Application {
 			primaryStage.show();
 
 		} catch (Exception e) {
+			//TODO
 			e.printStackTrace();
 		}
 	}
@@ -47,19 +46,16 @@ public class Main extends Application {
 	public static void setup(String managerType) {
 		try {
 			if (managerType.equals("login")) {
-				loginScreen = new Login();
-				loginManager = new LoginManager(loginScreen, loginScreen.getPlayer1(), loginScreen.getPlayer2(), loginScreen.getStartButton());
+				setLoginScreen(new Login());
 				setCurrentScene(new Scene(loginScreen));
 				stopMusic();
 				startMusic();
 			} else if (managerType.equals("game")) {
-				gameScreen = new Game();
-				gameManager = new GameManager(gameScreen);
-				gameScreen.getPlayer1().setName(loginManager.getPlayer1Input().getText());
-				gameScreen.getPlayer2().setName(loginManager.getPlayer2Input().getText());
+				setGameScreen(new Game(loginScreen.getPlayer1().getText(),loginScreen.getPlayer2().getText()));
 				setCurrentScene(new Scene(gameScreen));
 			}
 		} catch (Exception e) {
+			//TODO
 			e.printStackTrace();
 		}
 	}
@@ -82,15 +78,13 @@ public class Main extends Application {
 
 	public static void setGameScreen(Game gameScreen) {
 		Main.gameScreen = gameScreen;
+		gameManager = new GameManager(gameScreen);
 	}
 
 	public static GameManager getGameManager() {
 		return gameManager;
 	}
-
-	public static void setGameManager(GameManager gameManager) {
-		Main.gameManager = gameManager;
-	}
+	
 
 	public static void startMusic() {
 		backgroundMusic.play();
@@ -100,8 +94,5 @@ public class Main extends Application {
 		backgroundMusic.stop();
 	}
 
-	public static LoginManager getLoginManager() {
-		return loginManager;
-	}
 
 }

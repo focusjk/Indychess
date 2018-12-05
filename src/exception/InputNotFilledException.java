@@ -8,7 +8,7 @@ public class InputNotFilledException extends Exception {
 		System.err.println("Please Fill Player Name");
 
 	}
-
+	
 	public int getCode() {
 		return code;
 	}

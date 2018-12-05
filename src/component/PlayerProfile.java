@@ -4,17 +4,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontSmoothingType;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import java.util.Random;
 
 public class PlayerProfile extends Pane {
-	private int number;
 	private int player;
+	private String name;
 	private Text nameTag;
 	private ImageView arrow;
 	private int arrowPosition;
@@ -24,21 +21,21 @@ public class PlayerProfile extends Pane {
 	public PlayerProfile(String name, int player) {
 		super();
 		this.player = player;
-		Random rand = new Random();
-		this.number = rand.nextInt(9) + 1;
-
+		this.name = name;
+		
 		// set emoji1
+		Random rand = new Random();
+		int number = rand.nextInt(9) + 1;
 		ImageView emoji = new ImageView(
-				new Image(ClassLoader.getSystemResource("images/emoji" + this.number + ".png").toString()));
+				new Image(ClassLoader.getSystemResource("images/emoji" + number + ".png").toString()));
 		emoji.setLayoutX(10);
 		emoji.setLayoutY(10);
 
 		// text
-		
 		nameTag = new Text(name);
 		nameTag.setFont(Font.loadFont(ClassLoader.getSystemResource("font/CopperplateBold.ttf").toString(), 40));
 		nameTag.setFill(Color.BLACK);
-		
+
 		Text playerTag = new Text("PLAYER " + this.player);
 		playerTag.setFont(Font.loadFont(ClassLoader.getSystemResource("font/CopperplateBold.ttf").toString(), 15));
 		playerTag.setFill(Color.GRAY);
@@ -47,6 +44,7 @@ public class PlayerProfile extends Pane {
 		arrow = new ImageView(
 				new Image(ClassLoader.getSystemResource("images/redArrow" + this.player + ".png").toString()));
 		arrow.setVisible(false);
+		
 		arrowPosition = 0;
 		up = 1;
 		arrowThread = new Thread("arrow") {
@@ -61,17 +59,18 @@ public class PlayerProfile extends Pane {
 							arrowPosition %= 10;
 						}
 						if (player == 1) {
-							if(up == 1)
+							if (up == 1)
 								arrow.setLayoutY(150 + arrowPosition);
-							else 
+							else
 								arrow.setLayoutY(150 + 10 - arrowPosition);
 						} else {
-							if(up == 1)
+							if (up == 1)
 								arrow.setLayoutY(490 - arrowPosition);
-							else 
+							else
 								arrow.setLayoutY(490 - 10 + arrowPosition);
 						}
 					} catch (InterruptedException e) {
+						//TODO
 						e.printStackTrace();
 					}
 
@@ -108,20 +107,16 @@ public class PlayerProfile extends Pane {
 	}
 
 	public String getName() {
-		return nameTag.getText();
+		return name;
 	}
 
 	public void setName(String name) {
+		this.name = name;
 		nameTag.setText(name);
 	}
 
 	public void setTurn(boolean e) {
 		arrow.setVisible(e);
-//		if (e) {
-//			arrowThread.start();
-//		} else {
-//			Thread.yield();
-//		}
 	}
 
 }

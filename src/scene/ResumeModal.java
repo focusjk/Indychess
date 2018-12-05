@@ -20,9 +20,9 @@ public class ResumeModal extends VBox {
 		Button resume = new Button("images/resumeButton", 0, 0) {
 			@Override
 			public void onClicked() {
+				Main.getGameScreen().removeResumeModal();
 			}
 		};
-//		resume.setMouseTransparent(true);
 		Button newgame = new Button("images/newgameButton", 0, 0) {
 			@Override
 			public void onClicked() {

@@ -26,7 +26,7 @@ public class KingPiece extends ChessPiece {
 	}
 
 	@Override
-	public void onClicked() {
+	public void onActive() {
 		Main.getGameScreen().resetBoard();
 		int x = (int) getX();
 		int y = (int) getY();
@@ -42,7 +42,7 @@ public class KingPiece extends ChessPiece {
 			if (X == Main.getGameScreen().getStar().getX() && Y == Main.getGameScreen().getStar().getY())
 				continue;
 			Main.getGameScreen().getBoard()[X][Y].active();
-
+			
 		}
 	}
 
