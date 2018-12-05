@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import chessPiece.ChessPiece;
 import chessPiece.KingPiece;
 import chessPiece.PawnPiece;
+import chessPiece.Movable;
 import component.Button;
 import component.CellBoard;
-import component.Clickable;
 import component.PlayerProfile;
 import component.Star;
 import component.Timer;
@@ -34,7 +34,6 @@ public class Game extends Pane {
 	private int turn = 1;
 	private Star star = null;
 	private boolean isEnd = false;
-	private AudioClip selectSound = new AudioClip(ClassLoader.getSystemResource("sound/selectSound.mp3").toString());
 	private AudioClip eatSound = new AudioClip(ClassLoader.getSystemResource("sound/eatSound.mp3").toString());
 	private AudioClip disableSound = new AudioClip(ClassLoader.getSystemResource("sound/cantMoveSound.mp3").toString());
 	private AudioClip starSound = new AudioClip(ClassLoader.getSystemResource("sound/promotionSound.mp3").toString());
@@ -83,17 +82,15 @@ public class Game extends Pane {
 
 			@Override
 			public void handle(MouseEvent event) {
-				System.out.println(event.toString());
 				removeResumeModal();
-
+				
 				Object o = event.getTarget();
 				if (o instanceof ChessPiece) {
 					double x = ((ChessPiece) o).getX();
 					double y = ((ChessPiece) o).getY();
 
 					if (((ChessPiece) o).getPlayer() == turn) {
-						((Clickable) o).onClicked();
-						
+						((Movable) o).onClicked();
 					} else if (clickedChess != null && ((ChessPiece) o).getPlayer() != turn
 							&& board[(int) x][(int) y].isActive()) {
 						if (clickedChess instanceof PawnPiece) {
@@ -127,10 +124,8 @@ public class Game extends Pane {
 					resetBoard();
 					changeTurn();
 					eatSound.play();
-				} else if (o instanceof Clickable) {
-					((Clickable) o).onClicked();
-					selectSound.play();
 				}
+				
 				for (int i = 0; i < chessPiece.size(); i++) {
 					chessPiece.get(i).setImage(1);
 				}
@@ -259,7 +254,6 @@ public class Game extends Pane {
 			player2.setTurn(false);
 		}
 		timer.resetTime();
-
 	}
 
 	public ChessPiece getClickedChess() {
@@ -292,5 +286,6 @@ public class Game extends Pane {
 	public Star getStar() {
 		return star;
 	}
+	
 
 }

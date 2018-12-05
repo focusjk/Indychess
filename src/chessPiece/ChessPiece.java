@@ -1,6 +1,5 @@
 package chessPiece;
 
-import component.Clickable;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,7 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
 import main.Main;
 
-public abstract class ChessPiece extends Pane implements Clickable {
+public abstract class ChessPiece extends Pane implements Movable {
 	private double x;
 	private double y;
 	private int player;
@@ -50,7 +49,6 @@ public abstract class ChessPiece extends Pane implements Clickable {
 				event.consume();
 			}
 		});
-
 	}
 
 	@Override
@@ -60,8 +58,8 @@ public abstract class ChessPiece extends Pane implements Clickable {
 		selectSound.play();
 		onActive();		
 	}
-	public abstract void onActive();
-	public abstract boolean isMovable();
+	public abstract void onActive(); 
+	
 
 	public void setImage(int type) {
 		if (type == 1) {

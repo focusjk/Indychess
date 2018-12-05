@@ -20,7 +20,7 @@ public class BishopPiece extends ChessPiece {
 		getMove(x + 1, y + 1, 1, 1, true);
 	}
 
-	public boolean getMove(int x, int y, int addX, int addY, boolean isClicked) {
+	private boolean getMove(int x, int y, int addX, int addY, boolean isClicked) {
 		if (x > 6 || x < 1 || y > 6 || y < 1)
 			return false;
 

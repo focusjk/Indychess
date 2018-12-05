@@ -47,10 +47,8 @@ public class Login extends VBox {
 					setBackground(i);
 					i++;
 					i %= 40;
-					System.out.println(i);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
-					System.out.println("Stop Background Thread");
 					break;
 				}
 			}
