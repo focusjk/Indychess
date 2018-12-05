@@ -26,7 +26,7 @@ public class KnightPiece extends ChessPiece {
 	}
 
 	@Override
-	public void onActive() {
+	protected void onActive() {
 		Main.getGameScreen().resetBoard();
 		int x = (int) getX();
 		int y = (int) getY();

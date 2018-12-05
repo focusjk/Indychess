@@ -161,7 +161,7 @@ public class Game extends Pane {
 						if (!canMove) {
 							isEnd = true;
 							timer.stop();
-							getChildren().add(new CongratModal(player1.getName() + " & " + player2.getName(), "draw"));
+							getChildren().add(new CongratModal(player1.getName() + "\n & \n" + player2.getName(), "draw"));
 						}
 					}
 
@@ -277,7 +277,6 @@ public class Game extends Pane {
 			timer.start();
 		}
 	}
-
 
 	public ArrayList<ChessPiece> getChessPiece() {
 		return chessPiece;

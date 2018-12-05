@@ -13,7 +13,7 @@ public class PawnPiece extends ChessPiece {
 	}
 
 	@Override
-	public void onActive() {
+	protected void onActive() {
 		Main.getGameScreen().resetBoard();
 		int x = (int) getX();
 		int y = (int) getY();
@@ -53,15 +53,7 @@ public class PawnPiece extends ChessPiece {
 
 	}
 
-	public void getMove1(int x, int y) {
-		if (x > 6 || x < 1 || y > 6 || y < 1)
-			return;
-		if (Main.getGameScreen().findChessPiece(x, y) != null)
-			return;
-		Main.getGameScreen().getBoard()[x][y].active();
-	}
-
-	public boolean toKill(int x, int y, boolean isClicked) {
+	private boolean toKill(int x, int y, boolean isClicked) {
 		if (x > 6 || x < 1 || y > 6 || y < 1)
 			return false;
 		ChessPiece temp = Main.getGameScreen().findChessPiece(x, y);
@@ -72,7 +64,7 @@ public class PawnPiece extends ChessPiece {
 		return true;
 	}
 
-	public boolean queenMove(int x, int y, int addX, int addY, boolean isClicked) {
+	private boolean queenMove(int x, int y, int addX, int addY, boolean isClicked) {
 		if (x > 6 || x < 1 || y > 6 || y < 1)
 			return false;
 		ChessPiece temp = Main.getGameScreen().findChessPiece(x, y);

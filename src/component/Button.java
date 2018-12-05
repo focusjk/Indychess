@@ -47,7 +47,7 @@ public abstract class Button extends ImageView {
 
 	public abstract void onClicked();
 
-	public void setImage(int type) {
+	private void setImage(int type) {
 		if (type == 1) {
 			setImage(new Image(ClassLoader.getSystemResource(imageName + ".png").toString()));
 		} else if (type == 2) {

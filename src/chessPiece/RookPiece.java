@@ -9,7 +9,7 @@ public class RookPiece extends ChessPiece {
 	}
 
 	@Override
-	public void onActive() {
+	protected void onActive() {
 		Main.getGameScreen().resetBoard();
 		int x = (int) getX();
 		int y = (int) getY();
@@ -21,7 +21,7 @@ public class RookPiece extends ChessPiece {
 
 	}
 
-	public boolean getMove(int x, int y, int addX, int addY, boolean isClicked) {
+	private boolean getMove(int x, int y, int addX, int addY, boolean isClicked) {
 		if (x > 6 || x < 1 || y > 6 || y < 1)
 			return false;
 		ChessPiece temp = Main.getGameScreen().findChessPiece(x, y);

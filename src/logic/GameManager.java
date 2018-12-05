@@ -3,8 +3,8 @@ package logic;
 import java.util.ArrayList;
 import java.util.Random;
 
-import chessPiece.BishopPiece;
 import chessPiece.ChessPiece;
+import chessPiece.BishopPiece;
 import chessPiece.KingPiece;
 import chessPiece.KnightPiece;
 import chessPiece.PawnPiece;
@@ -26,7 +26,6 @@ public class GameManager {
 	
 	public void initialChess() {
 		chessPiece = new ArrayList<>();
-
 		for (int j = 1; j <= 2; j++) {
 			for (int i = 1; i <= 6; i++) {
 				if (i == 4 && j == 1) {
