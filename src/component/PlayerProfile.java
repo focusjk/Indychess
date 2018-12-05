@@ -9,6 +9,8 @@ import javafx.scene.text.Text;
 
 import java.util.Random;
 
+import exception.ThreadInterruptedException;
+
 public class PlayerProfile extends Pane {
 	private int player;
 	private String name;
@@ -22,7 +24,7 @@ public class PlayerProfile extends Pane {
 		super();
 		this.player = player;
 		this.name = name;
-		
+
 		// set emoji1
 		Random rand = new Random();
 		int number = rand.nextInt(9) + 1;
@@ -44,40 +46,48 @@ public class PlayerProfile extends Pane {
 		arrow = new ImageView(
 				new Image(ClassLoader.getSystemResource("images/redArrow" + this.player + ".png").toString()));
 		arrow.setVisible(false);
-		
+
 		arrowPosition = 0;
 		up = 1;
 		arrowThread = new Thread("arrow") {
 			@Override
 			public void run() {
-				while (true) {
-					try {
-						sleep(60);
-						arrowPosition += 1;
-						if (arrowPosition > 10) {
-							up *= -1;
-							arrowPosition %= 10;
+//				try {
+					while (true) {
+						try {
+							sleep(60);
+							arrowPosition += 1;
+							if (arrowPosition > 10) {
+								up *= -1;
+								arrowPosition %= 10;
+							}
+							if (player == 1) {
+								if (up == 1)
+									arrow.setLayoutY(150 + arrowPosition);
+								else
+									arrow.setLayoutY(150 + 10 - arrowPosition);
+							} else {
+								if (up == 1)
+									arrow.setLayoutY(490 - arrowPosition);
+								else
+									arrow.setLayoutY(490 - 10 + arrowPosition);
+							}
+//						} catch (InterruptedException e) {
+//							throw new ThreadInterruptedException();
+						} catch (Exception e) {
+							e.printStackTrace();
 						}
-						if (player == 1) {
-							if (up == 1)
-								arrow.setLayoutY(150 + arrowPosition);
-							else
-								arrow.setLayoutY(150 + 10 - arrowPosition);
-						} else {
-							if (up == 1)
-								arrow.setLayoutY(490 - arrowPosition);
-							else
-								arrow.setLayoutY(490 - 10 + arrowPosition);
-						}
-					} catch (InterruptedException e) {
-						//TODO
-						e.printStackTrace();
 					}
+//				} catch (ThreadInterruptedException e) {
+//					System.out.println("Arrow of player" + player + " thread is stoped");
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
 
-				}
 			}
 		};
-
+//		arrowThread.start();
+		
 		if (this.player == 1) {
 			emoji.setLayoutX(20);
 			emoji.setLayoutY(20);
@@ -102,7 +112,6 @@ public class PlayerProfile extends Pane {
 			arrow.setLayoutX(45);
 			arrow.setLayoutY(490);
 		}
-		arrowThread.start();
 		getChildren().addAll(emoji, nameTag, playerTag, arrow);
 	}
 
@@ -117,6 +126,10 @@ public class PlayerProfile extends Pane {
 
 	public void setTurn(boolean e) {
 		arrow.setVisible(e);
+//		if (e)
+//			arrowThread.start();
+//		else
+//			arrowThread.interrupt();
 	}
 
 }

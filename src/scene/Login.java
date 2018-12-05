@@ -3,6 +3,8 @@ package scene;
 import component.Button;
 import component.InputField;
 import exception.InputNotFilledException;
+import exception.ThreadInterruptedException;
+import exception.WrongFormatInputException;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -34,27 +36,34 @@ public class Login extends VBox {
 		setAlignment(Pos.CENTER);
 
 		// set background
-		background = new Image(
-				ClassLoader.getSystemResource("images/loginBackground/background1-" + backgroundNumber + ".jpg").toString());
+		background = new Image(ClassLoader
+				.getSystemResource("images/loginBackground/background1-" + backgroundNumber + ".jpg").toString());
 		setBackground(new Background(new BackgroundImage(background, null, null, null,
 				new BackgroundSize(1000, 700, false, false, false, false))));
-		
+
 		this.backgroundThread = new Thread(() -> {
 			int i = 1;
-			while (true) {
-				try {
-					Thread.sleep(35);
-					setBackground(i);
-					i++;
-					i %= 40;
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-					break;
+			try {
+				while (true) {
+					try {
+						Thread.sleep(35);
+						setBackground(i);
+						i++;
+						i %= 40;
+					} catch (InterruptedException e) {
+						throw new ThreadInterruptedException();
+					} catch (Exception e) {
+						throw e;
+					}
 				}
+			} catch (ThreadInterruptedException e) {
+				System.out.println("Login background thread is stoped");
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		});
 		this.backgroundThread.start();
-		
+
 		// set box
 		VBox box = new VBox();
 		box.setPadding(new Insets(20));
@@ -80,20 +89,24 @@ public class Login extends VBox {
 					String name1 = player1.getText();
 					String name2 = player2.getText();
 					if (name1.isEmpty() || name2.isEmpty()) {
-						throw new InputNotFilledException(0);
+						throw new InputNotFilledException();
+					} else if (name1.length() > 8 || name2.length() > 8) {
+						throw new WrongFormatInputException();
 					} else {
 						Main.setup("game");
 						backgroundThread.interrupt();
 					}
 				} catch (InputNotFilledException e) {
-					Alert a = new Alert(Alert.AlertType.INFORMATION, "Please Fill Player Name");
-					a.show();
+					System.out.println("InputNotFilledException in Login");
+				} catch (WrongFormatInputException e) {
+					System.out.println("WrongFormatInputException in Login");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		};
 		box.getChildren().addAll(logo, player1, player2, startButton);
+
 		getChildren().add(box);
 	}
 
@@ -131,8 +144,8 @@ public class Login extends VBox {
 
 	public void setBackground(int number) {
 		backgroundNumber = number;
-		background = new Image(
-				ClassLoader.getSystemResource("images/loginBackground/background1-" + backgroundNumber + ".jpg").toString());
+		background = new Image(ClassLoader
+				.getSystemResource("images/loginBackground/background1-" + backgroundNumber + ".jpg").toString());
 		setBackground(new Background(new BackgroundImage(background, null, null, null,
 				new BackgroundSize(1000, 700, false, false, false, false))));
 	}

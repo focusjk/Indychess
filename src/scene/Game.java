@@ -68,7 +68,7 @@ public class Game extends Pane {
 		player2 = new PlayerProfile(player2Name, 2);
 		player2.setTurn(false);
 		player2.setMouseTransparent(true);
-		
+
 		// set timer
 		timer = new Timer(player1, player2);
 		timer.setLayoutX(400);
@@ -83,7 +83,7 @@ public class Game extends Pane {
 			@Override
 			public void handle(MouseEvent event) {
 				removeResumeModal();
-				
+
 				Object o = event.getTarget();
 				if (o instanceof ChessPiece) {
 					double x = ((ChessPiece) o).getX();
@@ -125,7 +125,7 @@ public class Game extends Pane {
 					changeTurn();
 					eatSound.play();
 				}
-				
+
 				for (int i = 0; i < chessPiece.size(); i++) {
 					chessPiece.get(i).setImage(1);
 				}
@@ -161,11 +161,13 @@ public class Game extends Pane {
 						if (!canMove) {
 							isEnd = true;
 							timer.stop();
-							getChildren().add(new CongratModal(player1.getName() + "\n & \n" + player2.getName(), "draw"));
+							getChildren()
+									.add(new CongratModal(player1.getName() + "\n & \n" + player2.getName(), "draw"));
 						}
 					}
 
 				}
+
 				event.consume();
 			}
 		});
@@ -250,8 +252,8 @@ public class Game extends Pane {
 			player2.setTurn(true);
 		} else {
 			turn = 1;
-			player1.setTurn(true);
 			player2.setTurn(false);
+			player1.setTurn(true);
 		}
 		timer.resetTime();
 	}
@@ -270,7 +272,7 @@ public class Game extends Pane {
 			timer.start();
 		}
 	}
-	
+
 	public void removeResumeModal() {
 		if (getChildren().contains(resumeModal)) {
 			getChildren().remove(resumeModal);
@@ -285,6 +287,5 @@ public class Game extends Pane {
 	public Star getStar() {
 		return star;
 	}
-	
 
 }

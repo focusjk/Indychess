@@ -1,6 +1,7 @@
 package scene;
 
 import component.Button;
+import exception.ThreadInterruptedException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -34,19 +35,28 @@ public class CongratModal extends Pane {
 		img.setLayoutY(50);
 
 		this.backgroundThread = new Thread(() -> {
-			int i = 1;
-			while (true) {
-				try {
-					Thread.sleep(40);
-					img.setImage(new Image(
-							ClassLoader.getSystemResource("images/congratModal/congrat" + i + ".jpg").toString()));
-					i++;
-					i %= 133;
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-					break;
+			try {
+				int i = 1;
+				while (true) {
+					try {
+						Thread.sleep(40);
+						img.setImage(new Image(
+								ClassLoader.getSystemResource("images/congratModal/congrat" + i + ".jpg").toString()));
+						i++;
+						i %= 133;
+
+					} catch (InterruptedException e) {
+						throw new ThreadInterruptedException();
+					} catch (Exception e) {
+						throw e;
+					}
 				}
+			} catch (ThreadInterruptedException e) {
+				System.out.println("Congrat background thread is stoped");
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
+
 		});
 		this.backgroundThread.start();
 
