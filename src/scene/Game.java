@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 import chessPiece.ChessPiece;
 import chessPiece.KingPiece;
-import chessPiece.PawnPiece;
 import chessPiece.Movable;
 import component.Button;
 import component.CellBoard;
@@ -93,12 +92,8 @@ public class Game extends Pane {
 						((Movable) o).onClicked();
 					} else if (clickedChess != null && ((ChessPiece) o).getPlayer() != turn
 							&& board[(int) x][(int) y].isActive()) {
-						if (clickedChess instanceof PawnPiece) {
-							((PawnPiece) clickedChess).setIsFirstMove();
-							((PawnPiece) clickedChess).setQueen((int) y);
-						}
 						removeChessPiece((ChessPiece) o);
-						clickedChess.setPosition(x, y);
+						((Movable) clickedChess).onMove(x,y);
 						changeTurn();
 						eatSound.play();
 					} else {
@@ -107,25 +102,15 @@ public class Game extends Pane {
 				} else if (o instanceof CellBoard && clickedChess != null) {
 					double x = ((CellBoard) o).getPositionX();
 					double y = ((CellBoard) o).getPositionY();
-
-					if (clickedChess instanceof PawnPiece) {
-						((PawnPiece) clickedChess).setIsFirstMove();
-						((PawnPiece) clickedChess).setQueen((int) y);
-					}
-
 					if (star.getX() == x && star.getY() == y) {
 						starSound.play();
 						starModal = new StarModal(clickedChess, Main.getGameScreen());
 						getChildren().add(starModal);
 						timer.stop();
 					}
-					clickedChess.setPosition(x, y);
+					((Movable) clickedChess).onMove(x,y);
 					changeTurn();
 					eatSound.play();
-				}
-
-				for (int i = 0; i < chessPiece.size(); i++) {
-					chessPiece.get(i).setImage(1);
 				}
 
 				if (!isEnd) {
@@ -255,7 +240,9 @@ public class Game extends Pane {
 		timer.resetTime();
 		resetBoard();
 		setClickedChess(null);
-		
+		for (int i = 0; i < chessPiece.size(); i++) {
+			chessPiece.get(i).setImage(1);
+		}
 	}
 
 	public ChessPiece getClickedChess() {

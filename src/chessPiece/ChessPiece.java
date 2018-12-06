@@ -59,6 +59,11 @@ public abstract class ChessPiece extends Pane implements Movable {
 		selectSound.play();
 		onActive();
 	}
+	
+	@Override
+	public void onMove(double x, double y) {
+		setPosition(x, y);
+	}
 
 	protected abstract void onActive();
 

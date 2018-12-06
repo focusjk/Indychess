@@ -50,7 +50,13 @@ public class PawnPiece extends ChessPiece {
 				toKill(x + 1, y - 1, true);
 			}
 		}
-
+	}
+	
+	@Override
+	public void onMove(double x, double y) {
+		setPosition(x, y);
+		setIsFirstMove();
+		setQueen();
 	}
 
 	private boolean toKill(int x, int y, boolean isClicked) {
@@ -82,8 +88,8 @@ public class PawnPiece extends ChessPiece {
 		isFirstMove = false;
 	}
 
-	public void setQueen(int y) {
-		if ((getPlayer() == 1 && y == 6) || (getPlayer() == 2 && y == 1))
+	public void setQueen() {
+		if ((getPlayer() == 1 && getY() == 6) || (getPlayer() == 2 && getY() == 1))
 			isQueen = true;
 	}
 
