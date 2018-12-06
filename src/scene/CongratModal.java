@@ -1,6 +1,7 @@
 package scene;
 
 import component.Button;
+import exception.ImageNotFoundException;
 import exception.ThreadInterruptedException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,12 +28,11 @@ public class CongratModal extends Pane {
 		congratSound.setCycleCount(AudioClip.INDEFINITE);
 		congratSound.play();
 
-		ImageView img = new ImageView(
-				new Image(ClassLoader.getSystemResource("images/congratModal/congrat0.jpg").toString()));
-		img.setFitHeight(600);
-		img.setFitWidth(450);
-		img.setLayoutX(275);
-		img.setLayoutY(50);
+		ImageView backgroundImg = new ImageView();
+		backgroundImg.setFitHeight(600);
+		backgroundImg.setFitWidth(450);
+		backgroundImg.setLayoutX(275);
+		backgroundImg.setLayoutY(50);
 
 		this.backgroundThread = new Thread(() -> {
 			try {
@@ -40,20 +40,26 @@ public class CongratModal extends Pane {
 				while (true) {
 					try {
 						Thread.sleep(40);
-						img.setImage(new Image(
+						backgroundImg.setImage(new Image(
 								ClassLoader.getSystemResource("images/congratModal/congrat" + i + ".jpg").toString()));
 						i++;
 						i %= 133;
-
 					} catch (InterruptedException e) {
 						throw new ThreadInterruptedException();
-					} catch (Exception e) {
+					} catch(NullPointerException e) {
+						backgroundThread.interrupt();
+						throw new ImageNotFoundException(5);
+					}catch (Exception e) {
 						throw e;
 					}
 				}
 			} catch (ThreadInterruptedException e) {
 				System.out.println("Congrat background thread is stoped");
-			} catch (Exception e) {
+			} catch (ImageNotFoundException e) {
+				backgroundImg.setImage(new Image(ClassLoader.getSystemResource("images/errorIcon.png").toString()));
+				System.out.println("Can not setImage in CongratModal background");
+				System.out.println("Congrat background thread is stoped");
+			}catch (Exception e) {
 				e.printStackTrace();
 			}
 
@@ -87,7 +93,7 @@ public class CongratModal extends Pane {
 		winner.setLayoutX(350);
 		winner.setLayoutY(530);
 
-		getChildren().addAll(img, winner, statusText, name);
+		getChildren().addAll(backgroundImg, winner, statusText, name);
 	}
 
 }

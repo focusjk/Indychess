@@ -1,5 +1,6 @@
 package component;
 
+import exception.ImageNotFoundException;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,7 +14,11 @@ public abstract class Button extends ImageView {
 	public Button(String imageName, double x, double y) {
 		super();
 		this.imageName = imageName;
-		setImage(1);
+		try {
+			setImage(1);
+		} catch (ImageNotFoundException e) {
+			System.out.println("Can not setImage in Button constructor");
+		}
 		if (x != 0)
 			setLayoutX(x);
 		if (y != 0)
@@ -22,7 +27,11 @@ public abstract class Button extends ImageView {
 		setOnMouseEntered(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				setImage(2);
+				try {
+					setImage(2);
+				} catch (ImageNotFoundException e) {
+					System.out.println("Can not setImage in Button mouse entered");
+				}
 				event.consume();
 			}
 		});
@@ -30,7 +39,11 @@ public abstract class Button extends ImageView {
 		setOnMouseExited(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				setImage(1);
+				try {
+					setImage(1);
+				} catch (ImageNotFoundException e) {
+					System.out.println("Can not setImage in Button mouse exited");
+				}
 				event.consume();
 			}
 		});
@@ -47,11 +60,18 @@ public abstract class Button extends ImageView {
 
 	public abstract void onClicked();
 
-	private void setImage(int type) {
-		if (type == 1) {
-			setImage(new Image(ClassLoader.getSystemResource(imageName + ".png").toString()));
-		} else if (type == 2) {
-			setImage(new Image(ClassLoader.getSystemResource(imageName + "2.png").toString()));
+	private void setImage(int type) throws ImageNotFoundException {
+		try {
+			if (type == 1) {
+				setImage(new Image(ClassLoader.getSystemResource(imageName + ".png").toString()));
+			} else if (type == 2) {
+				setImage(new Image(ClassLoader.getSystemResource(imageName + "2.png").toString()));
+			}
+		} catch (NullPointerException e) {
+			setImage(new Image(ClassLoader.getSystemResource("images/errorIcon.png").toString()));
+			throw new ImageNotFoundException(2);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

@@ -20,6 +20,7 @@ import component.CellBoard;
 import component.PlayerProfile;
 import component.Star;
 import component.Timer;
+import exception.ImageNotFoundException;
 
 public class Game extends Pane {
 	private PlayerProfile player1;
@@ -127,7 +128,11 @@ public class Game extends Pane {
 				}
 
 				for (int i = 0; i < chessPiece.size(); i++) {
-					chessPiece.get(i).setImage(1);
+					try {
+						chessPiece.get(i).setImage(1);
+					} catch (ImageNotFoundException e) {
+						System.out.println("Can not setImage in GameScreen");
+					}
 				}
 
 				if (!isEnd) {

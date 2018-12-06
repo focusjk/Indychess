@@ -9,13 +9,14 @@ import javafx.scene.text.Text;
 
 import java.util.Random;
 
-import exception.ThreadInterruptedException;
+import exception.ImageNotFoundException;
 
 public class PlayerProfile extends Pane {
 	private int player;
 	private String name;
 	private Text nameTag;
 	private ImageView arrow;
+	private ImageView emoji;
 	private int arrowPosition;
 	private int up;
 	private Thread arrowThread;
@@ -28,10 +29,14 @@ public class PlayerProfile extends Pane {
 		// set emoji1
 		Random rand = new Random();
 		int number = rand.nextInt(9) + 1;
-		ImageView emoji = new ImageView(
-				new Image(ClassLoader.getSystemResource("images/emoji" + number + ".png").toString()));
+		emoji = new ImageView();
 		emoji.setLayoutX(10);
 		emoji.setLayoutY(10);
+		try {
+			setImg(number);
+		} catch (ImageNotFoundException e) {
+			System.out.println("Can not setImage in PlayerProfile emoji");
+		}
 
 		// text
 		nameTag = new Text(name);
@@ -43,9 +48,13 @@ public class PlayerProfile extends Pane {
 		playerTag.setFill(Color.GRAY);
 
 		// arrow
-		arrow = new ImageView(
-				new Image(ClassLoader.getSystemResource("images/redArrow" + this.player + ".png").toString()));
+		arrow = new ImageView();
 		arrow.setVisible(false);
+		try {
+			setImg(0);
+		} catch (ImageNotFoundException e) {
+			System.out.println("Can not setImage in PlayerProfile arrow");
+		}
 
 		arrowPosition = 0;
 		up = 1;
@@ -53,31 +62,31 @@ public class PlayerProfile extends Pane {
 			@Override
 			public void run() {
 //				try {
-					while (true) {
-						try {
-							sleep(60);
-							arrowPosition += 1;
-							if (arrowPosition > 10) {
-								up *= -1;
-								arrowPosition %= 10;
-							}
-							if (player == 1) {
-								if (up == 1)
-									arrow.setLayoutY(150 + arrowPosition);
-								else
-									arrow.setLayoutY(150 + 10 - arrowPosition);
-							} else {
-								if (up == 1)
-									arrow.setLayoutY(490 - arrowPosition);
-								else
-									arrow.setLayoutY(490 - 10 + arrowPosition);
-							}
+				while (true) {
+					try {
+						sleep(60);
+						arrowPosition += 1;
+						if (arrowPosition > 10) {
+							up *= -1;
+							arrowPosition %= 10;
+						}
+						if (player == 1) {
+							if (up == 1)
+								arrow.setLayoutY(150 + arrowPosition);
+							else
+								arrow.setLayoutY(150 + 10 - arrowPosition);
+						} else {
+							if (up == 1)
+								arrow.setLayoutY(490 - arrowPosition);
+							else
+								arrow.setLayoutY(490 - 10 + arrowPosition);
+						}
 //						} catch (InterruptedException e) {
 //							throw new ThreadInterruptedException();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
+				}
 //				} catch (ThreadInterruptedException e) {
 //					System.out.println("Arrow of player" + player + " thread is stoped");
 //				} catch (Exception e) {
@@ -87,7 +96,7 @@ public class PlayerProfile extends Pane {
 			}
 		};
 //		arrowThread.start();
-		
+
 		if (this.player == 1) {
 			emoji.setLayoutX(20);
 			emoji.setLayoutY(20);
@@ -122,6 +131,26 @@ public class PlayerProfile extends Pane {
 	public void setName(String name) {
 		this.name = name;
 		nameTag.setText(name);
+	}
+
+	private void setImg(int type) throws ImageNotFoundException {
+		try {
+			if (type == 0) {
+				arrow.setImage(
+						new Image(ClassLoader.getSystemResource("images/redArrow" + this.player + ".png").toString()));
+			} else {
+				emoji.setImage(new Image(ClassLoader.getSystemResource("images/emoji" + type + ".png").toString()));
+			}
+		} catch (NullPointerException e) {
+			// TODO
+			if (type == 0)
+				arrow.setImage(new Image(ClassLoader.getSystemResource("images/errorIcon.png").toString()));
+			else
+				emoji.setImage(new Image(ClassLoader.getSystemResource("images/errorIcon.png").toString()));
+			throw new ImageNotFoundException(3);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void setTurn(boolean e) {

@@ -15,24 +15,24 @@ public class CellBoard extends ImageView {
 		this.y = y;
 		this.color = (int) ((x + y) % 2) + 1;
 		this.isActive = false;
-		setImage(new Image(ClassLoader.getSystemResource("images/cell" + this.color + ".png").toString()));
+		setImg(this.color);
 		setLayoutX(260 + (80 * (x - 1)));
 		setLayoutY(110 + (80 * (y - 1)));
 		setMouseTransparent(true);
 	}
 
 	public void inactive() {
-		setImage(new Image(ClassLoader.getSystemResource("images/cell" + this.color + ".png").toString()));
+		setImg(this.color);
 		setMouseTransparent(true);
 		isActive = false;
 	}
 
 	public void active() {
-		setImage(new Image(ClassLoader.getSystemResource("images/cell3.png").toString()));
+		setImg(3);
 		setMouseTransparent(false);
 		isActive = true;
 	}
-	
+
 	public boolean isActive() {
 		return isActive;
 	}
@@ -43,6 +43,16 @@ public class CellBoard extends ImageView {
 
 	public double getPositionY() {
 		return y;
+	}
+
+	private void setImg(int type) {
+		if (type == 1)
+			setImage(new Image(ClassLoader.getSystemResource("images/cell1.png").toString()));
+		else if (type == 2)
+			setImage(new Image(ClassLoader.getSystemResource("images/cell2.png").toString()));
+		else if (type == 3)
+			setImage(new Image(ClassLoader.getSystemResource("images/cell3.png").toString()));
+
 	}
 
 }

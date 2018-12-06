@@ -2,12 +2,12 @@ package scene;
 
 import component.Button;
 import component.InputField;
+import exception.ImageNotFoundException;
 import exception.InputNotFilledException;
 import exception.ThreadInterruptedException;
 import exception.WrongFormatInputException;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -36,40 +36,10 @@ public class Login extends VBox {
 		setAlignment(Pos.CENTER);
 
 		// set background
-		background = new Image(ClassLoader
-				.getSystemResource("images/loginBackground/background1-" + backgroundNumber + ".jpg").toString());
-		setBackground(new Background(new BackgroundImage(background, null, null, null,
-				new BackgroundSize(1000, 700, false, false, false, false))));
-
-		this.backgroundThread = new Thread(() -> {
-			int i = 1;
-			try {
-				while (true) {
-					try {
-						Thread.sleep(35);
-						setBackground(i);
-						i++;
-						i %= 40;
-					} catch (InterruptedException e) {
-						throw new ThreadInterruptedException();
-					} catch (Exception e) {
-						throw e;
-					}
-				}
-			} catch (ThreadInterruptedException e) {
-				System.out.println("Login background thread is stoped");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-		this.backgroundThread.start();
-
-		// set box
-		VBox box = new VBox();
-		box.setPadding(new Insets(20));
-		box.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-		box.setSpacing(15);
-		box.setAlignment(Pos.CENTER);
+//		background = new Image(ClassLoader
+//				.getSystemResource("images/loginBackground/background1-" + backgroundNumber + ".jpg").toString());
+//		setBackground(new Background(new BackgroundImage(background, null, null, null,
+//				new BackgroundSize(1000, 700, false, false, false, false))));
 
 		// set logo
 		logo = new ImageView(new Image(ClassLoader.getSystemResource("images/logo.png").toString()));
@@ -105,9 +75,52 @@ public class Login extends VBox {
 				}
 			}
 		};
+		// set box
+		VBox box = new VBox();
+		box.setPadding(new Insets(20));
+		box.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
+		box.setSpacing(15);
+		box.setAlignment(Pos.CENTER);
 		box.getChildren().addAll(logo, player1, player2, startButton);
 
 		getChildren().add(box);
+
+		this.backgroundThread = new Thread(() -> {
+			int i = 1;
+			try {
+				while (true) {
+					try {
+						Thread.sleep(35);
+						setBackground(i);
+						i++;
+						i %= 40;
+					} catch (InterruptedException e) {
+						throw new ThreadInterruptedException();
+					} catch (Exception e) {
+						throw e;
+					}
+				}
+			} catch (ThreadInterruptedException e) {
+				System.out.println("Login background thread is stoped");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+		this.backgroundThread.start();
+
+		try {
+			try {
+				logo.setImage(new Image(ClassLoader.getSystemResource("images/logo.png").toString()));
+			} catch (NullPointerException e) {
+				throw new ImageNotFoundException(6);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (ImageNotFoundException exception) {
+			logo.setImage(new Image(ClassLoader.getSystemResource("images/errorIcon.png").toString()));
+			System.out.println("Can not setImage in Login logo");
+		}
+
 	}
 
 	public InputField getPlayer1() {
@@ -144,10 +157,23 @@ public class Login extends VBox {
 
 	public void setBackground(int number) {
 		backgroundNumber = number;
-		background = new Image(ClassLoader
-				.getSystemResource("images/loginBackground/background1-" + backgroundNumber + ".jpg").toString());
-		setBackground(new Background(new BackgroundImage(background, null, null, null,
-				new BackgroundSize(1000, 700, false, false, false, false))));
+		try {
+			try {
+				background = new Image(
+						ClassLoader.getSystemResource("images/loginBackground/backgrounds1-" + backgroundNumber + ".jpg")
+								.toString());
+				setBackground(new Background(new BackgroundImage(background, null, null, null,
+						new BackgroundSize(1000, 700, false, false, false, false))));
+			} catch (NullPointerException e) {
+				throw new ImageNotFoundException(6);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (ImageNotFoundException exception) {
+			this.backgroundThread.interrupt();
+			System.out.println("Can not setImage in Login background");
+		}
+
 	}
 
 }

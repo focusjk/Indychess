@@ -1,5 +1,6 @@
 package chessPiece;
 
+import exception.ImageNotFoundException;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -29,7 +30,12 @@ public abstract class ChessPiece extends Pane implements Movable {
 		setX(x);
 		setY(y);
 		img = new ImageView();
-		setImage(1);
+		try {
+			setImage(1);
+		} catch (ImageNotFoundException e) {
+			System.out.println("Can not setImage in ChessPiece constructor");
+		}
+
 		img.setMouseTransparent(true);
 		getChildren().add(this.img);
 
@@ -37,7 +43,11 @@ public abstract class ChessPiece extends Pane implements Movable {
 			@Override
 			public void handle(MouseEvent event) {
 				if (!this.equals(Main.getGameScreen().getClickedChess()))
-					setImage(2);
+					try {
+						setImage(2);
+					} catch (ImageNotFoundException e) {
+						System.out.println("Can not setImage in ChessPiece mouse entered");
+					}
 				event.consume();
 			}
 		});
@@ -45,7 +55,11 @@ public abstract class ChessPiece extends Pane implements Movable {
 		setOnMouseExited(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				setImage(1);
+				try {
+					setImage(1);
+				} catch (ImageNotFoundException e) {
+					System.out.println("Can not setImage in ChessPiece mouse exited");
+				}
 				event.consume();
 			}
 		});
@@ -56,19 +70,27 @@ public abstract class ChessPiece extends Pane implements Movable {
 		Main.getGameScreen().setClickedChess(this);
 		Main.getGameScreen().resetBoard();
 		selectSound.play();
-		onActive();		
+		onActive();
 	}
-	protected abstract void onActive(); 
-	
 
-	public void setImage(int type) {
-		if (type == 1) {
-			if (this.equals(Main.getGameScreen().getClickedChess()))
-				img.setImage(new Image(ClassLoader.getSystemResource(image + player + "red.png").toString()));
-			else
-				img.setImage(new Image(ClassLoader.getSystemResource(image + player + ".png").toString()));
-		} else if (type == 2) {
-			img.setImage(new Image(ClassLoader.getSystemResource(image + player + "gray.png").toString()));
+	protected abstract void onActive();
+
+	public void setImage(int type) throws ImageNotFoundException {
+		try {
+			if (type == 1) {
+				if (this.equals(Main.getGameScreen().getClickedChess()))
+					img.setImage(new Image(ClassLoader.getSystemResource(image + player + "red.png").toString()));
+				else
+					img.setImage(new Image(ClassLoader.getSystemResource(image + player + ".png").toString()));
+			} else if (type == 2) {
+				img.setImage(new Image(ClassLoader.getSystemResource(image + player + "gray.png").toString()));
+			}
+		} catch (NullPointerException e) {
+			//TODO
+			img.setImage(new Image(ClassLoader.getSystemResource("images/errorIcon.png").toString()));
+			throw new ImageNotFoundException(1);			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -104,7 +126,11 @@ public abstract class ChessPiece extends Pane implements Movable {
 
 	public void setPlayer(int player) {
 		this.player = player;
-		setImage(1);
+		try {
+			setImage(1);
+		} catch (ImageNotFoundException e) {
+			System.out.println("Can not setImage in setPlayer " + player);
+		}
 	}
 
 }
