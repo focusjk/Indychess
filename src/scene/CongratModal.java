@@ -43,13 +43,14 @@ public class CongratModal extends Pane {
 					i %= 133;
 				} catch (InterruptedException e) {
 					System.err.println("CongratModal: Thread is interrupted");
+					break;
 				} catch (NullPointerException e) {
 					backgroundThread.interrupt();
 					backgroundImg.setImage(new Image(ClassLoader.getSystemResource("images/errorIcon.png").toString()));
 					System.out.println("Congrat background thread is stoped");
 					System.err.println("CongratModal Image is not found");
 				} catch (Exception e) {
-					throw e;
+					e.printStackTrace();
 				}
 			}
 		});

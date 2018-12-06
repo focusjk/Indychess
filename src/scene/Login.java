@@ -93,7 +93,7 @@ public class Login extends VBox {
 					i %= 40;
 				} catch (InterruptedException e) {
 					System.err.println("Login: Thread is interrupted");
-
+					break;
 				} catch (Exception e) {
 					throw e;
 				}

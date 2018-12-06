@@ -145,10 +145,14 @@ public class Game extends Pane {
 					if (isWin1 && !isWin2) {
 						isEnd = true;
 						timer.stop();
+						player1.stopThread();
+						player2.stopThread();
 						getChildren().add(new CongratModal(player1.getName(), "winner"));
 					} else if (!isWin1 && isWin2) {
 						isEnd = true;
 						timer.stop();
+						player1.stopThread();
+						player2.stopThread();
 						getChildren().add(new CongratModal(player2.getName(), "winner"));
 					} else {
 						boolean canMove = false;
@@ -161,6 +165,8 @@ public class Game extends Pane {
 						if (!canMove) {
 							isEnd = true;
 							timer.stop();
+							player1.stopThread();
+							player2.stopThread();
 							getChildren()
 									.add(new CongratModal(player1.getName() + "\n & \n" + player2.getName(), "draw"));
 						}

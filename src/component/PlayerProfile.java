@@ -51,7 +51,6 @@ public class PlayerProfile extends Pane {
 		arrowThread = new Thread("arrow") {
 			@Override
 			public void run() {
-//				try {
 				while (true) {
 					try {
 						sleep(60);
@@ -71,21 +70,16 @@ public class PlayerProfile extends Pane {
 							else
 								arrow.setLayoutY(490 - 10 + arrowPosition);
 						}
-//						} catch (InterruptedException e) {
-//							throw new ThreadInterruptedException();
+					} catch (InterruptedException e) {
+						System.err.println("Arrow: Thread is interrupted");
+						break;
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
-//				} catch (ThreadInterruptedException e) {
-//					System.out.println("Arrow of player" + player + " thread is stoped");
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-
 			}
 		};
-//		arrowThread.start();
+		arrowThread.start();
 
 		if (this.player == 1) {
 			emoji.setLayoutX(20);
@@ -142,12 +136,12 @@ public class PlayerProfile extends Pane {
 		}
 	}
 
-	public void setTurn(boolean e) {
-		arrow.setVisible(e);
-//		if (e)
-//			arrowThread.start();
-//		else
-//			arrowThread.interrupt();
+	public void setTurn(boolean isPlaying) {
+		arrow.setVisible(isPlaying);
+	}
+
+	public void stopThread() {
+		this.arrowThread.interrupt();
 	}
 
 }
