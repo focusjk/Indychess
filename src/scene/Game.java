@@ -142,6 +142,7 @@ public class Game extends Pane {
 							}
 						}
 					}
+					
 					if (isWin1 && !isWin2) {
 						isEnd = true;
 						timer.stop();
@@ -156,13 +157,15 @@ public class Game extends Pane {
 						getChildren().add(new CongratModal(player2.getName(), "winner"));
 					} else {
 						boolean canMove = false;
+						boolean canKillKing = false;
 						for (int i = 0; i < chessPiece.size(); i++) {
+							canKillKing = canKillKing || chessPiece.get(i).canKillKing();
 							if (chessPiece.get(i).getPlayer() == turn && chessPiece.get(i).isMovable()) {
 								canMove = true;
 								break;
 							}
 						}
-						if (!canMove) {
+						if (!canMove || canKillKing) {
 							isEnd = true;
 							timer.stop();
 							player1.stopThread();

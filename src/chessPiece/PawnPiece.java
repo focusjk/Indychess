@@ -119,5 +119,39 @@ public class PawnPiece extends ChessPiece {
 			}
 		}
 	}
+	
+	@Override
+	public boolean canKillKing() {
+//		int x = (int) getX();
+//		int y = (int) getY();
+//
+//		if (isQueen) {
+//			return queenMove(x - 1, y - 1, -1, -1, false) || queenMove(x, y - 1, 0, -1, false)
+//					|| queenMove(x + 1, y - 1, 1, -1, false) || queenMove(x - 1, y, -1, 0, false)
+//					|| queenMove(x + 1, y, 1, 0, false) || queenMove(x - 1, y + 1, -1, 1, false)
+//					|| queenMove(x, y + 1, 0, 1, false) || queenMove(x + 1, y + 1, 1, 1, false);
+//		} else {
+//			if (getPlayer() == 1) {
+//				if (x <= 6 && x >= 1 && y + 1 <= 6 && y + 1 >= 1
+//						&& Main.getGameScreen().findChessPiece(x, y + 1) == null)
+//					return true;
+//				if (isFirstMove && x <= 6 && x >= 1 && y + 2 <= 6 && y + 2 >= 1
+//						&& Main.getGameScreen().findChessPiece(x, y + 2) == null
+//						&& Main.getGameScreen().findChessPiece(x, y + 1) == null)
+//					return true;
+//				return toKill(x - 1, y + 1, false) || toKill(x + 1, y + 1, false);
+//			} else {
+//				if (x <= 6 && x >= 1 && y - 1 <= 6 && y - 1 >= 1
+//						&& Main.getGameScreen().findChessPiece(x, y - 1) == null)
+//					return true;
+//				if (isFirstMove && x <= 6 && x >= 1 && y - 2 <= 6 && y - 2 >= 1
+//						&& Main.getGameScreen().findChessPiece(x, y - 2) == null
+//						&& Main.getGameScreen().findChessPiece(x, y - 1) == null)
+//					return true;
+//				return toKill(x - 1, y - 1, false) || toKill(x + 1, y - 1, false);
+//			}
+//		}
+		return false;
+	}
 
 }
