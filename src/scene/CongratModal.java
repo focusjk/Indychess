@@ -1,7 +1,6 @@
 package scene;
 
 import component.Button;
-import exception.ImageNotFoundException;
 import exception.ThreadInterruptedException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -48,16 +47,15 @@ public class CongratModal extends Pane {
 						throw new ThreadInterruptedException();
 					} catch(NullPointerException e) {
 						backgroundThread.interrupt();
-						throw new ImageNotFoundException(5);
+						backgroundImg.setImage(new Image(ClassLoader.getSystemResource("images/errorIcon.png").toString()));
+						System.out.println("Congrat background thread is stoped");
+						System.err.println("CongratModal Image is not found");
+						
 					}catch (Exception e) {
 						throw e;
 					}
 				}
 			} catch (ThreadInterruptedException e) {
-				System.out.println("Congrat background thread is stoped");
-			} catch (ImageNotFoundException e) {
-				backgroundImg.setImage(new Image(ClassLoader.getSystemResource("images/errorIcon.png").toString()));
-				System.out.println("Can not setImage in CongratModal background");
 				System.out.println("Congrat background thread is stoped");
 			}catch (Exception e) {
 				e.printStackTrace();

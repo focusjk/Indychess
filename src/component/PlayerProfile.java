@@ -9,8 +9,6 @@ import javafx.scene.text.Text;
 
 import java.util.Random;
 
-import exception.ImageNotFoundException;
-
 public class PlayerProfile extends Pane {
 	private int player;
 	private String name;
@@ -32,11 +30,7 @@ public class PlayerProfile extends Pane {
 		emoji = new ImageView();
 		emoji.setLayoutX(10);
 		emoji.setLayoutY(10);
-		try {
-			setImg(number);
-		} catch (ImageNotFoundException e) {
-			System.out.println("Can not setImage in PlayerProfile emoji");
-		}
+		setImg(number);
 
 		// text
 		nameTag = new Text(name);
@@ -50,11 +44,7 @@ public class PlayerProfile extends Pane {
 		// arrow
 		arrow = new ImageView();
 		arrow.setVisible(false);
-		try {
-			setImg(0);
-		} catch (ImageNotFoundException e) {
-			System.out.println("Can not setImage in PlayerProfile arrow");
-		}
+		setImg(0);
 
 		arrowPosition = 0;
 		up = 1;
@@ -133,7 +123,7 @@ public class PlayerProfile extends Pane {
 		nameTag.setText(name);
 	}
 
-	private void setImg(int type) throws ImageNotFoundException {
+	private void setImg(int type) {
 		try {
 			if (type == 0) {
 				arrow.setImage(
@@ -142,12 +132,11 @@ public class PlayerProfile extends Pane {
 				emoji.setImage(new Image(ClassLoader.getSystemResource("images/emoji" + type + ".png").toString()));
 			}
 		} catch (NullPointerException e) {
-			// TODO
 			if (type == 0)
 				arrow.setImage(new Image(ClassLoader.getSystemResource("images/errorIcon.png").toString()));
 			else
 				emoji.setImage(new Image(ClassLoader.getSystemResource("images/errorIcon.png").toString()));
-			throw new ImageNotFoundException(3);
+			System.err.println("Player Profile Image is not found");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

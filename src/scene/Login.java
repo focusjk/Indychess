@@ -2,7 +2,6 @@ package scene;
 
 import component.Button;
 import component.InputField;
-import exception.ImageNotFoundException;
 import exception.InputNotFilledException;
 import exception.ThreadInterruptedException;
 import exception.WrongFormatInputException;
@@ -107,20 +106,15 @@ public class Login extends VBox {
 			}
 		});
 		this.backgroundThread.start();
-
 		try {
-			try {
-				logo.setImage(new Image(ClassLoader.getSystemResource("images/logo.png").toString()));
-			} catch (NullPointerException e) {
-				throw new ImageNotFoundException(6);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} catch (ImageNotFoundException exception) {
+			logo.setImage(new Image(ClassLoader.getSystemResource("images/logo.png").toString()));
+		} catch (NullPointerException e) {
 			logo.setImage(new Image(ClassLoader.getSystemResource("images/errorIcon.png").toString()));
 			System.out.println("Can not setImage in Login logo");
+			System.err.println("Login Image is not found");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
 	}
 
 	public InputField getPlayer1() {
@@ -158,22 +152,16 @@ public class Login extends VBox {
 	public void setBackground(int number) {
 		backgroundNumber = number;
 		try {
-			try {
-				background = new Image(
-						ClassLoader.getSystemResource("images/loginBackground/backgrounds1-" + backgroundNumber + ".jpg")
-								.toString());
-				setBackground(new Background(new BackgroundImage(background, null, null, null,
-						new BackgroundSize(1000, 700, false, false, false, false))));
-			} catch (NullPointerException e) {
-				throw new ImageNotFoundException(6);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} catch (ImageNotFoundException exception) {
+			background = new Image(ClassLoader
+					.getSystemResource("images/loginBackground/background1-" + backgroundNumber + ".jpg").toString());
+			setBackground(new Background(new BackgroundImage(background, null, null, null,
+					new BackgroundSize(1000, 700, false, false, false, false))));
+		} catch (NullPointerException e) {
 			this.backgroundThread.interrupt();
-			System.out.println("Can not setImage in Login background");
+			System.err.println("Login Image is not found");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
 	}
 
 }

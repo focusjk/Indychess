@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import chessPiece.ChessPiece;
-import exception.ImageNotFoundException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -16,42 +15,35 @@ public class Star extends Pane {
 
 	public Star(ArrayList<ChessPiece> chessPiece) {
 		super();
-		try {
-			while (true) {
-				Random random1 = new Random();
-				Random random2 = new Random();
-				int x = random1.nextInt(5) + 1;
-				int y = random2.nextInt(5) + 1;
+		while (true) {
+			Random random1 = new Random();
+			Random random2 = new Random();
+			int x = random1.nextInt(5) + 1;
+			int y = random2.nextInt(5) + 1;
 
-				boolean isAvailable = true;
-				for (int i = 0; i < chessPiece.size(); i++) {
-					if (chessPiece.get(i).getX() == x && chessPiece.get(i).getY() == y) {
-						isAvailable = false;
-						break;
-					}
-				}
-				if (isAvailable) {
-					setX(x);
-					setY(y);
+			boolean isAvailable = true;
+			for (int i = 0; i < chessPiece.size(); i++) {
+				if (chessPiece.get(i).getX() == x && chessPiece.get(i).getY() == y) {
+					isAvailable = false;
 					break;
 				}
-
 			}
-			// set screen
-			setPrefHeight(80);
-			setPrefWidth(80);
-			img = new ImageView();
-			try {
-				img.setImage(new Image(ClassLoader.getSystemResource("images/star.png").toString()));
-
-			} catch (NullPointerException e) {
-				throw new ImageNotFoundException(4);
+			if (isAvailable) {
+				setX(x);
+				setY(y);
+				break;
 			}
 
-		} catch (ImageNotFoundException e) {
+		}
+		// set screen
+		setPrefHeight(80);
+		setPrefWidth(80);
+		img = new ImageView();
+		try {
+			img.setImage(new Image(ClassLoader.getSystemResource("images/star.png").toString()));
+			System.err.println("Star Image is not found");
+		} catch (NullPointerException e) {
 			img.setImage(new Image(ClassLoader.getSystemResource("images/errorIcon.png").toString()));
-			System.out.println("Can not setImage in Star constructor");
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

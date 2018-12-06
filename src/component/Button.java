@@ -1,6 +1,5 @@
 package component;
 
-import exception.ImageNotFoundException;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,11 +13,7 @@ public abstract class Button extends ImageView {
 	public Button(String imageName, double x, double y) {
 		super();
 		this.imageName = imageName;
-		try {
-			setImage(1);
-		} catch (ImageNotFoundException e) {
-			System.out.println("Can not setImage in Button constructor");
-		}
+		setImage(1);
 		if (x != 0)
 			setLayoutX(x);
 		if (y != 0)
@@ -27,11 +22,7 @@ public abstract class Button extends ImageView {
 		setOnMouseEntered(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				try {
-					setImage(2);
-				} catch (ImageNotFoundException e) {
-					System.out.println("Can not setImage in Button mouse entered");
-				}
+				setImage(2);
 				event.consume();
 			}
 		});
@@ -39,11 +30,7 @@ public abstract class Button extends ImageView {
 		setOnMouseExited(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				try {
-					setImage(1);
-				} catch (ImageNotFoundException e) {
-					System.out.println("Can not setImage in Button mouse exited");
-				}
+				setImage(1);
 				event.consume();
 			}
 		});
@@ -60,7 +47,7 @@ public abstract class Button extends ImageView {
 
 	public abstract void onClicked();
 
-	private void setImage(int type) throws ImageNotFoundException {
+	private void setImage(int type) {
 		try {
 			if (type == 1) {
 				setImage(new Image(ClassLoader.getSystemResource(imageName + ".png").toString()));
@@ -69,7 +56,7 @@ public abstract class Button extends ImageView {
 			}
 		} catch (NullPointerException e) {
 			setImage(new Image(ClassLoader.getSystemResource("images/errorIcon.png").toString()));
-			throw new ImageNotFoundException(2);
+			System.err.println("Button Image is not found");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
