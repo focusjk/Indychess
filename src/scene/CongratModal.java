@@ -1,7 +1,6 @@
 package scene;
 
 import component.Button;
-import exception.ThreadInterruptedException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -34,33 +33,25 @@ public class CongratModal extends Pane {
 		backgroundImg.setLayoutY(50);
 
 		this.backgroundThread = new Thread(() -> {
-			try {
-				int i = 1;
-				while (true) {
-					try {
-						Thread.sleep(40);
-						backgroundImg.setImage(new Image(
-								ClassLoader.getSystemResource("images/congratModal/congrat" + i + ".jpg").toString()));
-						i++;
-						i %= 133;
-					} catch (InterruptedException e) {
-						throw new ThreadInterruptedException();
-					} catch(NullPointerException e) {
-						backgroundThread.interrupt();
-						backgroundImg.setImage(new Image(ClassLoader.getSystemResource("images/errorIcon.png").toString()));
-						System.out.println("Congrat background thread is stoped");
-						System.err.println("CongratModal Image is not found");
-						
-					}catch (Exception e) {
-						throw e;
-					}
+			int i = 1;
+			while (true) {
+				try {
+					Thread.sleep(40);
+					backgroundImg.setImage(new Image(
+							ClassLoader.getSystemResource("images/congratModal/congrat" + i + ".jpg").toString()));
+					i++;
+					i %= 133;
+				} catch (InterruptedException e) {
+					System.err.println("CongratModal: Thread is interrupted");
+				} catch (NullPointerException e) {
+					backgroundThread.interrupt();
+					backgroundImg.setImage(new Image(ClassLoader.getSystemResource("images/errorIcon.png").toString()));
+					System.out.println("Congrat background thread is stoped");
+					System.err.println("CongratModal Image is not found");
+				} catch (Exception e) {
+					throw e;
 				}
-			} catch (ThreadInterruptedException e) {
-				System.out.println("Congrat background thread is stoped");
-			}catch (Exception e) {
-				e.printStackTrace();
 			}
-
 		});
 		this.backgroundThread.start();
 

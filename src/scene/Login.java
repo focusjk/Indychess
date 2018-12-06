@@ -3,7 +3,6 @@ package scene;
 import component.Button;
 import component.InputField;
 import exception.InputNotFilledException;
-import exception.ThreadInterruptedException;
 import exception.WrongFormatInputException;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -86,23 +85,18 @@ public class Login extends VBox {
 
 		this.backgroundThread = new Thread(() -> {
 			int i = 1;
-			try {
-				while (true) {
-					try {
-						Thread.sleep(35);
-						setBackground(i);
-						i++;
-						i %= 40;
-					} catch (InterruptedException e) {
-						throw new ThreadInterruptedException();
-					} catch (Exception e) {
-						throw e;
-					}
+			while (true) {
+				try {
+					Thread.sleep(35);
+					setBackground(i);
+					i++;
+					i %= 40;
+				} catch (InterruptedException e) {
+					System.err.println("Login: Thread is interrupted");
+
+				} catch (Exception e) {
+					throw e;
 				}
-			} catch (ThreadInterruptedException e) {
-				System.out.println("Login background thread is stoped");
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		});
 		this.backgroundThread.start();

@@ -41,8 +41,8 @@ public class Star extends Pane {
 		img = new ImageView();
 		try {
 			img.setImage(new Image(ClassLoader.getSystemResource("images/star.png").toString()));
-			System.err.println("Star Image is not found");
 		} catch (NullPointerException e) {
+			System.err.println("Star Image is not found");
 			img.setImage(new Image(ClassLoader.getSystemResource("images/errorIcon.png").toString()));
 		} catch (Exception e) {
 			e.printStackTrace();
