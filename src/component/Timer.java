@@ -42,8 +42,6 @@ public class Timer extends HBox {
 			public void handle(long now) {
 				if (currentTime < 0) {
 					Main.getGameScreen().changeTurn();
-					Main.getGameScreen().setClickedChess(null);
-					Main.getGameScreen().resetBoard();
 				}
 
 				if (currentTime < 10) {

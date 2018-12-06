@@ -97,7 +97,6 @@ public class Game extends Pane {
 							((PawnPiece) clickedChess).setIsFirstMove();
 							((PawnPiece) clickedChess).setQueen((int) y);
 						}
-						resetBoard();
 						removeChessPiece((ChessPiece) o);
 						clickedChess.setPosition(x, y);
 						changeTurn();
@@ -121,7 +120,6 @@ public class Game extends Pane {
 						timer.stop();
 					}
 					clickedChess.setPosition(x, y);
-					resetBoard();
 					changeTurn();
 					eatSound.play();
 				}
@@ -131,66 +129,40 @@ public class Game extends Pane {
 				}
 
 				if (!isEnd) {
-					boolean isWin1 = true;
-					boolean isWin2 = true;
+//					boolean isWin1 = true;
+//					boolean isWin2 = true;
+//					for (int i = 0; i < chessPiece.size(); i++) {
+//						if (chessPiece.get(i) instanceof KingPiece) {
+//							if (chessPiece.get(i).getPlayer() == 2)
+//								isWin1 = false;
+//							else
+//								isWin2 = false;
+//						}
+//					}
+//
+//					if (isWin1 && !isWin2) {
+//						endGame(1);
+//					} else if (!isWin1 && isWin2) {
+//						endGame(2);
+//					} else {
+					boolean canMove = false;
+					boolean canKillKing = false;
 					for (int i = 0; i < chessPiece.size(); i++) {
-						if (chessPiece.get(i) instanceof KingPiece) {
-							if (chessPiece.get(i).getPlayer() == 2) {
-								isWin1 = false;
-							} else {
-								isWin2 = false;
-							}
+						if (chessPiece.get(i).getPlayer() == turn) {
+							canKillKing = canKillKing || chessPiece.get(i).canKillKing();
+						}
+						if (chessPiece.get(i).getPlayer() == turn && chessPiece.get(i).isMovable()) {
+							canMove = true;
 						}
 					}
+					if (canKillKing && turn == 1)
+						endGame(1);
+					else if (canKillKing && turn == 2)
+						endGame(2);
+					else if (!canMove)
+						endGame(3);
 
-					if (isWin1 && !isWin2) {
-						isEnd = true;
-						timer.stop();
-						player1.stopThread();
-						player2.stopThread();
-						getChildren().add(new CongratModal(player1.getName(), "winner"));
-					} else if (!isWin1 && isWin2) {
-						isEnd = true;
-						timer.stop();
-						player1.stopThread();
-						player2.stopThread();
-						getChildren().add(new CongratModal(player2.getName(), "winner"));
-					} else {
-						boolean canMove = false;
-						boolean canKillKing = false;
-						for (int i = 0; i < chessPiece.size(); i++) {
-							if (chessPiece.get(i).getPlayer() == turn) {
-								System.out.println("1");
-								canKillKing = canKillKing || chessPiece.get(i).canKillKing();
-							}
-							if (chessPiece.get(i).getPlayer() == turn && chessPiece.get(i).isMovable()) {
-								canMove = true;
-							}
-						}
-						if(canKillKing) {
-							if(turn == 1) {
-								isEnd = true;
-								timer.stop();
-								player1.stopThread();
-								player2.stopThread();
-								getChildren().add(new CongratModal(player1.getName(), "winner"));
-							} else if (turn == 2) {
-								isEnd = true;
-								timer.stop();
-								player1.stopThread();
-								player2.stopThread();
-								getChildren().add(new CongratModal(player2.getName(), "winner"));
-							}
-						}
-						else if (!canMove) {
-							isEnd = true;
-							timer.stop();
-							player1.stopThread();
-							player2.stopThread();
-							getChildren()
-									.add(new CongratModal(player1.getName() + "\n & \n" + player2.getName(), "draw"));
-						}
-					}
+//					}
 
 				}
 
@@ -263,7 +235,6 @@ public class Game extends Pane {
 	}
 
 	public ChessPiece findChessPiece(int x, int y) {
-
 		for (int i = 0; i < chessPiece.size(); i++) {
 			if (chessPiece.get(i).getX() == (double) x && chessPiece.get(i).getY() == (double) y)
 				return chessPiece.get(i);
@@ -282,6 +253,9 @@ public class Game extends Pane {
 			player1.setTurn(true);
 		}
 		timer.resetTime();
+		resetBoard();
+		setClickedChess(null);
+		
 	}
 
 	public ChessPiece getClickedChess() {
@@ -312,6 +286,19 @@ public class Game extends Pane {
 
 	public Star getStar() {
 		return star;
+	}
+
+	private void endGame(int type) {
+		isEnd = true;
+		timer.stop();
+		player1.stopThread();
+		player2.stopThread();
+		if (type == 1)
+			getChildren().add(new CongratModal(player1.getName(), "winner"));
+		else if (type == 2)
+			getChildren().add(new CongratModal(player2.getName(), "winner"));
+		else
+			getChildren().add(new CongratModal(player1.getName() + "\n & \n" + player2.getName(), "draw"));
 	}
 
 }
