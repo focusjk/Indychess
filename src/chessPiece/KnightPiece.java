@@ -67,27 +67,4 @@ public class KnightPiece extends ChessPiece {
 		return isMovable;
 	}
 	
-	@Override
-	public boolean canKillKing() {
-		int x = (int) getX();
-		int y = (int) getY();
-		
-		for (int i = 0; i < move.size(); i++) {
-			int X = x + move.get(i).getKey();
-			int Y = y + move.get(i).getValue();
-			
-			if (X > 6 || X < 1 || Y > 6 || Y < 1)
-				continue;
-			
-			ChessPiece temp = Main.getGameScreen().findChessPiece(X, Y);
-			if (temp != null && temp.getPlayer() == Main.getGameScreen().getTurn())
-				continue;
-			
-			if(temp instanceof KingPiece)
-				return true;
-
-		}
-		return false;
-	}
-
 }

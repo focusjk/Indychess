@@ -93,7 +93,7 @@ public class Game extends Pane {
 					} else if (clickedChess != null && ((ChessPiece) o).getPlayer() != turn
 							&& board[(int) x][(int) y].isActive()) {
 						removeChessPiece((ChessPiece) o);
-						((Movable) clickedChess).onMove(x,y);
+						((Movable) clickedChess).onMove(x, y);
 						changeTurn();
 						eatSound.play();
 					} else {
@@ -108,47 +108,39 @@ public class Game extends Pane {
 						getChildren().add(starModal);
 						timer.stop();
 					}
-					((Movable) clickedChess).onMove(x,y);
+					((Movable) clickedChess).onMove(x, y);
 					changeTurn();
 					eatSound.play();
 				}
 
 				if (!isEnd) {
-//					boolean isWin1 = true;
-//					boolean isWin2 = true;
-//					for (int i = 0; i < chessPiece.size(); i++) {
-//						if (chessPiece.get(i) instanceof KingPiece) {
-//							if (chessPiece.get(i).getPlayer() == 2)
-//								isWin1 = false;
-//							else
-//								isWin2 = false;
-//						}
-//					}
-//
-//					if (isWin1 && !isWin2) {
-//						endGame(1);
-//					} else if (!isWin1 && isWin2) {
-//						endGame(2);
-//					} else {
-					boolean canMove = false;
-					boolean canKillKing = false;
+					boolean isWin1 = true;
+					boolean isWin2 = true;
 					for (int i = 0; i < chessPiece.size(); i++) {
-						if (chessPiece.get(i).getPlayer() == turn) {
-							canKillKing = canKillKing || chessPiece.get(i).canKillKing();
-						}
-						if (chessPiece.get(i).getPlayer() == turn && chessPiece.get(i).isMovable()) {
-							canMove = true;
+						if (chessPiece.get(i) instanceof KingPiece) {
+							if (chessPiece.get(i).getPlayer() == 2)
+								isWin1 = false;
+							else
+								isWin2 = false;
 						}
 					}
-					if (canKillKing && turn == 1)
+
+					if (isWin1 && !isWin2) {
 						endGame(1);
-					else if (canKillKing && turn == 2)
+					} else if (!isWin1 && isWin2) {
 						endGame(2);
-					else if (!canMove)
-						endGame(3);
+					} else {
+						boolean canMove = false;
 
-//					}
-
+						for (int i = 0; i < chessPiece.size(); i++) {
+							if (chessPiece.get(i).getPlayer() == turn && chessPiece.get(i).isMovable()) {
+								canMove = true;
+								break;
+							}
+						}
+						if (!canMove)
+							endGame(3);
+					}
 				}
 
 				event.consume();

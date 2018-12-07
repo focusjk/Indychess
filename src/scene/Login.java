@@ -67,12 +67,16 @@ public class Login extends VBox {
 							int ascii = (int) name1.charAt(i);
 							if (48 <= ascii && ascii <= 57 || 65 <= ascii && ascii <= 90 || 97 <= ascii && ascii <= 122
 									|| ascii == 95 || ascii == 45)
+								continue;
+							else 
 								throw new WrongFormatInputException();
 						}
 						for (int i = 0; i < name2.length(); i++) {
 							int ascii = (int) name1.charAt(i);
 							if (48 <= ascii && ascii <= 57 || 65 <= ascii && ascii <= 90 || 97 <= ascii && ascii <= 122
 									|| ascii == 95 || ascii == 45)
+								continue;
+							else 
 								throw new WrongFormatInputException();
 						}
 					}
