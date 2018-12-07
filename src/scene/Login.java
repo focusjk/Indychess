@@ -3,6 +3,7 @@ package scene;
 import component.Button;
 import component.InputField;
 import exception.InputNotFilledException;
+import exception.TooLongInputException;
 import exception.WrongFormatInputException;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -56,18 +57,33 @@ public class Login extends VBox {
 				try {
 					String name1 = player1.getText();
 					String name2 = player2.getText();
+
 					if (name1.isEmpty() || name2.isEmpty()) {
 						throw new InputNotFilledException();
 					} else if (name1.length() > 8 || name2.length() > 8) {
-						throw new WrongFormatInputException();
+						throw new TooLongInputException();
 					} else {
-						Main.setup("game");
-						backgroundThread.interrupt();
+						for (int i = 0; i < name1.length(); i++) {
+							int ascii = (int) name1.charAt(i);
+							if (48 <= ascii && ascii <= 57 || 65 <= ascii && ascii <= 90 || 97 <= ascii && ascii <= 122
+									|| ascii == 95 || ascii == 45)
+								throw new WrongFormatInputException();
+						}
+						for (int i = 0; i < name2.length(); i++) {
+							int ascii = (int) name1.charAt(i);
+							if (48 <= ascii && ascii <= 57 || 65 <= ascii && ascii <= 90 || 97 <= ascii && ascii <= 122
+									|| ascii == 95 || ascii == 45)
+								throw new WrongFormatInputException();
+						}
 					}
+					Main.setup("game");
+					backgroundThread.interrupt();
 				} catch (InputNotFilledException e) {
 					System.out.println("InputNotFilledException in Login");
 				} catch (WrongFormatInputException e) {
 					System.out.println("WrongFormatInputException in Login");
+				} catch (TooLongInputException e) {
+					System.out.println("TooLongInputException in Login");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
