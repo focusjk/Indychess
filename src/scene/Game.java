@@ -112,6 +112,9 @@ public class Game extends Pane {
 					changeTurn();
 					eatSound.play();
 				}
+				for (int i = 0; i < chessPiece.size(); i++) {
+					chessPiece.get(i).setImage(1);
+				}
 
 				if (!isEnd) {
 					boolean isWin1 = true;
@@ -232,9 +235,6 @@ public class Game extends Pane {
 		timer.resetTime();
 		resetBoard();
 		setClickedChess(null);
-		for (int i = 0; i < chessPiece.size(); i++) {
-			chessPiece.get(i).setImage(1);
-		}
 	}
 
 	public ChessPiece getClickedChess() {
