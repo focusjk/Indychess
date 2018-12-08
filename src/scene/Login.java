@@ -167,7 +167,7 @@ public class Login extends VBox {
 		backgroundNumber = number;
 		try {
 			background = new Image(ClassLoader
-					.getSystemResource("images/loginBackground/background1-" + backgroundNumber + ".jpg").toString());
+					.getSystemResource("images/loginBackground/background1-" + backgroundNumber + ".JPG").toString());
 			setBackground(new Background(new BackgroundImage(background, null, null, null,
 					new BackgroundSize(1000, 700, false, false, false, false))));
 		} catch (NullPointerException e) {
