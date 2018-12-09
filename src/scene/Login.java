@@ -34,12 +34,6 @@ public class Login extends VBox {
 		setPadding(new Insets(50, 320, 100, 320));
 		setAlignment(Pos.CENTER);
 
-		// set background
-//		background = new Image(ClassLoader
-//				.getSystemResource("images/loginBackground/background1-" + backgroundNumber + ".jpg").toString());
-//		setBackground(new Background(new BackgroundImage(background, null, null, null,
-//				new BackgroundSize(1000, 700, false, false, false, false))));
-
 		// set logo
 		logo = new ImageView(new Image(ClassLoader.getSystemResource("images/logo.png").toString()));
 		logo.setFitWidth(200);

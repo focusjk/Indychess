@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.2" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="false" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="scene.Login" project="indychess" file="/indychess/src/scene/Login.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="371" width="172" x="275" y="-84"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="logic.GameManager" project="indychess" 
+    file="/indychess/src/logic/GameManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="137" width="219" x="487" y="-84"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="chessPiece.ChessPiece" project="indychess" 
+    file="/indychess/src/chessPiece/ChessPiece.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="389" width="225" x="3866" y="-84"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="component.PlayerProfile" project="indychess" 
+    file="/indychess/src/component/PlayerProfile.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="317" width="150" x="746" y="-84"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="component.Timer" project="indychess" file="/indychess/src/component/Timer.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="245" width="204" x="936" y="-84"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="main.Main" project="indychess" file="/indychess/src/main/Main.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="389" width="215" x="1180" y="-84"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="7" language="java" name="chessPiece.Movable" project="indychess" 
+    file="/indychess/src/chessPiece/Movable.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="119" width="178" x="2826" y="705"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="8" language="java" name="chessPiece.KnightPiece" project="indychess" 
+    file="/indychess/src/chessPiece/KnightPiece.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="155" width="236" x="3044" y="705"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="scene.StarModal" project="indychess" file="/indychess/src/scene/StarModal.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="83" width="189" x="1435" y="-84"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="scene.Game" project="indychess" file="/indychess/src/scene/Game.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="749" width="244" x="1664" y="-84"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="component.Star" project="indychess" file="/indychess/src/component/Star.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="209" width="182" x="1948" y="-84"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="component.Button" project="indychess" file="/indychess/src/component/Button.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="155" width="179" x="2170" y="-84"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="chessPiece.BishopPiece" project="indychess" 
+    file="/indychess/src/chessPiece/BishopPiece.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="137" width="233" x="3320" y="705"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="scene.CongratModal" project="indychess" 
+    file="/indychess/src/scene/CongratModal.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="176" x="2389" y="-84"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="component.CellBoard" project="indychess" 
+    file="/indychess/src/component/CellBoard.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="263" width="163" x="2605" y="-84"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="chessPiece.RookPiece" project="indychess" 
+    file="/indychess/src/chessPiece/RookPiece.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="137" width="233" x="3593" y="705"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="exception.WrongFormatInputException" project="indychess" 
+    file="/indychess/src/exception/WrongFormatInputException.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="83" width="217" x="2808" y="-84"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="scene.ResumeModal" project="indychess" 
+    file="/indychess/src/scene/ResumeModal.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="83" width="119" x="3065" y="-84"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="chessPiece.KingPiece" project="indychess" 
+    file="/indychess/src/chessPiece/KingPiece.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="155" width="236" x="3866" y="705"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="chessPiece.QueenPiece" project="indychess" 
+    file="/indychess/src/chessPiece/QueenPiece.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="137" width="233" x="4142" y="705"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="component.InputField" project="indychess" 
+    file="/indychess/src/component/InputField.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="119" width="153" x="3224" y="-84"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="exception.InputNotFilledException" project="indychess" 
+    file="/indychess/src/exception/InputNotFilledException.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="83" width="185" x="3417" y="-84"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="chessPiece.PawnPiece" project="indychess" 
+    file="/indychess/src/chessPiece/PawnPiece.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="209" width="186" x="4415" y="705"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="exception.TooLongInputException" project="indychess" 
+    file="/indychess/src/exception/TooLongInputException.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="83" width="184" x="3642" y="-84"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <realization id="25">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="7"/>  
+  </realization>  
+  <generalization id="26">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="27">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="28">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="29">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="30">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="31">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

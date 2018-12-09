@@ -29,7 +29,6 @@ public class Main extends Application {
 			primaryStage.show();
 
 		} catch (Exception e) {
-			//TODO
 			e.printStackTrace();
 		}
 	}
@@ -55,7 +54,6 @@ public class Main extends Application {
 				setCurrentScene(new Scene(gameScreen));
 			}
 		} catch (Exception e) {
-			//TODO
 			e.printStackTrace();
 		}
 	}

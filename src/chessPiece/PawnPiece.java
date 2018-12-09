@@ -55,20 +55,6 @@ public class PawnPiece extends ChessPiece {
 		return true;
 	}
 
-	private boolean queenMove(int x, int y, int addX, int addY, boolean isClicked) {
-		if (x > 6 || x < 1 || y > 6 || y < 1)
-			return false;
-		ChessPiece temp = Main.getGameScreen().findChessPiece(x, y);
-		if (temp != null && temp.getPlayer() == Main.getGameScreen().getTurn())
-			return false;
-		if (isClicked) {
-			Main.getGameScreen().getBoard()[x][y].active();
-			if (temp == null)
-				queenMove(x + addX, y + addY, addX, addY, isClicked);
-		}
-		return true;
-	}
-
 	public void setIsFirstMove() {
 		isFirstMove = false;
 	}
