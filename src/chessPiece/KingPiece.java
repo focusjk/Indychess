@@ -41,9 +41,20 @@ public class KingPiece extends ChessPiece {
 				continue;
 			if (X == Main.getGameScreen().getStar().getX() && Y == Main.getGameScreen().getStar().getY())
 				continue;
+			boolean isDanger = false;
+			for (ChessPiece c : Main.getGameScreen().getChessPiece()) {
+				if (c.canKillTo(X, Y) && c.getPlayer() != getPlayer()) {
+					isDanger = true;
+					break;
+				}
+			}
+			if (isDanger)
+				continue;
+
 			Main.getGameScreen().getBoard()[X][Y].active();
-			
+
 		}
+
 	}
 
 	@Override
@@ -70,6 +81,16 @@ public class KingPiece extends ChessPiece {
 		}
 		return isMovable;
 	}
-	
+
+	@Override
+	public void updateKillPath() {
+		killPath.clear();
+		for (Pair<Integer, Integer> i : move) {
+			int x = (int) getX();
+			int y = (int) getY();
+			killPath.add(new Pair<>(x + i.getKey(), y + i.getValue()));
+		}
+
+	}
 
 }

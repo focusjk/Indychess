@@ -1,11 +1,14 @@
 package chessPiece;
 
+import java.util.ArrayList;
+
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
+import javafx.util.Pair;
 import main.Main;
 
 public abstract class ChessPiece extends Pane implements Movable {
@@ -15,6 +18,7 @@ public abstract class ChessPiece extends Pane implements Movable {
 	private String image;
 	private ImageView img;
 	private AudioClip selectSound = new AudioClip(ClassLoader.getSystemResource("sound/selectSound.mp3").toString());
+	ArrayList<Pair<Integer, Integer>> killPath = new ArrayList<>();
 
 	public ChessPiece(double x, double y, int player, String image) {
 		super();
@@ -119,5 +123,14 @@ public abstract class ChessPiece extends Pane implements Movable {
 		this.player = player;
 		setImage(1);
 	}
+
+	public boolean canKillTo(int x, int y) {
+		for (Pair<Integer, Integer> i : killPath) {
+			if (i.getKey() == x && i.getValue() == y)
+				return true;
+		}
+		return false;
+	}
+	public abstract void updateKillPath();
 
 }

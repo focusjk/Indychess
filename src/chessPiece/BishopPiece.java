@@ -1,5 +1,6 @@
 package chessPiece;
 
+import javafx.util.Pair;
 import main.Main;
 
 public class BishopPiece extends ChessPiece {
@@ -44,6 +45,29 @@ public class BishopPiece extends ChessPiece {
 		int y = (int) getY();
 		return getMove(x - 1, y - 1, -1, -1, false) || getMove(x + 1, y - 1, 1, -1, false)
 				|| getMove(x - 1, y + 1, -1, 1, false) || getMove(x + 1, y + 1, 1, 1, false);
+	}
+
+	@Override
+	public void updateKillPath() {
+		killPath.clear();
+		int x = (int) getX();
+		int y = (int) getY();
+		checkMovePath(x - 1, y - 1, -1, -1);
+		checkMovePath(x + 1, y - 1, 1, -1);
+		checkMovePath(x - 1, y + 1, -1, 1);
+		checkMovePath(x + 1, y + 1, 1, 1);
+	}
+
+	public void checkMovePath(int x, int y, int addX, int addY) {
+		if (x > 6 || x < 1 || y > 6 || y < 1)
+			return;
+		ChessPiece temp = Main.getGameScreen().findChessPiece(x, y);
+		if (temp == null || (temp instanceof KingPiece && temp.getPlayer() != getPlayer())) {
+			killPath.add(new Pair<>(x, y));
+			checkMovePath(x + addX, y + addY, addX, addY);
+		} else if (temp.getPlayer() != Main.getGameScreen().getTurn()) {
+			killPath.add(new Pair<>(x, y));
+		}
 	}
 
 }

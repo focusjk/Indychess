@@ -67,4 +67,15 @@ public class KnightPiece extends ChessPiece {
 		return isMovable;
 	}
 	
+
+	@Override
+	public void updateKillPath() {
+		killPath.clear();
+		for (Pair<Integer, Integer> i : move) {
+			int x = (int) getX();
+			int y = (int) getY();
+			killPath.add(new Pair<>(x + i.getKey(), y + i.getValue()));
+		}
+	}
+	
 }

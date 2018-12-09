@@ -1,5 +1,6 @@
 package chessPiece;
 
+import javafx.util.Pair;
 import main.Main;
 
 public class PawnPiece extends ChessPiece {
@@ -88,5 +89,20 @@ public class PawnPiece extends ChessPiece {
 				return true;
 			return toKill(x - 1, y - 1, false) || toKill(x + 1, y - 1, false);
 		}
+	}
+
+	@Override
+	public void updateKillPath() {
+		killPath.clear();
+		int x = (int) getX();
+		int y = (int) getY();
+		if (getPlayer() == 1) {
+			killPath.add(new Pair<>(x + 1, y + 1));
+			killPath.add(new Pair<>(x - 1, y + 1));
+		} else {
+			killPath.add(new Pair<>(x + 1, y - 1));
+			killPath.add(new Pair<>(x - 1, y - 1));
+		}
+
 	}
 }

@@ -95,6 +95,7 @@ public class Game extends Pane {
 						removeChessPiece((ChessPiece) o);
 						((Movable) clickedChess).onMove(x, y);
 						changeTurn();
+						updateAllKillPath();
 						eatSound.play();
 					} else {
 						disableSound.play();
@@ -110,6 +111,7 @@ public class Game extends Pane {
 					}
 					((Movable) clickedChess).onMove(x, y);
 					changeTurn();
+					updateAllKillPath();
 					eatSound.play();
 				}
 				for (int i = 0; i < chessPiece.size(); i++) {
@@ -280,4 +282,9 @@ public class Game extends Pane {
 			getChildren().add(new CongratModal(player1.getName() + "\n & \n" + player2.getName(), "draw"));
 	}
 
+	public void updateAllKillPath() {
+		for (ChessPiece c : chessPiece) {
+			c.updateKillPath();
+		}
+	}
 }
